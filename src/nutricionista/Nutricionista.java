@@ -5,6 +5,9 @@
  */
 package nutricionista;
 
+import controladores.ControladorPantallaPrincipal;
+import vistas.VistaPantallaPrincipal;
+
 /**
  *
  * @author Dario
@@ -15,7 +18,9 @@ public class Nutricionista {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+       VistaPantallaPrincipal vista = new VistaPantallaPrincipal();
+        ControladorPantallaPrincipal ctrl = new ControladorPantallaPrincipal(vista);
+        ctrl.iniciar();
     }
     
 }
