@@ -44,6 +44,7 @@ public class ControladorVistaPacientes implements ActionListener,FocusListener {
         vista.btEliminar.setEnabled(false);
         vista.btGuardar.setEnabled(false);
         vista.tbPacientes.setEnabled(false);
+        modelarTabla();
     }
 
     @Override
@@ -94,7 +95,19 @@ public class ControladorVistaPacientes implements ActionListener,FocusListener {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    private void modelarTabla(){
+        modelo.addColumn("ID");
+        modelo.addColumn("DNI");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Telefono");
+        vista.tbPacientes.setModel(modelo);
+        vista.tbPacientes.getColumnModel().getColumn(0).setPreferredWidth(80);
+        vista.tbPacientes.getColumnModel().getColumn(1).setPreferredWidth(250);
+        vista.tbPacientes.getColumnModel().getColumn(2).setPreferredWidth(500);
+        vista.tbPacientes.getColumnModel().getColumn(3).setPreferredWidth(300);
+    }
     
-    
-    
+    private void llenarTabla(){
+        
+    }
 }
