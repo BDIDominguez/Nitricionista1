@@ -44,13 +44,14 @@ public class DataPaciente {
     public boolean modificarPaciente(EntidadPaciente pa) throws SQLException{
         boolean vRespuesta = false;
         con = Conexion.getConexion();
-        String sql = "update pacientes set nombre = ?,dni = ?, domicilio=?, telefono=?,  where idpaciente = ?";
+        String sql = "update pacientes set nombre = ?,dni = ?, domicilio=?, telefono=?, estado = ? where idpaciente = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1,pa.getNombre());
         ps.setInt(2, pa.getDni());
         ps.setString(3, pa.getDomicilio());
         ps.setString(4, pa.getTelefono());
-        ps.setInt(5, pa.getIdpaciente());
+        ps.setBoolean(5, pa.isEstado());
+        ps.setInt(6, pa.getIdpaciente());
         ps.executeUpdate();
         vRespuesta = true;
         ps.close();
