@@ -26,12 +26,13 @@ public class DataPaciente {
     
     public EntidadPaciente crearPaciente(EntidadPaciente pa) throws SQLException{
         con = Conexion.getConexion();
-        String sql = "insert into pacientes (nombre,dni,domicilio,telefono) values (?,?,?,?)";
+        String sql = "insert into pacientes (nombre,dni,domicilio,telefono,estado) values (?,?,?,?,?)";
         PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1,pa.getNombre());
         ps.setInt(2, pa.getDni());
         ps.setString(3, pa.getDomicilio());
         ps.setString(4, pa.getTelefono());
+        ps.setBoolean(5, pa.isEstado());
         ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();  // Regresa los ID generados por la insercion anterior
         if (rs.next()) { // 
@@ -43,7 +44,7 @@ public class DataPaciente {
     public boolean modificarPaciente(EntidadPaciente pa) throws SQLException{
         boolean vRespuesta = false;
         con = Conexion.getConexion();
-        String sql = "update pacientes set nombre = ?,dni = ?, domicilio=?, telefono=? where idpaciente = ?";
+        String sql = "update pacientes set nombre = ?,dni = ?, domicilio=?, telefono=?,  where idpaciente = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1,pa.getNombre());
         ps.setInt(2, pa.getDni());
