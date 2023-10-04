@@ -4,6 +4,10 @@
  */
 package vistas;
 
+import java.awt.Image;
+import java.net.URL;
+import javax.swing.ImageIcon;
+
 /**
  * @author Dario
  */
@@ -12,6 +16,7 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
     public VistaPantallaPrincipal() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+        colocarIconos();
     }
 
     /**
@@ -42,7 +47,7 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
         dpFondo.setLayout(dpFondoLayout);
         dpFondoLayout.setHorizontalGroup(
             dpFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGap(0, 860, Short.MAX_VALUE)
         );
         dpFondoLayout.setVerticalGroup(
             dpFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -53,7 +58,7 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
 
         btSalir.setText("Salir");
 
-        jButton2.setText("jButton2");
+        jButton2.setText("Dietas");
 
         btPacientes.setText("Pacientes");
 
@@ -62,22 +67,21 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
         pnBotonesLayout.setHorizontalGroup(
             pnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnBotonesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btPacientes, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addGroup(pnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
-                .addContainerGap(7, Short.MAX_VALUE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btPacientes, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)))
         );
         pnBotonesLayout.setVerticalGroup(
             pnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnBotonesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -156,4 +160,25 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel pnFondo;
     // End of variables declaration//GEN-END:variables
 
+    private void colocarIconos(){
+        int alto = 50;
+        int ancho = 50; 
+        
+        
+        btPacientes.setIcon(prepararIcono("Pacientes.png",alto,ancho)); // asignamos al boton el icono
+        btSalir.setIcon(prepararIcono("salida3.png",alto,ancho));
+        
+    }
+    
+    private ImageIcon prepararIcono(String nombre,int alto,int ancho){ // Aplicacion que prepara los Iconos para ser puestos donde se quiera se pasa el nombre y el tamaño que quieres que tenga
+        // Obtén la ruta relativa a la ubicación de la clase Controlador eso es la carpeta SRC del proyecto ese seria la carpeta de inicio
+        ClassLoader directorio = getClass().getClassLoader();
+        URL imagen = directorio.getResource("iconos/" + nombre); // Creamos la ruta al recurso en este caso el icono de lupa
+        // Crea un ImageIcon utilizando la URL de la imagen
+        ImageIcon icono = new ImageIcon(imagen); // creamos la Imagen Icono para asignarsela al contenerdor
+        // Redimensionar el icono pasandolo a imagen con el nuevo tamaño y luego convirtiendolo en icono XD
+        Image imagenRedimensionada = icono.getImage().getScaledInstance(alto, ancho, Image.SCALE_SMOOTH);
+        icono = new ImageIcon(imagenRedimensionada);
+        return icono;
+    }
 }

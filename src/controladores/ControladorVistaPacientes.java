@@ -39,13 +39,10 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
         vista.btSalir.addActionListener(this);
         //Cuadros de texto
         vista.txDNI.addFocusListener(this);
-
         //check
         vista.chEstado.addActionListener(this);
-
         //Tabla
         vista.tbPacientes.getSelectionModel().addListSelectionListener(this);
-
     }
 
     public void iniciar() {
@@ -75,7 +72,8 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
         if (e.getSource() == vista.btGuardar) {
             EntidadPaciente p = new EntidadPaciente();
             p.setIdpaciente(Integer.parseInt(vista.txID.getText()));
-            p.setDni(Integer.parseInt(vista.txDNI.getText()));
+            // int dni = Integer.parseInt(text.replace(".", ""));
+            p.setDni(Integer.parseInt(vista.txDNI.getText().replace(".","")));
             p.setNombre(vista.txNombre.getText());
             p.setDomicilio(vista.txDomicilio.getText());
             p.setTelefono(vista.txTelefono.getText());
@@ -146,7 +144,7 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
                 if (vista.txDNI.getText().length() >= 7) {
                     try {
                         EntidadPaciente pa = new EntidadPaciente();
-                        pa = data.pacienteDNI(Integer.parseInt(vista.txDNI.getText()));
+                        pa = data.pacienteDNI(Integer.parseInt(vista.txDNI.getText().replace(".", "")));
                         if (pa.getDni() != 0) {
                             JOptionPane.showMessageDialog(vista, "Ese DNI ya existe!");
                             vista.txDNI.requestFocus();

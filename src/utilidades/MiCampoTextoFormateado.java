@@ -5,20 +5,21 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
-import javax.swing.JTextField;
+import javax.swing.JFormattedTextField;
+
 
 /**
  *
  * @author Dario
  */
-public class MiCampoTexto extends JTextField {
+public class MiCampoTextoFormateado extends JFormattedTextField {
 
     private boolean tienePunto = false;
     private DecimalFormat formato;
     private int tipo;
     
 
-    public MiCampoTexto(int tipo) {
+    public MiCampoTextoFormateado(int tipo) {
         super();
         this.tipo = tipo;
         

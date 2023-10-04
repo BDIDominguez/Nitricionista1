@@ -4,6 +4,8 @@
  */
 package vistas;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Dario
@@ -28,16 +30,14 @@ public class VistaPacientes extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txID = new utilidades.MiCampoTexto(1,"");
+        txID = new utilidades.MiCampoTexto(1);
         ;
         jLabel2 = new javax.swing.JLabel();
-        txDNI = new utilidades.MiCampoTexto(1,"##.###.###");
-        ;
         jLabel3 = new javax.swing.JLabel();
-        txNombre = new utilidades.MiCampoTexto(2,"");
+        txNombre = new utilidades.MiCampoTexto(2);
         jLabel4 = new javax.swing.JLabel();
-        txDomicilio = new utilidades.MiCampoTexto(2,"");
-        txTelefono = new utilidades.MiCampoTexto(4,"");
+        txDomicilio = new utilidades.MiCampoTexto(2);
+        txTelefono = new utilidades.MiCampoTexto(4);
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbPacientes = new javax.swing.JTable();
@@ -46,6 +46,8 @@ public class VistaPacientes extends javax.swing.JInternalFrame {
         btEliminar = new javax.swing.JButton();
         btSalir = new javax.swing.JButton();
         chEstado = new javax.swing.JCheckBox();
+        txDNI = new utilidades.MiCampoTextoFormateado(1);
+        ;
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         jLabel1.setText("ID Paciente");
@@ -56,9 +58,6 @@ public class VistaPacientes extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         jLabel2.setText("DNI");
-
-        txDNI.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        txDNI.setText("0");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         jLabel3.setText("Nombre");
@@ -101,7 +100,10 @@ public class VistaPacientes extends javax.swing.JInternalFrame {
         btSalir.setText("Salir");
 
         chEstado.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        chEstado.setText("Estado");
+        chEstado.setText("Activo");
+
+        txDNI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0"))));
+        txDNI.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -136,17 +138,17 @@ public class VistaPacientes extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(chEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txID, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                     .addGap(14, 14, 14)
                                     .addComponent(jLabel5)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txDNI)
+                                        .addComponent(txID, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -162,7 +164,7 @@ public class VistaPacientes extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -218,7 +220,7 @@ public class VistaPacientes extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable tbPacientes;
-    public javax.swing.JTextField txDNI;
+    public javax.swing.JFormattedTextField txDNI;
     public javax.swing.JTextField txDomicilio;
     public javax.swing.JTextField txID;
     public javax.swing.JTextField txNombre;
