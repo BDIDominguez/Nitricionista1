@@ -4,6 +4,9 @@
  */
 package vistas;
 
+import java.awt.Image;
+import java.net.URL;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +20,7 @@ public class VistaPacientes extends javax.swing.JInternalFrame {
      */
     public VistaPacientes() {
         initComponents();
+        colocarIconos();
     }
 
     /**
@@ -226,4 +230,28 @@ public class VistaPacientes extends javax.swing.JInternalFrame {
     public javax.swing.JTextField txNombre;
     public javax.swing.JTextField txTelefono;
     // End of variables declaration//GEN-END:variables
+private void colocarIconos(){
+        int alto = 30;
+        int ancho = 30; 
+        
+        btNuevo.setIcon(prepararIcono("nuevo.png",alto,ancho));
+        btGuardar.setIcon(prepararIcono("salvado.png",alto,ancho));
+        btEliminar.setIcon(prepararIcono("inactivo.png",alto,ancho));
+        btSalir.setIcon(prepararIcono("salida3.png",alto,ancho));
+        ImageIcon icono = new ImageIcon();
+        icono = prepararIcono("IconoFormulario.jpg",20,20);
+        this.setFrameIcon(icono);
+    }
+    
+    private ImageIcon prepararIcono(String nombre, int alto, int ancho) { // Aplicacion que prepara los Iconos para ser puestos donde se quiera se pasa el nombre y el tamaño que quieres que tenga
+        // Obtén la ruta relativa a la ubicación de la clase Controlador eso es la carpeta SRC del proyecto ese seria la carpeta de inicio
+        ClassLoader directorio = getClass().getClassLoader();
+        URL imagen = directorio.getResource("iconos/" + nombre); // Creamos la ruta al recurso en este caso el icono de lupa
+        // Crea un ImageIcon utilizando la URL de la imagen
+        ImageIcon icono = new ImageIcon(imagen); // creamos la Imagen Icono para asignarsela al contenerdor
+        // Redimensionar el icono pasandolo a imagen con el nuevo tamaño y luego convirtiendolo en icono XD
+        Image imagenRedimensionada = icono.getImage().getScaledInstance(alto, ancho, Image.SCALE_SMOOTH);
+        icono = new ImageIcon(imagenRedimensionada);
+        return icono;
+    }
 }
