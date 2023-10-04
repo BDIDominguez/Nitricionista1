@@ -14,13 +14,16 @@ import javax.swing.JTextField;
 public class MiCampoTexto extends JTextField {
 
     private boolean tienePunto = false;
-    private DecimalFormat formatter;
+    private DecimalFormat formato;
     private int tipo;
+    private String forma;
 
-    public MiCampoTexto(int tipo) {
+    public MiCampoTexto(int tipo, String forma) {
         super();
         this.tipo = tipo;
-        addKeyListener(new KeyAdapter() { 
+        this.forma = forma;
+
+        addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
@@ -36,7 +39,7 @@ public class MiCampoTexto extends JTextField {
                         }
                         break;
                     case 3: // acepta numero y punto decimal
-                        formatter = new DecimalFormat("#,##0.00");
+                        //formato = new DecimalFormat("#,##0.00");
                         if (c == '.') {
                             if (tienePunto) {
                                 e.consume();
@@ -47,7 +50,7 @@ public class MiCampoTexto extends JTextField {
                             e.consume();
                         }
                         break;
-                        case 4: // es un numero entero sin nada mas que numero del 0 al 9
+                    case 4: // es un numero entero sin nada mas que numero del 0 al 9
                         if (!(Character.isDigit(c) || c == '+' || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
                             e.consume();
                         }
@@ -66,19 +69,24 @@ public class MiCampoTexto extends JTextField {
         // Evitar la opcion de pegar texto
         setTransferHandler(null);
     }
-    // Método para formatear el texto en el campo
+
+// Método para formatear el texto en el campo
     private void formatText() {
-        try {
-            String text = getText();
-            if (!text.isEmpty() && tipo == 4) {
-                double value = Double.parseDouble(text);
-                setText(formatter.format(value));
+        //formato = new DecimalFormat("#,##0.00"); // Numeros Decimal con 2 digitos
+        // ##.###.### para que un dni se vea con .
+        if (!forma.isEmpty()) { // Si el la forma biene Vacias no tendra formato!!!
+            formato = new DecimalFormat(forma);
+            try {
+                String text = getText();
+                if (!text.isEmpty() && tipo == 4) {
+                    double value = Double.parseDouble(text);
+                    setText(formato.format(value));
+                }
+            } catch (NumberFormatException e) {
+                // Manejar una entrada no válida
             }
-        } catch (NumberFormatException e) {
-            // Manejar una entrada no válida
         }
     }
-
 
     @Override
     public void setText(String t) {

@@ -28,16 +28,16 @@ public class VistaPacientes extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txID = new utilidades.MiCampoTexto(1);
+        txID = new utilidades.MiCampoTexto(1,"");
         ;
         jLabel2 = new javax.swing.JLabel();
-        txDNI = new utilidades.MiCampoTexto(1);
+        txDNI = new utilidades.MiCampoTexto(1,"##.###.###");
         ;
         jLabel3 = new javax.swing.JLabel();
-        txNombre = new utilidades.MiCampoTexto(2);
+        txNombre = new utilidades.MiCampoTexto(2,"");
         jLabel4 = new javax.swing.JLabel();
-        txDomicilio = new utilidades.MiCampoTexto(2);
-        txTelefono = new utilidades.MiCampoTexto(4);
+        txDomicilio = new utilidades.MiCampoTexto(2,"");
+        txTelefono = new utilidades.MiCampoTexto(4,"");
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbPacientes = new javax.swing.JTable();
@@ -184,9 +184,7 @@ public class VistaPacientes extends javax.swing.JInternalFrame {
                 .addGap(50, 50, 50)
                 .addComponent(btSalir)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
