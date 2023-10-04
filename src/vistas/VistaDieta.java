@@ -164,19 +164,19 @@ public class VistaDieta extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jbEliminar;
-    private javax.swing.JButton jbGuardar;
-    private javax.swing.JButton jbNuevo;
-    private javax.swing.JButton jbSalir;
-    private com.toedter.calendar.JDateChooser jdcFecFinal;
-    private com.toedter.calendar.JDateChooser jdcFecInicio;
-    private javax.swing.JLabel jlEstado;
-    private javax.swing.JLabel jlFecFinal;
-    private javax.swing.JLabel jlFecInicio;
-    private javax.swing.JLabel jlIDPaciente;
-    private javax.swing.JLabel jlNombre;
-    private javax.swing.JRadioButton jrbEstado;
-    private javax.swing.JTextField jtIDPaciente;
-    private javax.swing.JTextField jtNombre;
+    public javax.swing.JButton jbEliminar;
+    public javax.swing.JButton jbGuardar;
+    public javax.swing.JButton jbNuevo;
+    public javax.swing.JButton jbSalir;
+    public com.toedter.calendar.JDateChooser jdcFecFinal;
+    public com.toedter.calendar.JDateChooser jdcFecInicio;
+    public javax.swing.JLabel jlEstado;
+    public javax.swing.JLabel jlFecFinal;
+    public javax.swing.JLabel jlFecInicio;
+    public javax.swing.JLabel jlIDPaciente;
+    public javax.swing.JLabel jlNombre;
+    public javax.swing.JRadioButton jrbEstado;
+    public javax.swing.JTextField jtIDPaciente;
+    public javax.swing.JTextField jtNombre;
     // End of variables declaration//GEN-END:variables
 }
