@@ -36,11 +36,11 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         jrbEstado = new javax.swing.JRadioButton();
         jtIDPaciente = new javax.swing.JTextField();
         jdcFecInicio = new com.toedter.calendar.JDateChooser();
-        jbNuevo = new javax.swing.JButton();
+        btNuevo = new javax.swing.JButton();
         jdcFecFinal = new com.toedter.calendar.JDateChooser();
-        jbGuardar = new javax.swing.JButton();
-        jbEliminar = new javax.swing.JButton();
-        jbSalir = new javax.swing.JButton();
+        btGuardar = new javax.swing.JButton();
+        btEliminar = new javax.swing.JButton();
+        btSalir = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -71,13 +71,13 @@ public class VistaDieta extends javax.swing.JInternalFrame {
             }
         });
 
-        jbNuevo.setText("Nuevo");
+        btNuevo.setText("Nuevo");
 
-        jbGuardar.setText("Guardar");
+        btGuardar.setText("Guardar");
 
-        jbEliminar.setText("Eliminar");
+        btEliminar.setText("Eliminar");
 
-        jbSalir.setText("Salir");
+        btSalir.setText("Salir");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,13 +87,13 @@ public class VistaDieta extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbNuevo)
+                        .addComponent(btNuevo)
                         .addGap(18, 18, 18)
-                        .addComponent(jbGuardar)
+                        .addComponent(btGuardar)
                         .addGap(18, 18, 18)
-                        .addComponent(jbEliminar)
+                        .addComponent(btEliminar)
                         .addGap(18, 18, 18)
-                        .addComponent(jbSalir))
+                        .addComponent(btSalir))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jlIDPaciente)
@@ -144,10 +144,10 @@ public class VistaDieta extends javax.swing.JInternalFrame {
                     .addComponent(jrbEstado))
                 .addGap(118, 118, 118)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
@@ -164,10 +164,10 @@ public class VistaDieta extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton jbEliminar;
-    public javax.swing.JButton jbGuardar;
-    public javax.swing.JButton jbNuevo;
-    public javax.swing.JButton jbSalir;
+    public javax.swing.JButton btEliminar;
+    public javax.swing.JButton btGuardar;
+    public javax.swing.JButton btNuevo;
+    public javax.swing.JButton btSalir;
     public com.toedter.calendar.JDateChooser jdcFecFinal;
     public com.toedter.calendar.JDateChooser jdcFecInicio;
     public javax.swing.JLabel jlEstado;
