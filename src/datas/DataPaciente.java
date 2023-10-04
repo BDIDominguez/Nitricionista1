@@ -61,7 +61,7 @@ public class DataPaciente {
     public boolean eliminarPaciente(int id) throws SQLException{
         boolean vRespuesta = false;
         con = Conexion.getConexion();
-        String sql = "delete from paciente where idpaciente = ?";
+        String sql = "update pacientes set estado = 0 where idpaciente = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, id);
         ps.executeUpdate();
@@ -73,9 +73,9 @@ public class DataPaciente {
     public List<EntidadPaciente> listarPacientes() throws SQLException{
         List<EntidadPaciente> pacientes = new ArrayList<>();
         con = Conexion.getConexion();
-        String sql = "Select * from pacientes";
+        String sql = "Select * from pacientes order by nombre,dni";
         PreparedStatement ps = con.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery(sql);
+        ResultSet rs = ps.executeQuery();
         while (rs.next()){
             EntidadPaciente a = new EntidadPaciente();
             a.setIdpaciente(rs.getInt("idpaciente"));
@@ -83,6 +83,7 @@ public class DataPaciente {
             a.setNombre(rs.getString("nombre"));
             a.setDomicilio(rs.getString("domicilio"));
             a.setTelefono(rs.getString("telefono"));
+            a.setEstado(rs.getBoolean("estado"));
             pacientes.add(a);
         }
         ps.close();
@@ -95,13 +96,14 @@ public class DataPaciente {
         String sql = "Select * from pacientes where dni = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, dni);
-        ResultSet rs = ps.executeQuery(sql);
+        ResultSet rs = ps.executeQuery();
         while (rs.next()){
             a.setIdpaciente(rs.getInt("idpaciente"));
             a.setDni(rs.getInt("dni"));
             a.setNombre(rs.getString("nombre"));
             a.setDomicilio(rs.getString("domicilio"));
             a.setTelefono(rs.getString("telefono"));
+            a.setEstado(rs.getBoolean("estado"));
         }
         ps.close();
         return a;
@@ -112,13 +114,14 @@ public class DataPaciente {
         String sql = "Select * from pacientes where idpaciente = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, ID);
-        ResultSet rs = ps.executeQuery(sql);
+        ResultSet rs = ps.executeQuery();
         while (rs.next()){
             a.setIdpaciente(rs.getInt("idpaciente"));
             a.setDni(rs.getInt("dni"));
             a.setNombre(rs.getString("nombre"));
             a.setDomicilio(rs.getString("domicilio"));
             a.setTelefono(rs.getString("telefono"));
+            a.setEstado(rs.getBoolean("estado"));
         }
         ps.close();
         return a;

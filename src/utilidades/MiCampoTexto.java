@@ -4,6 +4,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import javax.swing.JTextField;
 
 /**
@@ -13,9 +14,12 @@ import javax.swing.JTextField;
 public class MiCampoTexto extends JTextField {
 
     private boolean tienePunto = false;
+    private DecimalFormat formatter;
+    private int tipo;
 
     public MiCampoTexto(int tipo) {
         super();
+        this.tipo = tipo;
         addKeyListener(new KeyAdapter() { 
             @Override
             public void keyTyped(KeyEvent e) {
@@ -32,6 +36,7 @@ public class MiCampoTexto extends JTextField {
                         }
                         break;
                     case 3: // acepta numero y punto decimal
+                        formatter = new DecimalFormat("#,##0.00");
                         if (c == '.') {
                             if (tienePunto) {
                                 e.consume();
@@ -61,6 +66,19 @@ public class MiCampoTexto extends JTextField {
         // Evitar la opcion de pegar texto
         setTransferHandler(null);
     }
+    // Método para formatear el texto en el campo
+    private void formatText() {
+        try {
+            String text = getText();
+            if (!text.isEmpty() && tipo == 4) {
+                double value = Double.parseDouble(text);
+                setText(formatter.format(value));
+            }
+        } catch (NumberFormatException e) {
+            // Manejar una entrada no válida
+        }
+    }
+
 
     @Override
     public void setText(String t) {
