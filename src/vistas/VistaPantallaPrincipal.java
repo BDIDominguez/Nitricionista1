@@ -32,8 +32,10 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
         dpFondo = new javax.swing.JDesktopPane();
         pnBotones = new javax.swing.JPanel();
         btSalir = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btDieta = new javax.swing.JButton();
         btPacientes = new javax.swing.JButton();
+        btComida = new javax.swing.JButton();
+        btDietaComida = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Gestion Dietas");
@@ -47,7 +49,7 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
         dpFondo.setLayout(dpFondoLayout);
         dpFondoLayout.setHorizontalGroup(
             dpFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 860, Short.MAX_VALUE)
+            .addGap(0, 854, Short.MAX_VALUE)
         );
         dpFondoLayout.setVerticalGroup(
             dpFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -58,31 +60,42 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
 
         btSalir.setText("Salir");
 
-        jButton2.setText("Dietas");
+        btDieta.setText("Dietas");
 
         btPacientes.setText("Pacientes");
+
+        btComida.setText("Comidas");
+
+        btDietaComida.setText("Dieta Comida");
 
         javax.swing.GroupLayout pnBotonesLayout = new javax.swing.GroupLayout(pnBotones);
         pnBotones.setLayout(pnBotonesLayout);
         pnBotonesLayout.setHorizontalGroup(
             pnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnBotonesLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(pnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btPacientes, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)))
+            .addComponent(btSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btDieta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btPacientes, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+            .addComponent(btComida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(btDietaComida, javax.swing.GroupLayout.PREFERRED_SIZE, 99, Short.MAX_VALUE))
         );
         pnBotonesLayout.setVerticalGroup(
             pnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnBotonesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(btDieta, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(147, 147, 147)
+                .addComponent(btComida, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(pnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnBotonesLayout.createSequentialGroup()
+                    .addGap(191, 191, 191)
+                    .addComponent(btDietaComida, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(328, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout pnFondoLayout = new javax.swing.GroupLayout(pnFondo);
@@ -152,10 +165,12 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btComida;
+    public javax.swing.JButton btDieta;
+    public javax.swing.JButton btDietaComida;
     public javax.swing.JButton btPacientes;
     public javax.swing.JButton btSalir;
     public javax.swing.JDesktopPane dpFondo;
-    public javax.swing.JButton jButton2;
     public javax.swing.JPanel pnBotones;
     private javax.swing.JPanel pnFondo;
     // End of variables declaration//GEN-END:variables
