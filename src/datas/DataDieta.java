@@ -95,6 +95,7 @@ public class DataDieta {
 
     public EntidadDieta obtenerDietaPorId(int id) throws SQLException {
         EntidadDieta d = new EntidadDieta();
+        DataPaciente p = new DataPaciente();
         con = Conexion.getConexion();
         String sql = "SELECT * FROM dietas WHERE id_dieta = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -103,7 +104,11 @@ public class DataDieta {
         if (rs.next()) {
             d.setIdDieta(rs.getInt("id_dieta"));
             d.setNombre(rs.getString("nombre"));
-            // Aquí debes continuar con la lógica para obtener el paciente y las fechas
+            d.setPaciente(p.pacienteID(rs.getInt("idpaciente"))); 
+            d.setFechaInicial(rs.getDate("fecinicio").toLocalDate());
+            d.setFechaFinal(rs.getDate("fecfinal").toLocalDate());
+            d.setPesoInicial(rs.getDouble("pesoinicial"));
+            d.setPesoFinal(rs.getDouble("pesofinal"));
         }
         ps.close();
         return d;
