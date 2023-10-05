@@ -62,7 +62,7 @@ public class DataDieta {
     private boolean eliminarDieta(int id) throws SQLException {
         boolean vRespuesta = false;
         con = Conexion.getConexion();
-        String sql = "DELETE FROM dietas WHERE id_dieta = ?";
+        String sql = "UPDATE dietas SET estado = 0 WHERE id_dieta = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, id);
         ps.executeUpdate();

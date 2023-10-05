@@ -30,11 +30,28 @@ public class ControladorDieta implements ActionListener, KeyListener{
         this.menu = menu;
         this.vista = vista;
         this.data = data;
+        //Botones
+        vista.btEliminar.addActionListener(this);
+        vista.btGuardar.addActionListener(this);
+        vista.btNuevo.addActionListener(this);
+        vista.btSalir.addActionListener(this);
+    }
+    
+    public void iniciar() {
+        vista.setVisible(true);
+        vista.requestFocus();
+        vista.btEliminar.setEnabled(false);
+        vista.btGuardar.setEnabled(false);
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        vista.jtNombre.setText("");
+        vista.jtfDNI.setText("");
+        vista.jcbPaciente.setSelected(true);
+        vista.jcbDieta.setSelected(true);
+        vista.btNuevo.setEnabled(false);
+        vista.btGuardar.setEnabled(true);
     }
 
     @Override

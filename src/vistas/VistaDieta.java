@@ -28,33 +28,28 @@ public class VistaDieta extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jlNombre = new javax.swing.JLabel();
-        jlIDPaciente = new javax.swing.JLabel();
-        jlFecInicio = new javax.swing.JLabel();
-        jlFecFinal = new javax.swing.JLabel();
+        jlDNI = new javax.swing.JLabel();
         jlEstado = new javax.swing.JLabel();
         jtNombre = new javax.swing.JTextField();
         jrbEstado = new javax.swing.JRadioButton();
-        jtIDPaciente = new javax.swing.JTextField();
-        jdcFecInicio = new com.toedter.calendar.JDateChooser();
+        jtfDNI = new javax.swing.JTextField();
         btNuevo = new javax.swing.JButton();
-        jdcFecFinal = new com.toedter.calendar.JDateChooser();
         btGuardar = new javax.swing.JButton();
         btEliminar = new javax.swing.JButton();
         btSalir = new javax.swing.JButton();
+        jlPaciente = new javax.swing.JLabel();
+        jcbPaciente = new javax.swing.JCheckBox();
+        jlDieta = new javax.swing.JLabel();
+        jcbDieta = new javax.swing.JCheckBox();
 
+        setBackground(new java.awt.Color(0, 255, 204));
         setClosable(true);
 
         jlNombre.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jlNombre.setText("Nombre:");
 
-        jlIDPaciente.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jlIDPaciente.setText("ID Paciente:");
-
-        jlFecInicio.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jlFecInicio.setText("Fecha de Inicio:");
-
-        jlFecFinal.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jlFecFinal.setText("Fecha final:");
+        jlDNI.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jlDNI.setText("DNI:");
 
         jlEstado.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jlEstado.setText("Estado:");
@@ -65,9 +60,9 @@ public class VistaDieta extends javax.swing.JInternalFrame {
             }
         });
 
-        jtIDPaciente.addActionListener(new java.awt.event.ActionListener() {
+        jtfDNI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtIDPacienteActionPerformed(evt);
+                jtfDNIActionPerformed(evt);
             }
         });
 
@@ -79,6 +74,16 @@ public class VistaDieta extends javax.swing.JInternalFrame {
 
         btSalir.setText("Salir");
 
+        jlPaciente.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jlPaciente.setText("Paciente");
+
+        jcbPaciente.setText("jCheckBox1");
+
+        jlDieta.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jlDieta.setText("Dieta");
+
+        jcbDieta.setText("jCheckBox1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,68 +92,68 @@ public class VistaDieta extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btNuevo)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jlDNI)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jtfDNI))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jlNombre)
+                                .addGap(10, 10, 10)
+                                .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(78, 78, 78)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jlPaciente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jcbPaciente))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jlDieta)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jcbDieta))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlEstado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jrbEstado))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btNuevo)
+                            .addComponent(btEliminar))
                         .addGap(18, 18, 18)
-                        .addComponent(btGuardar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btEliminar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btSalir))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jlIDPaciente)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jtIDPaciente))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jlNombre)
-                            .addGap(10, 10, 10)
-                            .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jlFecInicio)
-                            .addGap(18, 18, 18)
-                            .addComponent(jdcFecInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jlEstado)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jrbEstado))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jlFecFinal)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jdcFecFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(348, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlNombre))
-                        .addGap(38, 38, 38)
+                            .addComponent(jlNombre)
+                            .addComponent(jlPaciente)
+                            .addComponent(jcbPaciente))
+                        .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlIDPaciente)
-                            .addComponent(jtIDPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(54, 54, 54)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jlFecInicio)
-                            .addComponent(jdcFecInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(54, 54, 54)
-                        .addComponent(jlFecFinal))
-                    .addComponent(jdcFecFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jlEstado)
+                            .addComponent(jlDNI)
+                            .addComponent(jtfDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlDieta)
+                            .addComponent(jcbDieta))
+                        .addGap(37, 37, 37)
+                        .addComponent(jlEstado))
                     .addComponent(jrbEstado))
-                .addGap(118, 118, 118)
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -158,9 +163,9 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtNombreActionPerformed
 
-    private void jtIDPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtIDPacienteActionPerformed
+    private void jtfDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfDNIActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtIDPacienteActionPerformed
+    }//GEN-LAST:event_jtfDNIActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -168,15 +173,15 @@ public class VistaDieta extends javax.swing.JInternalFrame {
     public javax.swing.JButton btGuardar;
     public javax.swing.JButton btNuevo;
     public javax.swing.JButton btSalir;
-    public com.toedter.calendar.JDateChooser jdcFecFinal;
-    public com.toedter.calendar.JDateChooser jdcFecInicio;
+    public javax.swing.JCheckBox jcbDieta;
+    public javax.swing.JCheckBox jcbPaciente;
+    public javax.swing.JLabel jlDNI;
+    public javax.swing.JLabel jlDieta;
     public javax.swing.JLabel jlEstado;
-    public javax.swing.JLabel jlFecFinal;
-    public javax.swing.JLabel jlFecInicio;
-    public javax.swing.JLabel jlIDPaciente;
     public javax.swing.JLabel jlNombre;
+    public javax.swing.JLabel jlPaciente;
     public javax.swing.JRadioButton jrbEstado;
-    public javax.swing.JTextField jtIDPaciente;
     public javax.swing.JTextField jtNombre;
+    public javax.swing.JTextField jtfDNI;
     // End of variables declaration//GEN-END:variables
 }
