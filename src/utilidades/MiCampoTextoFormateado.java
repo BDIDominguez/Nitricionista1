@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -68,6 +69,7 @@ public class MiCampoTextoFormateado extends JFormattedTextField {
         addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
+                //System.out.println("SI engresa al lugar");
                 selectAll();
             }
         });

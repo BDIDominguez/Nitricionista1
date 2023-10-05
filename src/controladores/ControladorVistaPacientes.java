@@ -26,6 +26,7 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
     private VistaPantallaPrincipal menu;
     private VistaPacientes vista;
     private DataPaciente data;
+    private ArrayList<EntidadPaciente> pacientes = new ArrayList<>();
     MyModelo modelo = new MyModelo();
 
     public ControladorVistaPacientes(VistaPantallaPrincipal menu, VistaPacientes vista, DataPaciente data) {
@@ -73,7 +74,7 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
             EntidadPaciente p = new EntidadPaciente();
             p.setIdpaciente(Integer.parseInt(vista.txID.getText()));
             // int dni = Integer.parseInt(text.replace(".", ""));
-            p.setDni(Integer.parseInt(vista.txDNI.getText().replace(".","")));
+            p.setDni(Integer.parseInt(vista.txDNI.getText().replace(".", "")));
             p.setNombre(vista.txNombre.getText());
             p.setDomicilio(vista.txDomicilio.getText());
             p.setTelefono(vista.txTelefono.getText());
@@ -156,6 +157,25 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
                     JOptionPane.showMessageDialog(vista, "Ese Nro de DNI no es Valido!");
                     vista.txDNI.requestFocus();
                 }
+            } else { //buscar por dni
+                if (!vista.txDNI.getText().isEmpty()) {
+                    try {
+                        EntidadPaciente pa = new EntidadPaciente();
+                        pa = data.pacienteDNI(Integer.parseInt(vista.txDNI.getText().replace(".", "")));
+                        if (pa.getIdpaciente() != 0) {
+                            vista.txID.setText(pa.getIdpaciente() + " ");
+                            vista.txNombre.setText(pa.getNombre());
+                            vista.txDomicilio.setText(pa.getDomicilio());
+                            vista.txTelefono.setText(pa.getTelefono());
+                        } else {
+                            JOptionPane.showMessageDialog(vista, "No se encontro algun paciente con ese DNI");
+                            vista.txDNI.requestFocus();
+                        }
+                    } catch (SQLException ex) {
+                        //Logger.getLogger(ControladorVistaPacientes.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(vista, "Error al tratar buscar al Paciente por DNI \n" + ex.getMessage());
+                    }
+                }
             }
         }
     }
@@ -181,6 +201,8 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
                 modelo.addRow(new Object[]{enti.getIdpaciente(), enti.getDni(), enti.getNombre(), enti.getTelefono()});
             }
             vista.tbPacientes.setModel(modelo);
+            pacientes.clear();
+            pacientes.addAll(pa);
         } catch (SQLException ex) {
             //Logger.getLogger(ControladorVistaPacientes.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(vista, "error al tratar de obtener una lista de pacientes \n" + ex.getMessage());
@@ -232,4 +254,5 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
             return false;
         }
     }
+
 }
