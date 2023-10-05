@@ -5,24 +5,27 @@ package entidades;
  */
 public class EntidadComida {
 private int idComida;
-private String nombreComida;
+private String nombre;
 private String receta;
 private int calorias; 
-private int tipo;
+private boolean estado;
+private double peso;
 
-    public EntidadComida(int idComida, String nombreComida, String receta, int calorias, int tipo) {
+    public EntidadComida(int idComida, String nombre, String receta, int calorias, boolean estado, double peso) {
         this.idComida = idComida;
-        this.nombreComida = nombreComida;
+        this.nombre = nombre;
         this.receta = receta;
         this.calorias = calorias;
-        this.tipo = tipo;
+        this.estado=estado;
+        this.peso = peso;
     }
 
-    public EntidadComida(String nombreComida, String receta, int calorias, int tipo) {
-        this.nombreComida = nombreComida;
+    public EntidadComida(String nombre, String receta, int calorias, boolean estado, double peso) {
+         this.nombre = nombre;
         this.receta = receta;
         this.calorias = calorias;
-        this.tipo = tipo;
+        this.estado=estado;
+        this.peso = peso; 
     }
 
     public EntidadComida() {
@@ -37,11 +40,11 @@ private int tipo;
     }
 
     public String getNombreComida() {
-        return nombreComida;
+        return nombre;
     }
 
-    public void setNombreComida(String nombreComida) {
-        this.nombreComida = nombreComida;
+    public void setNombreComida(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getReceta() {
@@ -60,17 +63,31 @@ private int tipo;
         this.calorias = calorias;
     }
 
-    public int getTipo() {
-        return tipo;
+    public boolean isEstado() {
+        return estado;
     }
 
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
- 
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
+
     @Override
     public String toString() {
-        return "EntidadComida{" + "idComida=" + idComida + ", nombreComida=" + nombreComida + ", receta=" + receta + ", calorias=" + calorias + '}';
+        return "EntidadComida{" + "idComida=" + idComida + ", nombre=" + nombre + ", receta=" + receta + ", calorias=" + calorias + ", estado=" + estado + ", peso=" + peso + '}';
     }
 
+      
     }
+ 
+ 
+
+
+    
