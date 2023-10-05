@@ -49,7 +49,7 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
         dpFondo.setLayout(dpFondoLayout);
         dpFondoLayout.setHorizontalGroup(
             dpFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 854, Short.MAX_VALUE)
+            .addGap(0, 848, Short.MAX_VALUE)
         );
         dpFondoLayout.setVerticalGroup(
             dpFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -74,28 +74,24 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
             pnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btDieta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btPacientes, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+            .addComponent(btPacientes, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
             .addComponent(btComida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(pnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(btDietaComida, javax.swing.GroupLayout.PREFERRED_SIZE, 99, Short.MAX_VALUE))
+            .addComponent(btDietaComida, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
         );
         pnBotonesLayout.setVerticalGroup(
             pnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnBotonesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(btDieta, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(147, 147, 147)
-                .addComponent(btComida, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btPacientes, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btDieta, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btDietaComida, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btComida, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addGap(161, 161, 161)
+                .addComponent(btSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(pnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnBotonesLayout.createSequentialGroup()
-                    .addGap(191, 191, 191)
-                    .addComponent(btDietaComida, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(328, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout pnFondoLayout = new javax.swing.GroupLayout(pnFondo);
@@ -181,7 +177,14 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
         
         
         btPacientes.setIcon(prepararIcono("Pacientes.png",alto,ancho)); // asignamos al boton el icono
+        btComida.setIcon(prepararIcono("comidas.png",alto,ancho)); // asignamos al boton el icono
+        btDietaComida.setIcon(prepararIcono("dietacomida.png",alto,ancho)); // asignamos al boton el icono
+        btDieta.setIcon(prepararIcono("dietas.png", alto, ancho)); // asignamos al boton el icono
         btSalir.setIcon(prepararIcono("salida3.png",alto,ancho));
+         ImageIcon icono = new ImageIcon();
+        icono = prepararIcono("IconoFormulario.jpg",20,20);
+        this.setIconImage(icono.getImage());
+        
         
     }
     
