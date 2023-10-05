@@ -18,6 +18,7 @@ public class ControladorPantallaPrincipal implements ActionListener {
     public ControladorPantallaPrincipal(VistaPantallaPrincipal menu) {
         this.menu = menu;
         menu.btSalir.addActionListener(this);
+        menu.btDieta.addActionListener(this);
         menu.btPacientes.addActionListener(this);
 
     }
