@@ -32,7 +32,8 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         jlEstado = new javax.swing.JLabel();
         jtNombre = new javax.swing.JTextField();
         jrbEstado = new javax.swing.JRadioButton();
-        jtfDNI = new javax.swing.JTextField();
+        jtfDNI = new utilidades.MiCampoTexto(1);
+        ;
         btNuevo = new javax.swing.JButton();
         btGuardar = new javax.swing.JButton();
         btEliminar = new javax.swing.JButton();

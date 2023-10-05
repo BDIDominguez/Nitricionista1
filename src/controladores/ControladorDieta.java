@@ -38,7 +38,9 @@ public class ControladorDieta implements ActionListener, KeyListener{
     }
     
     public void iniciar() {
+        menu.dpFondo.add(vista);
         vista.setVisible(true);
+        menu.dpFondo.moveToFront(vista);
         vista.requestFocus();
         vista.btEliminar.setEnabled(false);
         vista.btGuardar.setEnabled(false);
@@ -55,8 +57,13 @@ public class ControladorDieta implements ActionListener, KeyListener{
     }
 
     @Override
-    public void keyTyped(KeyEvent ke) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void keyTyped(KeyEvent e) {
+        if (e.getSource() == vista.jtfDNI) {
+            char caracter = e.getKeyChar();
+            if (caracter < '0' || caracter > '9') {
+                e.consume();
+            }
+        }
     }
 
     @Override
