@@ -42,6 +42,7 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         jlDieta = new javax.swing.JLabel();
         jcbDieta = new javax.swing.JCheckBox();
 
+        setBackground(new java.awt.Color(0, 255, 204));
         setClosable(true);
 
         jlNombre.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N

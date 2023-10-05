@@ -50,6 +50,8 @@ public class ControladorDieta implements ActionListener, KeyListener{
         vista.jtfDNI.setText("");
         vista.jcbPaciente.setSelected(true);
         vista.jcbDieta.setSelected(true);
+        vista.btNuevo.setEnabled(false);
+        vista.btGuardar.setEnabled(true);
     }
 
     @Override
