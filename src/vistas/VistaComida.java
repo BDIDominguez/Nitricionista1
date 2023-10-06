@@ -81,58 +81,58 @@ public class VistaComida extends javax.swing.JInternalFrame {
         btAgregar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btAgregar.setForeground(java.awt.Color.red);
         btAgregar.setText("Agregar");
-        jPanel1.add(btAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 390, -1, -1));
+        jPanel1.add(btAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 410, -1, -1));
 
         jbModificar.setBackground(java.awt.Color.orange);
         jbModificar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jbModificar.setForeground(java.awt.Color.red);
         jbModificar.setText("Modificar");
-        jPanel1.add(jbModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 540, -1, -1));
+        jPanel1.add(jbModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 560, -1, -1));
 
         jbSalir.setBackground(java.awt.Color.blue);
         jbSalir.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jbSalir.setForeground(java.awt.Color.blue);
         jbSalir.setText("Salir");
-        jPanel1.add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 650, -1, -1));
+        jPanel1.add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 620, -1, -1));
 
         jbHabilitarLista.setBackground(java.awt.Color.orange);
         jbHabilitarLista.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jbHabilitarLista.setForeground(java.awt.Color.red);
         jbHabilitarLista.setText("Habilitar");
-        jPanel1.add(jbHabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 580, -1, -1));
+        jPanel1.add(jbHabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 600, -1, -1));
 
         lbSelectTabla.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lbSelectTabla.setText("Seleccione una fila a continuación y presione una opción del menu a su izquierda");
-        jPanel1.add(lbSelectTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 500, -1, -1));
+        jPanel1.add(lbSelectTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 520, -1, -1));
 
         lbHabilitada.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
         lbHabilitada.setText("Habilitada");
-        jPanel1.add(lbHabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
+        jPanel1.add(lbHabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, -1, -1));
 
         lbAgregar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        lbAgregar.setText("Si desea agregar una comida complete todos los campos del formulario arriba y presione aqui");
-        jPanel1.add(lbAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, -1, -1));
-        jPanel1.add(txNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, 324, -1));
-        jPanel1.add(txIdComida, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 57, -1));
-        jPanel1.add(txReceta, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 350, 230, 20));
+        lbAgregar.setText("Para agregar una comida complete todos los campos del formulario arriba y presione");
+        jPanel1.add(lbAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, -1, -1));
+        jPanel1.add(txNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 324, -1));
+        jPanel1.add(txIdComida, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 57, -1));
+        jPanel1.add(txReceta, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, 230, 20));
 
         lbIdComida.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
         lbIdComida.setText("Id de Comida:");
-        jPanel1.add(lbIdComida, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
+        jPanel1.add(lbIdComida, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, -1, -1));
 
         lbkcal.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
         lbkcal.setText("Kilocalorias");
-        jPanel1.add(lbkcal, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, -1, -1));
+        jPanel1.add(lbkcal, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 270, -1, -1));
 
         lbCantidadCaloriasMenor.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
         lbCantidadCaloriasMenor.setText("Cantidad menor a: ");
-        jPanel1.add(lbCantidadCaloriasMenor, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 313, -1, -1));
-        jPanel1.add(RbHabilitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, -1, -1));
-        jPanel1.add(btDeshabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, -1, -1));
+        jPanel1.add(lbCantidadCaloriasMenor, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
+        jPanel1.add(RbHabilitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, -1, -1));
+        jPanel1.add(btDeshabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, -1, -1));
 
         lbDeshabilitada.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
         lbDeshabilitada.setText("Deshabilitada");
-        jPanel1.add(lbDeshabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, -1, -1));
+        jPanel1.add(lbDeshabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, -1, -1));
 
         tbComidas.setBackground(new java.awt.Color(245, 248, 106));
         tbComidas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -149,46 +149,46 @@ public class VistaComida extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tbComidas);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 550, 460, 93));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 570, 460, 93));
 
         btBuscar.setBackground(java.awt.Color.orange);
         btBuscar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btBuscar.setForeground(java.awt.Color.red);
         btBuscar.setText("Buscar");
-        jPanel1.add(btBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 150, -1, -1));
+        jPanel1.add(btBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, -1, -1));
 
         btLista.setBackground(java.awt.Color.orange);
         btLista.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btLista.setForeground(java.awt.Color.red);
         btLista.setText("Lista");
-        jPanel1.add(btLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 430, -1, -1));
+        jPanel1.add(btLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 440, -1, -1));
 
         lbLista.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lbLista.setText("También puede listar todas las comidas presione aqui");
-        jPanel1.add(lbLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, -1, -1));
+        jPanel1.add(lbLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, -1, -1));
 
         lbingrediente.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
         lbingrediente.setText("Ingrediente de la receta:");
-        jPanel1.add(lbingrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, -1, -1));
+        jPanel1.add(lbingrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, -1, -1));
 
         LbNombre.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
         LbNombre.setText("Nombre:");
-        jPanel1.add(LbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
-        jPanel1.add(txKcal, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 310, 58, -1));
+        jPanel1.add(LbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
+        jPanel1.add(txKcal, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, 58, -1));
 
         lbBuscar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        lbBuscar.setText("Para realizar la busqueda de una comida por favor ingrese una");
-        jPanel1.add(lbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
+        lbBuscar.setText("Para realizar la busqueda de una comida por favor ingrese una opción:");
+        jPanel1.add(lbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, -1, -1));
 
         jbDeshabilitarLista.setBackground(java.awt.Color.orange);
         jbDeshabilitarLista.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jbDeshabilitarLista.setForeground(java.awt.Color.red);
         jbDeshabilitarLista.setText("Deshabilitar");
-        jPanel1.add(jbDeshabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 620, -1, -1));
+        jPanel1.add(jbDeshabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 640, -1, -1));
 
         lbBuscar1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        lbBuscar1.setText(" de las opciones a continuación y presione aqui");
-        jPanel1.add(lbBuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+        lbBuscar1.setText(" Ahora presione aqui");
+        jPanel1.add(lbBuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/food2.jpg"))); // NOI18N
