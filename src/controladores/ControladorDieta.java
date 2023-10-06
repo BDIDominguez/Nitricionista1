@@ -14,7 +14,7 @@ import java.sql.Connection;
 import javax.swing.JOptionPane;
 import vistas.VistaDieta;
 import vistas.VistaPantallaPrincipal;
-
+import entidades.EntidadDieta;
 /**
  *
  * @author Matias
