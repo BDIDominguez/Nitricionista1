@@ -2,17 +2,17 @@ package controladores;
 
 /*** @author DIEGO G. */
 
-import datas.DataDieta_Comida;
-import entidades.EntidadDieta_Comida;
-import vistas.VistaDieta_Comida;
-import java.sql.SQLException;
-import java.util.List;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-public class ControladorDieta_Comida {
+//import datas.DataDieta_Comida;
+//import entidades.EntidadDieta_Comida;
+//import vistas.VistaDieta_Comida;
+//import java.sql.SQLException;
+//import java.util.List;
+//import javax.swing.JOptionPane;
+//import javax.swing.table.DefaultTableModel;
+////public class ControladorDieta_Comida {
 
-    private final VistaDieta_Comida vista;
-    private final DataDieta_Comida dataDietaComida;
+//    private final VistaDieta_Comida vista;
+//    private final DataDieta_Comida dataDietaComida;
 
 //    public ControladorDieta_Comida(VistaDieta_Comida vista) {
 //        this.vista = vista;
