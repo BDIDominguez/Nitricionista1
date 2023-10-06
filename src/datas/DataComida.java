@@ -8,22 +8,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import entidades.EntidadComida;
-import entidades.EntidadDieta_Comida;
 import javax.swing.JOptionPane;
 
 /**
- * EN PRUEBAS
  *
  * @author louis
  */
 public class DataComida {
 
-    private Connection con;
+    private Connection con = null;
 
     public DataComida() {
     }
 
-    public void agregarComidas(EntidadComida comida) {
+    //Agregar nuevas comidas:
+    //INSERT INTO comidas (nombre, receta, calorias, estado, peso) VALUES ('Ensalada de Atún y Garbanzos', 'Atún enlatado, garbanzos, tomate, cebolla roja, aceite de oliva', 320, 1, 280);
+    public EntidadComida agregarComidas(EntidadComida comida) {
         con = Conexion.getConexion();
         String sql = "INSERT INTO comidas (nombre, receta, calorias, estado, peso) VALUES (?, ?, ?, ?, ?)";
         try {
@@ -36,21 +36,23 @@ public class DataComida {
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) { // 
-                comida.setIdComida(rs.getInt("idComida"));
-                JOptionPane.showMessageDialog(null, "Comida agregada correctamente");
-            }
-            ps.close();
+            comida.setIdComida(rs.getInt(1));
+          }
+        cerrarRecursos(ps, rs);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al intentar agegar una comida" + ex.getMessage());
         }
+        return comida;
     }
-
-    public void eliminarComida(int nombre) {
+  
+    //Eliminar una comida:
+    // UPDATE comidas SET estado = 0 WHERE nombre = 'Tofu Salteado con Verduras';
+    public void eliminarComida(String nombre) {
         con = Conexion.getConexion();
         try {
             String sql = "UPDATE comidas SET estado = 0 WHERE nombre = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, nombre);
+            ps.setString(1, nombre);
             int fila = ps.executeUpdate();
             if (fila == 1) {
                 JOptionPane.showMessageDialog(null, " Se elimino la comida");
@@ -58,15 +60,17 @@ public class DataComida {
             ps.close();
         } catch (SQLException e) {
             if (e.getSQLState().equals("23000") || e.getErrorCode() == 1451) {
-                JOptionPane.showMessageDialog(null, " Error al intentar eliminar la comida existe una dieta");
+                JOptionPane.showMessageDialog(null, " Error al intentar eliminar la comida, pertenece a una dieta");
             }
         }
     }
 
-    public List<EntidadComida> obtenerComidas() {
+    //Listar todas las comidas habilitadas
+    // SELECT * FROM comidas WHERE estado = 1;
+    public List<EntidadComida> obtenerComidasHabilitadas() {
         con = Conexion.getConexion();
-        ArrayList<EntidadComida> comidas = new ArrayList<>();
-        String sql = "SELECT * FROM comidas";
+        ArrayList<EntidadComida> comidashab = new ArrayList<>();
+        String sql = "SELECT * FROM comidas WHERE estado = 1";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet resultSet = ps.executeQuery();
@@ -78,46 +82,161 @@ public class DataComida {
                 comida.setCalorias(resultSet.getInt("calorias"));
                 comida.setEstado(resultSet.getBoolean("estado"));
                 comida.setPeso(resultSet.getDouble("peso"));
-          
-                comidas.add(comida);
+
+                comidashab.add(comida);
             }
             cerrarRecursos(ps, resultSet);
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Fallo al recuperar el listado de comidas " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Fallo al recuperar el listado de comidas habilitadas " + ex.getMessage());
         }
-        return comidas;
+        return comidashab;
     }
-
-    //modificar las porciones de comida, a una dieta en particular
-    public void modificarComidas(String nombre, String receta, int calorias, boolean estado, double peso) {
+    
+     //Listar todas las comidas no habilitadas
+    // SELECT * FROM comidas WHERE estado = 0;
+    public List<EntidadComida> obtenerComidasNoHabilitadas() {
         con = Conexion.getConexion();
-        String sql = "UPDATE comidas SET nombre = ?, receta = ?, calorias = ?, estado = ?, peso = ? WHERE idComida = ?";
+        ArrayList<EntidadComida> comidasnohab = new ArrayList<>();
+        String sql = "SELECT * FROM comidas WHERE estado = 0";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                EntidadComida comida = new EntidadComida();
+                comida.setIdComida(resultSet.getInt("idcomida"));
+                comida.setNombreComida(resultSet.getString("nombre"));
+                comida.setReceta(resultSet.getString("receta"));
+                comida.setCalorias(resultSet.getInt("calorias"));
+                comida.setEstado(resultSet.getBoolean("estado"));
+                comida.setPeso(resultSet.getDouble("peso"));
+
+                comidasnohab.add(comida);
+            }
+            cerrarRecursos(ps, resultSet);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Fallo al recuperar el listado de comidas no habilitadas " + ex.getMessage());
+        }
+        return comidasnohab;
+    }
+    
+     //➢➢	Consultar la búsqueda de comidas por nombre
+    // SELECT idcomida, receta, calorias, estado, peso FROM comidas WHERE nombre = 'Ensalada Cesar';
+    public List<EntidadComida> obtenerComidasxNombre(String nombre) {
+        con = Conexion.getConexion();
+        ArrayList<EntidadComida> comidasxnombre = new ArrayList<>();
+        String sql = "SELECT idcomida, nombre, receta, calorias, estado, peso FROM comidas WHERE nombre = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nombre);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                EntidadComida comida = new EntidadComida();
+                comida.setIdComida(resultSet.getInt("idcomida"));
+                comida.setNombreComida(resultSet.getString("nombre"));
+                comida.setReceta(resultSet.getString("receta"));
+                comida.setCalorias(resultSet.getInt("calorias"));
+                comida.setEstado(resultSet.getBoolean("estado"));
+                comida.setPeso(resultSet.getDouble("peso"));
+
+                comidasxnombre.add(comida);
+            }
+            cerrarRecursos(ps, resultSet);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Fallo al recuperar el listado de comidas con el nombre deseado" + ex.getMessage());
+        }  
+        return comidasxnombre;
+    }
+        
+    //➢➢	Consultar la búsqueda de comidas por id 
+ //SELECT nombre, receta, calorias, estado, peso FROM comidas WHERE idcomida = 2;
+    public List<EntidadComida> obtenerComidasxidComida(int idComida) {
+        con = Conexion.getConexion();
+        ArrayList<EntidadComida> comidasxid = new ArrayList<>();
+        String sql = "SELECT nombre, receta, calorias, estado, peso FROM comidas WHERE idcomida = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idComida);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                EntidadComida comida = new EntidadComida();
+                comida.setIdComida(resultSet.getInt("idcomida"));
+                comida.setNombreComida(resultSet.getString("nombre"));
+                comida.setReceta(resultSet.getString("receta"));
+                comida.setCalorias(resultSet.getInt("calorias"));
+                comida.setEstado(resultSet.getBoolean("estado"));
+                comida.setPeso(resultSet.getDouble("peso"));
+
+                comidasxid.add(comida);
+            }
+            cerrarRecursos(ps, resultSet);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Fallo al recuperar el listado de comidas por su id" + ex.getMessage());
+        }  
+        return comidasxid;
+    }
+    
+     //➢➢	Consultar la búsqueda de comidas por estado bien que esten deshabilitadas o no
+     public List<EntidadComida> obtenerComidasxEstado(boolean estado) {
+        con = Conexion.getConexion();
+        ArrayList<EntidadComida> comidasestado = new ArrayList<>();
+        String sql = "SELECT * FROM comidas WHERE estado = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setBoolean(1, estado);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                EntidadComida comida = new EntidadComida();
+                comida.setIdComida(resultSet.getInt("idcomida"));
+                comida.setNombreComida(resultSet.getString("nombre"));
+                comida.setReceta(resultSet.getString("receta"));
+                comida.setCalorias(resultSet.getInt("calorias"));
+                comida.setEstado(resultSet.getBoolean("estado"));
+                comida.setPeso(resultSet.getDouble("peso"));
+
+                comidasestado.add(comida);
+            }
+            cerrarRecursos(ps, resultSet);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Fallo al recuperar el listado de comidas por su estado" + ex.getMessage());
+        }  
+        return comidasestado;
+    }
+    
+    //modificar comidas
+    public void modificarComidas(EntidadComida comida) {
+        con = Conexion.getConexion();
+        String sql = "UPDATE comidas SET nombre = ?, receta = ?, calorias = ?, estado = ?, peso = ? WHERE idcomida = ?";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, nombre);
-            ps.setString(2, receta);
-            ps.setInt(3, calorias);
-            ps.setBoolean(3, estado);
-            ps.setDouble(3, peso);
-            ps.executeUpdate();
+        ps.setString(1, comida.getNombreComida());
+        ps.setString(2, comida.getReceta());
+        ps.setInt(3, comida.getCalorias());
+        ps.setBoolean(4, comida.isEstado());
+        ps.setDouble(5, comida.getPeso());
+        ps.setInt(6, comida.getIdComida());
             int fila = ps.executeUpdate();
             if (fila == 1) {
                 JOptionPane.showMessageDialog(null, "Porcion de comida actualizada");
-            } else {
-                JOptionPane.showMessageDialog(null, "La comida no esta disponible");
+            } else if (fila == 0) {
+                JOptionPane.showMessageDialog(null, "La comida no existe en la base de datos");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la comida " + ex.getMessage());
         }
     }
-    
-     //➢➢	Consultar la búsqueda de comidas que tengan una cantidad menor de un determinado número de calorías.
+
+//➢➢	Consultar la búsqueda de comidas que tengan una cantidad menor de un determinado número de calorías
+    //SELECT idcomida, nombre, receta, calorias, estado, peso FROM comidas WHERE calorias < 400;
     public List<EntidadComida> obtenerComidasxCalorias(int calorias) {
         con = Conexion.getConexion();
         ArrayList<EntidadComida> comidas = new ArrayList<>();
-        String sql = "SELECT comidas.idComida, nombre, receta, tipo, porcion FROM comidas WHERE calorias < ?";
+        String sql = "SELECT idcomida, nombre, receta, calorias, estado, peso FROM comidas WHERE calorias < ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, calorias);
@@ -137,56 +256,7 @@ public class DataComida {
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Fallo al recuperar el listado de comidas con menor cantidad de calorias a la indicada" + ex.getMessage());
-        } ////////pensar como la buscar por caloria en la vista
-        return comidas;
-    }
-    
-    //modificar las porciones de comida, a una dieta en particular
-    public void modificarPorcionComida(String nombre, int iddietacomida, int porcion) {
-        con = Conexion.getConexion();
-        String sql = "UPDATE comidas SET porcion = ? WHERE nombre = ? AND idDietacomidas  = ?";
-        PreparedStatement ps = null;
-        try {
-            ps = con.prepareStatement(sql);
-            ps.setString(1, nombre);
-            ps.setInt(2, iddietacomida);
-            ps.setInt(3, porcion);
-            ps.executeUpdate();
-            int fila = ps.executeUpdate();
-            if (fila == 1) {
-                JOptionPane.showMessageDialog(null, "Porcion de comida actualizada");
-            } else {
-                JOptionPane.showMessageDialog(null, "La comida no esta disponible");
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la comida " + ex.getMessage());
-        }
-    }
-    
-    //➢ Se necesita saber las comidas incluidas en una dieta específica 
-    public List<EntidadComida> obtenerComidasxDieta() {
-        con = Conexion.getConexion();
-        ArrayList<EntidadComida> comidas = new ArrayList<>();
-        String sql = "SELECT comidas.idComida, nombre, receta, calorias, tipo, porcion FROM comidas JOIN dietacomidas ON comidas.idComida = dietacomidas.idComida WHERE dietacomidas.idDietacomidas = ?";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet resultSet = ps.executeQuery();
-            while (resultSet.next()) {
-                EntidadComida comida = new EntidadComida();
-                comida.setIdComida(resultSet.getInt("idcomida"));
-                comida.setNombreComida(resultSet.getString("nombre"));
-                comida.setReceta(resultSet.getString("receta"));
-                comida.setCalorias(resultSet.getInt("calorias"));
-                comida.setEstado(resultSet.getBoolean("estado"));
-                comida.setPeso(resultSet.getDouble("peso"));
-
-                comidas.add(comida);
-            }
-            cerrarRecursos(ps, resultSet);
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Fallo al recuperar el listado de comidas de la dieta elegida  " + ex.getMessage());
-        } ////////pensar como la elige en la vista
+        } 
         return comidas;
     }
 
