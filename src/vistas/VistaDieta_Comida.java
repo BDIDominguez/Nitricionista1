@@ -40,6 +40,8 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
         CbHorario = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
 
+        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
+
         jLabel3.setText("Paciente:");
 
         jButton1.setText("Salir");
