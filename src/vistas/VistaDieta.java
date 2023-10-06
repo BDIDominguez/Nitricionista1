@@ -30,10 +30,10 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
         txDNI = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txNP = new javax.swing.JTextField();
+        txNombreP = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txND = new javax.swing.JTextField();
+        txNombreD = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -64,9 +64,9 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         jLabel2.setText("Nombre del Paciente");
         jDesktopPane1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 170, -1));
 
-        txNP.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        txNP.setText("Buscar por nombre");
-        jDesktopPane1.add(txNP, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 190, -1));
+        txNombreP.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        txNombreP.setText("Buscar por nombre");
+        jDesktopPane1.add(txNombreP, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 190, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         jLabel3.setText("DNI del Paciente");
@@ -76,9 +76,9 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         jLabel4.setText("Listas de Dietas");
         jDesktopPane1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 130, -1));
 
-        txND.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        txND.setText("Nombre Dieta");
-        jDesktopPane1.add(txND, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 190, -1));
+        txNombreD.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        txNombreD.setText("Nombre Dieta");
+        jDesktopPane1.add(txNombreD, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 190, -1));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         jLabel5.setText("Fecha de Inicio");
@@ -171,8 +171,8 @@ public class VistaDieta extends javax.swing.JInternalFrame {
     public javax.swing.JLabel jLabel8;
     public javax.swing.JLabel jLabel9;
     public javax.swing.JTextField txDNI;
-    public javax.swing.JTextField txND;
-    public javax.swing.JTextField txNP;
+    public javax.swing.JTextField txNombreD;
+    public javax.swing.JTextField txNombreP;
     public javax.swing.JTextField txPesoFin;
     public javax.swing.JTextField txPesoIni;
     // End of variables declaration//GEN-END:variables
