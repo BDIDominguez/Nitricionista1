@@ -75,7 +75,7 @@ public class VistaComida extends javax.swing.JInternalFrame {
         lbTitulo.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         lbTitulo.setForeground(java.awt.Color.orange);
         lbTitulo.setText("Gestion de Comidas");
-        jPanel1.add(lbTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, -1, -1));
+        jPanel1.add(lbTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         btAgregar.setBackground(java.awt.Color.orange);
         btAgregar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
