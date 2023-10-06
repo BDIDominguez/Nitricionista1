@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-10-2023 a las 01:40:06
+-- Tiempo de generación: 06-10-2023 a las 23:19:41
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.4
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `nutricionista`
 --
+CREATE DATABASE IF NOT EXISTS `nutricionista` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `nutricionista`;
 
 -- --------------------------------------------------------
 
@@ -27,13 +29,15 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `comidas`
 --
 
+DROP TABLE IF EXISTS `comidas`;
 CREATE TABLE `comidas` (
   `idcomida` int NOT NULL,
   `nombre` varchar(30) DEFAULT NULL,
   `receta` varchar(120) DEFAULT NULL,
   `calorias` int DEFAULT NULL,
-  `estado` tinyint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+  `estado` tinyint DEFAULT NULL,
+  `peso` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -41,13 +45,14 @@ CREATE TABLE `comidas` (
 -- Estructura de tabla para la tabla `dietacomidas`
 --
 
+DROP TABLE IF EXISTS `dietacomidas`;
 CREATE TABLE `dietacomidas` (
   `iddietacomida` int NOT NULL,
   `idcomida` int DEFAULT NULL,
   `iddieta` int DEFAULT NULL,
   `porcion` double DEFAULT NULL,
   `horario` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -55,6 +60,7 @@ CREATE TABLE `dietacomidas` (
 -- Estructura de tabla para la tabla `dietas`
 --
 
+DROP TABLE IF EXISTS `dietas`;
 CREATE TABLE `dietas` (
   `iddieta` int NOT NULL,
   `nombre` varchar(30) DEFAULT NULL,
@@ -64,7 +70,7 @@ CREATE TABLE `dietas` (
   `pesoinicial` double DEFAULT NULL,
   `pesofinal` double DEFAULT NULL,
   `estado` tinyint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -72,6 +78,7 @@ CREATE TABLE `dietas` (
 -- Estructura de tabla para la tabla `pacientes`
 --
 
+DROP TABLE IF EXISTS `pacientes`;
 CREATE TABLE `pacientes` (
   `idpaciente` int NOT NULL,
   `nombre` varchar(60) DEFAULT NULL,
@@ -79,15 +86,17 @@ CREATE TABLE `pacientes` (
   `domicilio` varchar(60) DEFAULT NULL,
   `telefono` varchar(15) DEFAULT NULL,
   `estado` tinyint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `pacientes`
 --
 
 INSERT INTO `pacientes` (`idpaciente`, `nombre`, `dni`, `domicilio`, `telefono`, `estado`) VALUES
-(1, 'Bernardo Dario Ismael Dominguez', 30541575, 'La Providencia N 62', '+543885273263', NULL),
-(2, 'Dominguez, Dario', 30541576, 'La providencia nro 62', '+543885273263', NULL);
+(1, 'Dominguez, Benardo', 30541575, 'La Providencia N 62', '+543885273263', 1),
+(2, 'Dominguez, Dario', 30541576, 'La providencia nro 62', '+543885273263', 1),
+(3, 'Dominguez, Ismael', 30541577, 'La Providencia Nro 62', '+543885273263', 1),
+(4, 'Vasualdo, Ines', 30150502, 'La providencia nro 62', '+543885273827', 1);
 
 --
 -- Índices para tablas volcadas
@@ -147,7 +156,7 @@ ALTER TABLE `dietas`
 -- AUTO_INCREMENT de la tabla `pacientes`
 --
 ALTER TABLE `pacientes`
-  MODIFY `idpaciente` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idpaciente` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
