@@ -7,12 +7,12 @@ package vistas;
 
 /**
  *
- * @author Matias
+ * @author Dario
  */
 public class VistaDieta extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form VistaDieta
+     * Creates new form miDieta
      */
     public VistaDieta() {
         initComponents();
@@ -27,162 +27,153 @@ public class VistaDieta extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jlNombre = new javax.swing.JLabel();
-        jlDNI = new javax.swing.JLabel();
-        jlEstado = new javax.swing.JLabel();
-        jtNombre = new javax.swing.JTextField();
-        jrbEstado = new javax.swing.JRadioButton();
-        jtfDNI = new utilidades.MiCampoTexto(1);
-        ;
+        jDesktopPane1 = new javax.swing.JDesktopPane();
+        txDNI = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txNP = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txND = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txPesoIni = new javax.swing.JTextField();
+        cbEstado = new javax.swing.JCheckBox();
+        jLabel8 = new javax.swing.JLabel();
+        cboxListaDietas = new javax.swing.JComboBox<>();
+        btBuscar = new javax.swing.JButton();
         btNuevo = new javax.swing.JButton();
         btGuardar = new javax.swing.JButton();
         btEliminar = new javax.swing.JButton();
         btSalir = new javax.swing.JButton();
-        jlPaciente = new javax.swing.JLabel();
-        jcbPaciente = new javax.swing.JCheckBox();
-        jlDieta = new javax.swing.JLabel();
-        jcbDieta = new javax.swing.JCheckBox();
+        jLabel9 = new javax.swing.JLabel();
+        txPesoFin = new javax.swing.JTextField();
+        dcFechFinal = new com.toedter.calendar.JDateChooser();
+        dcFechInicio = new com.toedter.calendar.JDateChooser();
 
-        setBackground(new java.awt.Color(0, 255, 204));
         setClosable(true);
 
-        jlNombre.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jlNombre.setText("Nombre:");
+        jDesktopPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jDesktopPane1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jlDNI.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jlDNI.setText("DNI:");
+        txDNI.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        txDNI.setText("DNI Paciente");
+        jDesktopPane1.add(txDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 190, -1));
 
-        jlEstado.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jlEstado.setText("Estado:");
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel2.setText("Nombre del Paciente");
+        jDesktopPane1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 170, -1));
 
-        jtNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtNombreActionPerformed(evt);
-            }
-        });
+        txNP.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        txNP.setText("Buscar por nombre");
+        jDesktopPane1.add(txNP, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 190, -1));
 
-        jtfDNI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfDNIActionPerformed(evt);
-            }
-        });
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel3.setText("DNI del Paciente");
+        jDesktopPane1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 140, -1));
 
-        btNuevo.setText("Nuevo");
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel4.setText("Listas de Dietas");
+        jDesktopPane1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 130, -1));
+
+        txND.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        txND.setText("Nombre Dieta");
+        jDesktopPane1.add(txND, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 190, -1));
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel5.setText("Fecha de Inicio");
+        jDesktopPane1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 170, -1));
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel6.setText("Fecha de Finalizacion");
+        jDesktopPane1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 170, -1));
+
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel7.setText("Peso Inicial");
+        jDesktopPane1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 170, -1));
+
+        txPesoIni.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        txPesoIni.setText("Peso Inicial");
+        jDesktopPane1.add(txPesoIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 190, -1));
+
+        cbEstado.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        cbEstado.setText("Estado Desactivado");
+        jDesktopPane1.add(cbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 340, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel8.setText("Nombre de la Dieta");
+        jDesktopPane1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 170, -1));
+
+        cboxListaDietas.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        cboxListaDietas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dietas del Pacientes Seleccionado" }));
+        jDesktopPane1.add(cboxListaDietas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 270, -1));
+
+        btBuscar.setText("Buscar DNI");
+        jDesktopPane1.add(btBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, -1, -1));
+
+        btNuevo.setText("Nueva");
+        jDesktopPane1.add(btNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, -1));
 
         btGuardar.setText("Guardar");
+        jDesktopPane1.add(btGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, -1, -1));
 
         btEliminar.setText("Eliminar");
+        jDesktopPane1.add(btEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 390, -1, -1));
 
         btSalir.setText("Salir");
+        jDesktopPane1.add(btSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 390, -1, -1));
 
-        jlPaciente.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jlPaciente.setText("Paciente");
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel9.setText("Peso Actual/Final");
+        jDesktopPane1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 170, -1));
 
-        jcbPaciente.setText("jCheckBox1");
-
-        jlDieta.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jlDieta.setText("Dieta");
-
-        jcbDieta.setText("jCheckBox1");
+        txPesoFin.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        txPesoFin.setText("Paso Actual/Final");
+        jDesktopPane1.add(txPesoFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 190, -1));
+        jDesktopPane1.add(dcFechFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 190, -1));
+        jDesktopPane1.add(dcFechInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 190, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlDNI)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jtfDNI))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlNombre)
-                                .addGap(10, 10, 10)
-                                .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(78, 78, 78)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlPaciente)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jcbPaciente))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlDieta)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jcbDieta))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jlEstado)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jrbEstado))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btNuevo)
-                            .addComponent(btEliminar))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(58, Short.MAX_VALUE))
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlNombre)
-                            .addComponent(jlPaciente)
-                            .addComponent(jcbPaciente))
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlDNI)
-                            .addComponent(jtfDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlDieta)
-                            .addComponent(jcbDieta))
-                        .addGap(37, 37, 37)
-                        .addComponent(jlEstado))
-                    .addComponent(jrbEstado))
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtNombreActionPerformed
-
-    private void jtfDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfDNIActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfDNIActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btBuscar;
     public javax.swing.JButton btEliminar;
     public javax.swing.JButton btGuardar;
     public javax.swing.JButton btNuevo;
     public javax.swing.JButton btSalir;
-    public javax.swing.JCheckBox jcbDieta;
-    public javax.swing.JCheckBox jcbPaciente;
-    public javax.swing.JLabel jlDNI;
-    public javax.swing.JLabel jlDieta;
-    public javax.swing.JLabel jlEstado;
-    public javax.swing.JLabel jlNombre;
-    public javax.swing.JLabel jlPaciente;
-    public javax.swing.JRadioButton jrbEstado;
-    public javax.swing.JTextField jtNombre;
-    public javax.swing.JTextField jtfDNI;
+    public javax.swing.JCheckBox cbEstado;
+    public javax.swing.JComboBox<String> cboxListaDietas;
+    private com.toedter.calendar.JDateChooser dcFechFinal;
+    private com.toedter.calendar.JDateChooser dcFechInicio;
+    private javax.swing.JDesktopPane jDesktopPane1;
+    public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel3;
+    public javax.swing.JLabel jLabel4;
+    public javax.swing.JLabel jLabel5;
+    public javax.swing.JLabel jLabel6;
+    public javax.swing.JLabel jLabel7;
+    public javax.swing.JLabel jLabel8;
+    public javax.swing.JLabel jLabel9;
+    public javax.swing.JTextField txDNI;
+    public javax.swing.JTextField txND;
+    public javax.swing.JTextField txNP;
+    public javax.swing.JTextField txPesoFin;
+    public javax.swing.JTextField txPesoIni;
     // End of variables declaration//GEN-END:variables
 }

@@ -31,10 +31,13 @@ public class ControladorDieta implements ActionListener, KeyListener{
         this.vista = vista;
         this.data = data;
         //Botones
+        vista.btBuscar.addActionListener(this);
         vista.btEliminar.addActionListener(this);
         vista.btGuardar.addActionListener(this);
         vista.btNuevo.addActionListener(this);
         vista.btSalir.addActionListener(this);
+        
+        
     }
     
     public void iniciar() {
@@ -42,23 +45,19 @@ public class ControladorDieta implements ActionListener, KeyListener{
         vista.setVisible(true);
         menu.dpFondo.moveToFront(vista);
         vista.requestFocus();
+        vista.txDNI.setText("0");
         vista.btEliminar.setEnabled(false);
         vista.btGuardar.setEnabled(false);
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        vista.jtNombre.setText("");
-        vista.jtfDNI.setText("");
-        vista.jcbPaciente.setSelected(true);
-        vista.jcbDieta.setSelected(true);
-        vista.btNuevo.setEnabled(false);
-        vista.btGuardar.setEnabled(true);
+        
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (e.getSource() == vista.jtfDNI) {
+        if (e.getSource() == vista.txDNI) {
             char caracter = e.getKeyChar();
             if (caracter < '0' || caracter > '9') {
                 e.consume();
