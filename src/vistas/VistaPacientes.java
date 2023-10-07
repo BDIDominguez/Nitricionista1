@@ -9,8 +9,9 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+
+
 /**
- *
  * @author Dario
  */
 public class VistaPacientes extends javax.swing.JInternalFrame {
