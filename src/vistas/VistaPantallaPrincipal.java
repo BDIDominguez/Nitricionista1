@@ -36,6 +36,7 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
         btPacientes = new javax.swing.JButton();
         btComida = new javax.swing.JButton();
         btDietaComida = new javax.swing.JButton();
+        btControles = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Gestion Dietas");
@@ -68,6 +69,8 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
 
         btDietaComida.setText("Plan Nutricional");
 
+        btControles.setText("Controles");
+
         javax.swing.GroupLayout pnBotonesLayout = new javax.swing.GroupLayout(pnBotones);
         pnBotones.setLayout(pnBotonesLayout);
         pnBotonesLayout.setHorizontalGroup(
@@ -77,18 +80,21 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
             .addComponent(btComida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btDietaComida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btControles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnBotonesLayout.setVerticalGroup(
             pnBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnBotonesLayout.createSequentialGroup()
                 .addComponent(btPacientes, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(btDieta, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                .addComponent(btDieta, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(btDietaComida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btDietaComida, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(btComida, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                .addGap(206, 206, 206)
+                .addGap(0, 0, 0)
+                .addComponent(btControles, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addGap(166, 166, 166)
                 .addComponent(btSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
         );
 
@@ -160,6 +166,7 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btComida;
+    public javax.swing.JButton btControles;
     public javax.swing.JButton btDieta;
     public javax.swing.JButton btDietaComida;
     public javax.swing.JButton btPacientes;

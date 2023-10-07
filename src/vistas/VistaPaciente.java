@@ -14,12 +14,12 @@ import javax.swing.JOptionPane;
 /**
  * @author Dario
  */
-public class VistaPacientes extends javax.swing.JInternalFrame {
+public class VistaPaciente extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form VistaPacientes
      */
-    public VistaPacientes() {
+    public VistaPaciente() {
         initComponents();
         colocarIconos();
     }

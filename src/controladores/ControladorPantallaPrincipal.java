@@ -7,9 +7,11 @@ import java.awt.event.ActionListener;
 import datas.DataPaciente;
 import vistas.VistaDieta;
 import vistas.VistaDieta_Comida;
-import vistas.VistaPacientes;
+import vistas.VistaPaciente;
 import vistas.VistaPantallaPrincipal;
 import controladores.ControladorDieta_Comida;
+import datas.DataControl;
+import vistas.VistaControl;
 
 /**
  * @author Dario
@@ -23,6 +25,7 @@ public class ControladorPantallaPrincipal implements ActionListener {
         menu.btSalir.addActionListener(this);
         menu.btDieta.addActionListener(this);
         menu.btPacientes.addActionListener(this);
+        menu.btControles.addActionListener(this);
 
     }
 
@@ -37,7 +40,7 @@ public class ControladorPantallaPrincipal implements ActionListener {
             menu.dispose();
         }
         if (e.getSource() == menu.btPacientes) { // Iniciar el jInternalFrame de Pacientes
-            VistaPacientes vista = new VistaPacientes();
+            VistaPaciente vista = new VistaPaciente();
             DataPaciente data = new DataPaciente();
             ControladorVistaPacientes ctrl = new ControladorVistaPacientes(menu,vista,data);
             
@@ -59,8 +62,14 @@ public class ControladorPantallaPrincipal implements ActionListener {
 
         }
         if (e.getSource() == menu.btComida){
-            
-            
+
+        }
+        if (e.getSource() == menu.btControles){
+            VistaControl vista = new VistaControl();
+            DataControl cData = new DataControl();
+            DataPaciente pData = new DataPaciente();
+            ControladorControl ctrl = new ControladorControl(vista, menu, cData, pData);
+            ctrl.iniciar();
         }
 
     } // Fin metodo actionPerformed

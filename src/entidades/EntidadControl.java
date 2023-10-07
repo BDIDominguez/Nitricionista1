@@ -21,11 +21,13 @@ public class EntidadControl {
     private double gasenergetico;
     private double IMC;
     private LocalDate proximacita;
+    private boolean estado;
+    private String obs;
 
     public EntidadControl() {
     }
 
-    public EntidadControl(int idPaciente, LocalDate fecha, double peso, double altura, double cintura, double gasenergetico, double IMC, LocalDate proximacita) {
+    public EntidadControl(int idPaciente, LocalDate fecha, double peso, double altura, double cintura, double gasenergetico, double IMC, LocalDate proximacita, boolean estado, String obs) {
         this.idPaciente = idPaciente;
         this.fecha = fecha;
         this.peso = peso;
@@ -34,9 +36,11 @@ public class EntidadControl {
         this.gasenergetico = gasenergetico;
         this.IMC = IMC;
         this.proximacita = proximacita;
+        this.estado = estado;
+        this.obs = obs;
     }
 
-    public EntidadControl(int idControl, int idPaciente, LocalDate fecha, double peso, double altura, double cintura, double gasenergetico, double IMC, LocalDate proximacita) {
+    public EntidadControl(int idControl, int idPaciente, LocalDate fecha, double peso, double altura, double cintura, double gasenergetico, double IMC, LocalDate proximacita, boolean estado, String obs) {
         this.idControl = idControl;
         this.idPaciente = idPaciente;
         this.fecha = fecha;
@@ -46,6 +50,8 @@ public class EntidadControl {
         this.gasenergetico = gasenergetico;
         this.IMC = IMC;
         this.proximacita = proximacita;
+        this.estado = estado;
+        this.obs = obs;
     }
 
     public int getIdControl() {
@@ -119,7 +125,22 @@ public class EntidadControl {
     public void setProximacita(LocalDate proximacita) {
         this.proximacita = proximacita;
     }
-    
-    
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
+    }
+
     
 }

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import vistas.VistaPacientes;
+import vistas.VistaPaciente;
 import vistas.VistaPantallaPrincipal;
 
 /**
@@ -24,12 +24,12 @@ import vistas.VistaPantallaPrincipal;
 public class ControladorVistaPacientes implements ActionListener, FocusListener, ListSelectionListener {
 
     private VistaPantallaPrincipal menu;
-    private VistaPacientes vista;
+    private VistaPaciente vista;
     private DataPaciente data;
     private ArrayList<EntidadPaciente> pacientes = new ArrayList<>();
     MyModelo modelo = new MyModelo();
 
-    public ControladorVistaPacientes(VistaPantallaPrincipal menu, VistaPacientes vista, DataPaciente data) {
+    public ControladorVistaPacientes(VistaPantallaPrincipal menu, VistaPaciente vista, DataPaciente data) {
         this.menu = menu;
         this.vista = vista;
         this.data = data;
