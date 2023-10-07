@@ -1,12 +1,15 @@
 package controladores;
 
 import datas.DataDieta;
+import datas.DataDieta_Comida;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import datas.DataPaciente;
 import vistas.VistaDieta;
+import vistas.VistaDieta_Comida;
 import vistas.VistaPacientes;
 import vistas.VistaPantallaPrincipal;
+import controladores.ControladorDieta_Comida;
 
 /**
  * @author Dario
@@ -49,9 +52,14 @@ public class ControladorPantallaPrincipal implements ActionListener {
             
         }
         if (e.getSource() == menu.btDietaComida){
-            
+            VistaDieta_Comida vista = new VistaDieta_Comida();
+            DataDieta_Comida data = new DataDieta_Comida();
+            ControladorDieta_Comida ctrl = new ControladorDieta_Comida(menu,vista,data);
+            ctrl.iniciar();
+
         }
         if (e.getSource() == menu.btComida){
+            
             
         }
 
