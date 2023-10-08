@@ -186,7 +186,8 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
         btDietaComida.setIcon(prepararIcono("dietacomida.png",alto,ancho)); // asignamos al boton el icono
         btDieta.setIcon(prepararIcono("dietas.png", alto, ancho)); // asignamos al boton el icono
         btSalir.setIcon(prepararIcono("salida3.png",alto,ancho));
-         ImageIcon icono = new ImageIcon();
+        btControles.setIcon(prepararIcono("controles.png",alto,ancho));
+        ImageIcon icono = new ImageIcon();
         icono = prepararIcono("IconoFormulario.jpg",20,20);
         this.setIconImage(icono.getImage());
         

@@ -68,7 +68,7 @@ public class ControladorPantallaPrincipal implements ActionListener {
             VistaControl vista = new VistaControl();
             DataControl cData = new DataControl();
             DataPaciente pData = new DataPaciente();
-            ControladorControl ctrl = new ControladorControl(vista, menu, cData, pData);
+            ControladorVistaControl ctrl = new ControladorVistaControl(vista, menu, cData, pData);
             ctrl.iniciar();
         }
 

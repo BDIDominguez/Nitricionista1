@@ -18,25 +18,23 @@ import java.util.List;
 
 
 /**
- *
  * @author Dario
  */
 public class DataControl {
     public EntidadControl crearControl(EntidadControl co) throws SQLException{
         Connection con = Conexion.getConexion();
-        String sql = "insert into controles (idControl,idPaciente,fecha,peso,altura,cintura,gasenergetico,IMC,proximacita,estado,obs) values (?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into controles (idPaciente,fecha,peso,altura,cintura,gasenergetico,IMC,proximacita,estado,obs) values (?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        ps.setInt(1,co.getIdControl());
-        ps.setInt(2,co.getIdPaciente());
-        ps.setDate(3,Date.valueOf(co.getFecha()));
-        ps.setDouble(4, co.getPeso());
-        ps.setDouble(5,co.getAltura());
-        ps.setDouble(6, co.getCintura());
-        ps.setDouble(7,co.getGasenergetico());
-        ps.setDouble(8, co.getIMC());
-        ps.setDate(9,Date.valueOf(co.getProximacita()));
-        ps.setBoolean(10, co.isEstado());
-        ps.setString(11, co.getObs());
+        ps.setInt(1,co.getIdPaciente());
+        ps.setDate(2,Date.valueOf(co.getFecha()));
+        ps.setDouble(3, co.getPeso());
+        ps.setDouble(4,co.getAltura());
+        ps.setDouble(5, co.getCintura());
+        ps.setDouble(6,co.getGasenergetico());
+        ps.setDouble(7, co.getIMC());
+        ps.setDate(8,Date.valueOf(co.getProximacita()));
+        ps.setBoolean(9, co.isEstado());
+        ps.setString(10, co.getObs());
         ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();  // Regresa los ID generados por la insercion anterior
         if (rs.next()) { // 
@@ -156,6 +154,29 @@ public class DataControl {
         return lista;
     }
     
+   public EntidadControl ControlxID(int id) throws SQLException{
+        EntidadControl a = new EntidadControl();
+        Connection con = Conexion.getConexion();
+        String sql = "select * from controles where idControl = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            a.setIdControl(rs.getInt("idControl"));
+            a.setIdPaciente(rs.getInt("idPaciente"));
+            a.setFecha(rs.getDate("fecha").toLocalDate());
+            a.setPeso(rs.getDouble("peso"));
+            a.setAltura(rs.getDouble("altura"));
+            a.setCintura(rs.getDouble("cintura"));
+            a.setGasenergetico(rs.getDouble("gasenergetico"));
+            a.setIMC(rs.getDouble("IMC"));
+            a.setProximacita(rs.getDate("proximacita").toLocalDate());
+            a.setEstado(rs.getBoolean("estado"));
+            a.setObs(rs.getString("obs"));
+        }
+        ps.close();
+        return a;
+    }
    
     
 }
