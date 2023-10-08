@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import vistas.VistaDieta;
 import vistas.VistaPantallaPrincipal;
 import entidades.EntidadDieta;
+import entidades.EntidadPaciente;
 /**
  *
  * @author Matias
