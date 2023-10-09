@@ -159,8 +159,8 @@ public class VistaDieta extends javax.swing.JInternalFrame {
     public javax.swing.JButton btSalir;
     public javax.swing.JCheckBox cbEstado;
     public javax.swing.JComboBox<String> cboxListaDietas;
-    private com.toedter.calendar.JDateChooser dcFechFinal;
-    private com.toedter.calendar.JDateChooser dcFechInicio;
+    public com.toedter.calendar.JDateChooser dcFechFinal;
+    public com.toedter.calendar.JDateChooser dcFechInicio;
     private javax.swing.JDesktopPane jDesktopPane1;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;

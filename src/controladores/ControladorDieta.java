@@ -18,6 +18,9 @@ import vistas.VistaPantallaPrincipal;
 import entidades.EntidadDieta;
 import entidades.EntidadPaciente;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -94,6 +97,30 @@ public class ControladorDieta implements ActionListener, KeyListener{
                 }
                  
             }
+        }
+        if(d.getSource() == vista.btGuardar){
+           vista.btNuevo.setEnabled(true);
+           vista.btEliminar.setEnabled(true);
+           vista.txNombreD.setEnabled(true);
+           vista.txPesoIni.setEnabled(true);
+           vista.txPesoFin.setEnabled(true);
+           
+           if(idDieta == 0 && vista.txNombreD.getText().equals("")){
+               JOptionPane.showMessageDialog(null, "El campo de texto no puede estar en blanco.", "Error", JOptionPane.ERROR_MESSAGE);
+           }else{
+               String nombre = vista.txNombreD.getText();
+               double pesoinicial = Double.parseDouble(vista.txPesoIni.getText());
+               double pesofinal = Double.parseDouble(vista.txPesoFin.getText());
+               java.util.Date nac = vista.dcFechInicio.getDate();
+               boolean estado = vista.cbEstado.isSelected();
+               
+               Instant instant = nac.toInstant();
+               
+               LocalDate fecha = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+           }
+        }
+        if (d.getSource() == vista.btSalir) {
+            vista.dispose();
         }
     }
 
