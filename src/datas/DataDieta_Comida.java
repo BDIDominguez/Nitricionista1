@@ -15,7 +15,6 @@ public class DataDieta_Comida {
     private Connection con;
 
     public DataDieta_Comida() {
-        con = Conexion.getConexion();
     }
 
     public void agregarDietaComida(EntidadDieta_Comida dietaComida) throws SQLException {
