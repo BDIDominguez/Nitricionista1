@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import vistas.VistaControl;
 import vistas.VistaPantallaPrincipal;
 
@@ -227,16 +229,17 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
     private void llenarCombo() {
         vista.cbPacientes.removeAllItems();
         for (EntidadPaciente paciente : pacientes) {
-            String cadena = paciente.getIdpaciente() + " - " + paciente.getDni() + " - " + paciente.getNombre();
+            String cadena = paciente.getNombre() + " - " + paciente.getDni() + " - " + paciente.getIdpaciente()  ;
             vista.cbPacientes.addItem(cadena);
         }
+        AutoCompleteDecorator.decorate(vista.cbPacientes); // esta unica linia usa la libreria swingx-all-1.6.4.jar para generar el auto completado del ComboBox
     }
     private int extraerIdPaciente(){
         int id = -1;
         try{
             String combobox = vista.cbPacientes.getSelectedItem().toString();
             String partes[] = combobox.split("-");
-            id = Integer.parseInt(partes[0].trim()); 
+            id = Integer.parseInt(partes[2].trim()); 
         }catch (NumberFormatException ex){
             JOptionPane.showMessageDialog(null, "A ocurrido un error al cargar los indices en el combobox, revices la posicion del idMateria");
         }
@@ -247,8 +250,17 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         try {
             EntidadControl co = new EntidadControl();
             co = cData.ControlxID(idcontrol);
-            //vista.dcFecha.setDate(Date.from(LocalDate.atZone(ZoneId.systemDefault()).toInstant()));
-            //java.util.Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            idcontrol = co.getIdControl();
+            vista.dcFecha.setDate(Date.from(co.getFecha().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            vista.txPeso.setText(co.getPeso() + "");
+            vista.txAltura.setText(co.getAltura() + "");
+            vista.txCintura.setText(co.getCintura() + "");
+            vista.txIMC.setText(co.getIMC() + "");
+            vista.txGasto.setText(co.getGasenergetico() + "");
+            vista.dcCita.setDate(Date.from(co.getProximacita().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            vista.txObs.setText(co.getObs());
+            vista.btGuardar.setEnabled(true);
+            vista.btEliminar.setEnabled(true);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "no se puede consultar datos del Control " + idcontrol + "\n" + ex.getMessage());
         }

@@ -26,6 +26,7 @@ public class ControladorPantallaPrincipal implements ActionListener {
         menu.btDieta.addActionListener(this);
         menu.btPacientes.addActionListener(this);
         menu.btControles.addActionListener(this);
+        menu.btDietaComida.addActionListener(this);
 
     }
 
