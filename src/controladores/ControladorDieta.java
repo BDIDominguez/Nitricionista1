@@ -6,6 +6,7 @@
 package controladores;
 
 import datas.DataDieta;
+import datas.DataPaciente;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -16,6 +17,9 @@ import vistas.VistaDieta;
 import vistas.VistaPantallaPrincipal;
 import entidades.EntidadDieta;
 import entidades.EntidadPaciente;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Matias
@@ -70,10 +74,24 @@ public class ControladorDieta implements ActionListener, KeyListener{
             vista.txDNI.requestFocus();
         }
         if (d.getSource() == vista.btBuscar) {
-            if(vista.txDNI.getText().equals("")){
+            if(vista.txDNI.getText().equals("") || vista.txDNI.getText().equals("0")){
                 JOptionPane.showMessageDialog(null, "El Dni no puede estar en blanco");
             }else{
-                int a = Integer.parseInt(vista.txDNI.getText());
+                int b = Integer.parseInt(vista.txDNI.getText());
+                EntidadPaciente pac = new EntidadPaciente();
+                DataPaciente a = new DataPaciente();
+                try {
+                    pac = a.pacienteDNI(b);
+                    if(pac.getDni() == b){
+                        vista.txNombreP.setText(pac.getNombre());
+                        //llamar el metodo para rellenar el combo de dietas
+                    }else{
+                        JOptionPane.showMessageDialog(vista, "No se encontrado el DNI");
+                        vista.txDNI.requestFocus();
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Error de Consultar Paciente");
+                }
                  
             }
         }
