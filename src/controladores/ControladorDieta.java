@@ -18,20 +18,24 @@ import vistas.VistaPantallaPrincipal;
 import entidades.EntidadDieta;
 import entidades.EntidadPaciente;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author Matias
  */
-public class ControladorDieta implements ActionListener, KeyListener{
-    
+public class ControladorDieta implements ActionListener, KeyListener {
+
     private Connection con;
     private final VistaDieta vista;
     private final DataDieta data;
     private final VistaPantallaPrincipal menu;
     private int idDieta;
-    
+
     public ControladorDieta(VistaPantallaPrincipal menu, VistaDieta vista, DataDieta data) {
         this.menu = menu;
         this.vista = vista;
@@ -45,10 +49,9 @@ public class ControladorDieta implements ActionListener, KeyListener{
         vista.cboxListaDietas.addActionListener(this);
         //Check
         vista.cbEstado.addActionListener(this);
-        
-        
+
     }
-    
+
     public void iniciar() {
         menu.dpFondo.add(vista);
         vista.setVisible(true);
@@ -57,7 +60,7 @@ public class ControladorDieta implements ActionListener, KeyListener{
         vista.txDNI.setText("0");
         vista.btEliminar.setEnabled(false);
         vista.btGuardar.setEnabled(false);
-       
+
     }
 
     @Override
@@ -74,26 +77,61 @@ public class ControladorDieta implements ActionListener, KeyListener{
             vista.txDNI.requestFocus();
         }
         if (d.getSource() == vista.btBuscar) {
-            if(vista.txDNI.getText().equals("") || vista.txDNI.getText().equals("0")){
+            if (vista.txDNI.getText().equals("") || vista.txDNI.getText().equals("0")) {
                 JOptionPane.showMessageDialog(null, "El Dni no puede estar en blanco");
-            }else{
+            } else {
                 int b = Integer.parseInt(vista.txDNI.getText());
                 EntidadPaciente pac = new EntidadPaciente();
                 DataPaciente a = new DataPaciente();
                 try {
                     pac = a.pacienteDNI(b);
-                    if(pac.getDni() == b){
+                    if (pac.getDni() == b) {
                         vista.txNombreP.setText(pac.getNombre());
                         //llamar el metodo para rellenar el combo de dietas
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(vista, "No se encontrado el DNI");
                         vista.txDNI.requestFocus();
                     }
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Error de Consultar Paciente");
                 }
-                 
+
             }
+        }
+        if (d.getSource() == vista.btGuardar) {
+            vista.btNuevo.setEnabled(true);
+            vista.btEliminar.setEnabled(true);
+            vista.txNombreD.setEnabled(true);
+            vista.txPesoIni.setEnabled(true);
+            vista.txPesoFin.setEnabled(true);
+
+            if (idDieta == 0 && vista.txNombreD.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "El campo de texto no puede estar en blanco.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                EntidadDieta di = new EntidadDieta();
+                di.setNombre(vista.txNombreD.getText());
+                di.setPesoInicial(Double.parseDouble(vista.txPesoIni.getText()));
+                di.setPesoFinal(Double.parseDouble(vista.txPesoFin.getText()));
+
+                java.util.Date fechaInicio = vista.dcFechInicio.getDate();
+                if (fechaInicio != null) {
+                    Instant instantInicio = fechaInicio.toInstant();
+                    LocalDate fechaInicial = instantInicio.atZone(ZoneId.systemDefault()).toLocalDate();
+                    di.setFechaInicial(fechaInicial);
+                }
+
+                // Configurar la fecha final
+                java.util.Date fechaFinal = vista.dcFechFinal.getDate();
+                if (fechaFinal != null) {
+                    Instant instantFinal = fechaFinal.toInstant();
+                    LocalDate fechaFin = instantFinal.atZone(ZoneId.systemDefault()).toLocalDate();
+                    di.setFechaFinal(fechaFin);
+                }
+                boolean estado = true;
+            }
+        }
+        if (d.getSource() == vista.btSalir) {
+            vista.dispose();
         }
     }
 

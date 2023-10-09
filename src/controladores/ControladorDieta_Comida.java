@@ -26,18 +26,19 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     private final VistaDieta_Comida vista;
     private final DataDieta_Comida dataDietaComida;
 
-    public void iniciar() {
-        vista.setVisible(true);
-    }
-    
-    
     public ControladorDieta_Comida(VistaPantallaPrincipal menu, VistaDieta_Comida vista, DataDieta_Comida data) {
         this.vista = vista;
-        this.dataDietaComida = new DataDieta_Comida();
-       
+        this.menu= menu;
+        this.dataDietaComida= data;
+   
     }
 
-    
+    public void iniciar() {
+        menu.dpFondo.add(vista);
+        vista.setVisible(true);
+        menu.dpFondo.moveToFront(vista);
+        vista.requestFocus();
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
