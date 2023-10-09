@@ -39,9 +39,8 @@ public class MiCampoTexto extends JTextField {
                         }
                         break;
                     case 3: // acepta numero y punto decimal
-                        //formato = new DecimalFormat("#,##0.00");
                         if (c == '.') {
-                            if (tienePunto) {
+                            if (!tienePunto) {
                                 e.consume();
                             } else {
                                 tienePunto = true;

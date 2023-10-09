@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -43,7 +44,6 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
     MyModelo modelo = new MyModelo();
     private List<EntidadPaciente> pacientes = new ArrayList<>();
     private int idcontrol = -1;
-    
 
     public ControladorVistaControl(VistaControl vista, VistaPantallaPrincipal menu, DataControl cData, DataPaciente pData) {
         this.vista = vista;
@@ -61,7 +61,11 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
 
         //Agregando la Tabla
         vista.tbControl.getSelectionModel().addListSelectionListener(this);
-        
+
+        //Capturando Text
+        vista.txAltura.addFocusListener(this);
+        vista.txPeso.addFocusListener(this);
+
     }
 
     public void iniciar() {
@@ -99,7 +103,8 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         }
         if (e.getSource() == vista.btGuardar) {
             EntidadControl co = new EntidadControl();
-            co.setIdControl(extraerIdPaciente());
+            co.setIdControl(idcontrol);
+            co.setIdPaciente(extraerIdPaciente());
             co.setFecha(vista.dcFecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             co.setPeso(Double.parseDouble(vista.txPeso.getText()));
             co.setAltura(Double.parseDouble(vista.txAltura.getText()));
@@ -127,12 +132,13 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
                 boolean vRespuesta = false;
                 try {
                     vRespuesta = cData.modificarControl(co);
-                    if (vRespuesta){
-                        JOptionPane.showMessageDialog(vista, "Cambios guardados con exito" );
+                    if (vRespuesta) {
+                        JOptionPane.showMessageDialog(vista, "Cambios guardados con exito");
                         vista.btGuardar.setEnabled(false);
                         vista.btEliminar.setEnabled(true);
-                    }else{
-                        JOptionPane.showMessageDialog(vista, "No se pudo guardar los cambios!!" );
+                        llenarTabla(extraerIdPaciente());
+                    } else {
+                        JOptionPane.showMessageDialog(vista, "No se pudo guardar los cambios!!");
                         vista.btGuardar.setEnabled(true);
                         vista.btEliminar.setEnabled(false);
                     }
@@ -142,10 +148,31 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
                 }
             }
         }
-        if (e.getSource() == vista.cbPacientes){
+
+        if (e.getSource() == vista.btEliminar) {
+            if (idcontrol > 0) {
+                int vRespuesta = JOptionPane.showConfirmDialog(menu, "Seguro de Eliminar este Control?", "Advertencia", JOptionPane.YES_NO_OPTION);
+                if (vRespuesta == 0) {
+                    try {
+                        boolean vresp = cData.eliminarControl(idcontrol);
+                        if (vresp) {
+                            JOptionPane.showMessageDialog(vista, "Se elimino el control correctamente");
+                            llenarTabla(extraerIdPaciente());
+                        } else {
+                            JOptionPane.showMessageDialog(vista, "No se pudo eliminar, se desconose la causa!");
+                        }
+                    } catch (SQLException ex) {
+                        //Logger.getLogger(ControladorVistaControl.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(vista, "Error al intentar eliminar de la tabla controles \n" + ex.getMessage());
+                    }
+                }
+            }
+        }
+
+        if (e.getSource() == vista.cbPacientes) {
             llenarTabla(extraerIdPaciente());
         }
-        
+
     }
 
     @Override
@@ -155,14 +182,17 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
 
     @Override
     public void focusLost(FocusEvent e) {
+        if (e.getSource() == vista.txAltura || e.getSource() == vista.txPeso) {
+            calcularIMC();
+        }
 
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (!e.getValueIsAdjusting()){
+        if (!e.getValueIsAdjusting()) {
             int fila = vista.tbControl.getSelectedRow();
-            if (fila != -1){
+            if (fila != -1) {
                 this.idcontrol = (int) vista.tbControl.getValueAt(fila, 0);
                 mostrarControl();
             }
@@ -229,24 +259,25 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
     private void llenarCombo() {
         vista.cbPacientes.removeAllItems();
         for (EntidadPaciente paciente : pacientes) {
-            String cadena = paciente.getNombre() + " - " + paciente.getDni() + " - " + paciente.getIdpaciente()  ;
+            String cadena = paciente.getNombre() + " - " + paciente.getDni() + " - " + paciente.getIdpaciente();
             vista.cbPacientes.addItem(cadena);
         }
         AutoCompleteDecorator.decorate(vista.cbPacientes); // esta unica linia usa la libreria swingx-all-1.6.4.jar para generar el auto completado del ComboBox
     }
-    private int extraerIdPaciente(){
+
+    private int extraerIdPaciente() {
         int id = -1;
-        try{
+        try {
             String combobox = vista.cbPacientes.getSelectedItem().toString();
             String partes[] = combobox.split("-");
-            id = Integer.parseInt(partes[2].trim()); 
-        }catch (NumberFormatException ex){
+            id = Integer.parseInt(partes[2].trim());
+        } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "A ocurrido un error al cargar los indices en el combobox, revices la posicion del idMateria");
         }
         return id;
     }
-    
-    private void mostrarControl(){
+
+    private void mostrarControl() {
         try {
             EntidadControl co = new EntidadControl();
             co = cData.ControlxID(idcontrol);
@@ -264,7 +295,22 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "no se puede consultar datos del Control " + idcontrol + "\n" + ex.getMessage());
         }
-        
     }
 
+    private void calcularIMC() {
+        double altura = Double.parseDouble(vista.txAltura.getText());
+        double peso = Double.parseDouble(vista.txPeso.getText());
+        if (altura > 0 && peso > 0) {
+            double imc = peso / (altura * altura);
+            vista.txIMC.setText(imc + "");
+        }
+    }
+
+    private String formatoDecimal(double valor) {
+        String respuesta = "";
+        DecimalFormat formato = new DecimalFormat("0.00");
+        String numeroFormateado = formato.format(valor);
+        respuesta = valor + "";
+        return respuesta;
+    }
 } //Fin Clase

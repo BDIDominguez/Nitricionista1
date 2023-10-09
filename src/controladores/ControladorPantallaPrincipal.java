@@ -10,7 +10,10 @@ import vistas.VistaDieta_Comida;
 import vistas.VistaPaciente;
 import vistas.VistaPantallaPrincipal;
 import controladores.ControladorDieta_Comida;
+import controladores.ControladorComida;
+import datas.DataComida;
 import datas.DataControl;
+import vistas.VistaComida;
 import vistas.VistaControl;
 
 /**
@@ -63,6 +66,10 @@ public class ControladorPantallaPrincipal implements ActionListener {
 
         }
         if (e.getSource() == menu.btComida){
+            VistaComida vista = new VistaComida();
+            DataComida data = new DataComida();
+            ControladorComida ctrl = new ControladorComida(menu, data, vista);
+            ctrl.inicia();
 
         }
         if (e.getSource() == menu.btControles){

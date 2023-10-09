@@ -5,6 +5,10 @@
  */
 package vistas;
 
+import java.awt.Image;
+import java.net.URL;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Dario
@@ -16,6 +20,7 @@ public class VistaControl extends javax.swing.JInternalFrame {
      */
     public VistaControl() {
         initComponents();
+        colocarIconos();
     }
 
     /**
@@ -47,7 +52,6 @@ public class VistaControl extends javax.swing.JInternalFrame {
         ;
         txIMC = new utilidades.MiCampoTexto(3);
         ;
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         dcCita = new com.toedter.calendar.JDateChooser();
         jLabel9 = new javax.swing.JLabel();
@@ -58,10 +62,17 @@ public class VistaControl extends javax.swing.JInternalFrame {
         btNuevo = new javax.swing.JButton();
         btGuardar = new javax.swing.JButton();
         btSalir = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        lbFondo = new javax.swing.JLabel();
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Fecha");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 56, -1));
 
@@ -73,6 +84,7 @@ public class VistaControl extends javax.swing.JInternalFrame {
         jPanel1.add(btEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 156, -1));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Paciente");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
@@ -81,30 +93,34 @@ public class VistaControl extends javax.swing.JInternalFrame {
         jPanel1.add(dcFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 209, 35));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Peso");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
         txPeso.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         txPeso.setText("0.00");
-        jPanel1.add(txPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 103, -1));
+        jPanel1.add(txPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 80, -1));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabel4.setText("Altura");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, -1, -1));
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Kg/m2");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, -1, 30));
 
         txAltura.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         txAltura.setText("0.00");
-        jPanel1.add(txAltura, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, 103, -1));
+        jPanel1.add(txAltura, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, 103, -1));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Cintura");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
 
         txCintura.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         txCintura.setText("0.00");
-        jPanel1.add(txCintura, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 103, -1));
+        jPanel1.add(txCintura, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 80, -1));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Gasto Energetico");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 143, -1));
 
@@ -119,13 +135,10 @@ public class VistaControl extends javax.swing.JInternalFrame {
                 txIMCActionPerformed(evt);
             }
         });
-        jPanel1.add(txIMC, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, 103, -1));
-
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabel7.setText("IMC");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 35, -1));
+        jPanel1.add(txIMC, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 103, -1));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Proxima Cita");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 110, -1));
 
@@ -134,6 +147,7 @@ public class VistaControl extends javax.swing.JInternalFrame {
         jPanel1.add(dcCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 209, 35));
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Observaciones");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 159, -1));
 
@@ -171,6 +185,35 @@ public class VistaControl extends javax.swing.JInternalFrame {
         btSalir.setText("Salir");
         jPanel1.add(btSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 156, -1));
 
+        jLabel13.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Cm");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, -1, 30));
+
+        jLabel12.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Kgs");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, -1, 30));
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Mtrs");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, -1, 30));
+
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Altura");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, -1, 30));
+
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("IMC");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 35, -1));
+
+        lbFondo.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        lbFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bkg4.jpeg"))); // NOI18N
+        jPanel1.add(lbFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-5, 0, 980, 650));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -199,6 +242,10 @@ public class VistaControl extends javax.swing.JInternalFrame {
     public com.toedter.calendar.JDateChooser dcCita;
     public com.toedter.calendar.JDateChooser dcFecha;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -210,6 +257,7 @@ public class VistaControl extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lbFondo;
     public javax.swing.JTable tbControl;
     public javax.swing.JTextField txAltura;
     public javax.swing.JTextField txCintura;
@@ -218,4 +266,29 @@ public class VistaControl extends javax.swing.JInternalFrame {
     public javax.swing.JTextArea txObs;
     public javax.swing.JTextField txPeso;
     // End of variables declaration//GEN-END:variables
+private void colocarIconos(){
+        int alto = 30;
+        int ancho = 30; 
+        
+        btNuevo.setIcon(prepararIcono("nuevo.png",alto,ancho));
+        btGuardar.setIcon(prepararIcono("salvado.png",alto,ancho));
+        btEliminar.setIcon(prepararIcono("inactivo.png",alto,ancho));
+        btSalir.setIcon(prepararIcono("salida3.png",alto,ancho));
+        ImageIcon icono = new ImageIcon();
+        icono = prepararIcono("IconoFormulario.jpg",20,20);
+        this.setFrameIcon(icono);
+    }
+    
+    private ImageIcon prepararIcono(String nombre, int alto, int ancho) { // Aplicacion que prepara los Iconos para ser puestos donde se quiera se pasa el nombre y el tamaño que quieres que tenga
+        // Obtén la ruta relativa a la ubicación de la clase Controlador eso es la carpeta SRC del proyecto ese seria la carpeta de inicio
+        ClassLoader directorio = getClass().getClassLoader();
+        URL imagen = directorio.getResource("iconos/" + nombre); // Creamos la ruta al recurso en este caso el icono de lupa
+        // Crea un ImageIcon utilizando la URL de la imagen
+        ImageIcon icono = new ImageIcon(imagen); // creamos la Imagen Icono para asignarsela al contenerdor
+        // Redimensionar el icono pasandolo a imagen con el nuevo tamaño y luego convirtiendolo en icono XD
+        Image imagenRedimensionada = icono.getImage().getScaledInstance(alto, ancho, Image.SCALE_SMOOTH);
+        icono = new ImageIcon(imagenRedimensionada);
+        return icono;
+    }
+
 }
