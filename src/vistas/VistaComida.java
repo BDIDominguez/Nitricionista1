@@ -33,7 +33,7 @@ public class VistaComida extends javax.swing.JInternalFrame {
         btAgregar = new javax.swing.JButton();
         jbModificar = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
-        jbHabilitarLista = new javax.swing.JButton();
+        btHabilitarLista = new javax.swing.JButton();
         lbSelectTabla = new javax.swing.JLabel();
         lbHabilitada = new javax.swing.JLabel();
         lbAgregar = new javax.swing.JLabel();
@@ -56,9 +56,8 @@ public class VistaComida extends javax.swing.JInternalFrame {
         txKcal = new javax.swing.JTextField();
         lbBuscar = new javax.swing.JLabel();
         jbDeshabilitarLista = new javax.swing.JButton();
-        lbBuscar1 = new javax.swing.JLabel();
+        lbAhora = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        lbBuscar2 = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
@@ -81,37 +80,39 @@ public class VistaComida extends javax.swing.JInternalFrame {
         btAgregar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btAgregar.setForeground(java.awt.Color.red);
         btAgregar.setText("Agregar");
-        jPanel1.add(btAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 410, -1, -1));
+        jPanel1.add(btAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 390, -1, -1));
 
         jbModificar.setBackground(java.awt.Color.orange);
         jbModificar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jbModificar.setForeground(java.awt.Color.red);
         jbModificar.setText("Modificar");
-        jPanel1.add(jbModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 560, -1, -1));
+        jPanel1.add(jbModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 560, -1, -1));
 
         jbSalir.setBackground(java.awt.Color.blue);
         jbSalir.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jbSalir.setForeground(java.awt.Color.blue);
         jbSalir.setText("Salir");
-        jPanel1.add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 620, -1, -1));
+        jPanel1.add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 620, -1, -1));
 
-        jbHabilitarLista.setBackground(java.awt.Color.orange);
-        jbHabilitarLista.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jbHabilitarLista.setForeground(java.awt.Color.red);
-        jbHabilitarLista.setText("Habilitar");
-        jPanel1.add(jbHabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 600, -1, -1));
+        btHabilitarLista.setBackground(java.awt.Color.orange);
+        btHabilitarLista.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btHabilitarLista.setForeground(java.awt.Color.red);
+        btHabilitarLista.setText("Habilitar");
+        jPanel1.add(btHabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, -1, -1));
 
-        lbSelectTabla.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lbSelectTabla.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbSelectTabla.setForeground(java.awt.Color.blue);
         lbSelectTabla.setText("Seleccione una fila a continuación y presione una opción del menu a su izquierda");
-        jPanel1.add(lbSelectTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 520, -1, -1));
+        jPanel1.add(lbSelectTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, -1, -1));
 
         lbHabilitada.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
         lbHabilitada.setText("Habilitada");
         jPanel1.add(lbHabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, -1, -1));
 
-        lbAgregar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        lbAgregar.setText("Para agregar una comida complete todos los campos del formulario arriba y presione");
-        jPanel1.add(lbAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, -1, -1));
+        lbAgregar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbAgregar.setForeground(java.awt.Color.blue);
+        lbAgregar.setText("Para agregar una comida complete todos los campos del arriba y presione");
+        jPanel1.add(lbAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, -1, -1));
         jPanel1.add(txNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 324, -1));
         jPanel1.add(txIdComida, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 57, -1));
         jPanel1.add(txReceta, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, 230, 20));
@@ -126,8 +127,12 @@ public class VistaComida extends javax.swing.JInternalFrame {
 
         lbCantidadCaloriasMenor.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
         lbCantidadCaloriasMenor.setText("Cantidad menor a: ");
-        jPanel1.add(lbCantidadCaloriasMenor, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
+        jPanel1.add(lbCantidadCaloriasMenor, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, -1));
+
+        RbHabilitado.setBorder(null);
         jPanel1.add(RbHabilitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, -1, -1));
+
+        btDeshabilitada.setBorder(null);
         jPanel1.add(btDeshabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, -1, -1));
 
         lbDeshabilitada.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
@@ -149,7 +154,7 @@ public class VistaComida extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tbComidas);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 570, 460, 93));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 550, 560, 120));
 
         btBuscar.setBackground(java.awt.Color.orange);
         btBuscar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -161,11 +166,12 @@ public class VistaComida extends javax.swing.JInternalFrame {
         btLista.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btLista.setForeground(java.awt.Color.red);
         btLista.setText("Lista");
-        jPanel1.add(btLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 440, -1, -1));
+        jPanel1.add(btLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 430, -1, -1));
 
-        lbLista.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lbLista.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbLista.setForeground(java.awt.Color.blue);
         lbLista.setText("También puede listar todas las comidas presione aqui");
-        jPanel1.add(lbLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, -1, -1));
+        jPanel1.add(lbLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, -1, -1));
 
         lbingrediente.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
         lbingrediente.setText("Ingrediente de la receta:");
@@ -176,9 +182,10 @@ public class VistaComida extends javax.swing.JInternalFrame {
         jPanel1.add(LbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
         jPanel1.add(txKcal, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, 58, -1));
 
-        lbBuscar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        lbBuscar.setText("Para realizar la busqueda de una comida por favor ingrese una opción:");
-        jPanel1.add(lbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, -1, -1));
+        lbBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbBuscar.setForeground(java.awt.Color.blue);
+        lbBuscar.setText("Para realizar la busqueda de una comida ingrese una opción:");
+        jPanel1.add(lbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
 
         jbDeshabilitarLista.setBackground(java.awt.Color.orange);
         jbDeshabilitarLista.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -186,9 +193,10 @@ public class VistaComida extends javax.swing.JInternalFrame {
         jbDeshabilitarLista.setText("Deshabilitar");
         jPanel1.add(jbDeshabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 640, -1, -1));
 
-        lbBuscar1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        lbBuscar1.setText(" Ahora presione aqui");
-        jPanel1.add(lbBuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, -1, -1));
+        lbAhora.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
+        lbAhora.setForeground(java.awt.Color.blue);
+        lbAhora.setText(" Ahora presione aqui");
+        jPanel1.add(lbAhora, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/food2.jpg"))); // NOI18N
@@ -198,23 +206,19 @@ public class VistaComida extends javax.swing.JInternalFrame {
         jLabel1.setPreferredSize(new java.awt.Dimension(930, 720));
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 720));
 
-        lbBuscar2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        lbBuscar2.setText("Para realizar la busqueda de una comida por favor ingrese una de las opciones a continuación y presione aqui");
-        jPanel1.add(lbBuscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 918, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
         );
 
         pack();
@@ -223,23 +227,22 @@ public class VistaComida extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LbNombre;
-    private javax.swing.JRadioButton RbHabilitado;
-    private javax.swing.JButton btAgregar;
-    private javax.swing.JButton btBuscar;
-    private javax.swing.JRadioButton btDeshabilitada;
-    private javax.swing.JButton btLista;
+    public javax.swing.JRadioButton RbHabilitado;
+    public javax.swing.JButton btAgregar;
+    public javax.swing.JButton btBuscar;
+    public javax.swing.JRadioButton btDeshabilitada;
+    public javax.swing.JButton btHabilitarLista;
+    public javax.swing.JButton btLista;
     public javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jbDeshabilitarLista;
-    private javax.swing.JButton jbHabilitarLista;
-    private javax.swing.JButton jbModificar;
-    private javax.swing.JButton jbSalir;
+    public javax.swing.JButton jbDeshabilitarLista;
+    public javax.swing.JButton jbModificar;
+    public javax.swing.JButton jbSalir;
     private javax.swing.JLabel lbAgregar;
+    private javax.swing.JLabel lbAhora;
     private javax.swing.JLabel lbBuscar;
-    private javax.swing.JLabel lbBuscar1;
-    private javax.swing.JLabel lbBuscar2;
     private javax.swing.JLabel lbCantidadCaloriasMenor;
     private javax.swing.JLabel lbDeshabilitada;
     private javax.swing.JLabel lbHabilitada;
