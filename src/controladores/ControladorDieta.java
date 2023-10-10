@@ -35,6 +35,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
     private final DataDieta data;
     private final VistaPantallaPrincipal menu;
     private int idDieta;
+    private int idPaciente = -1;
 
     public ControladorDieta(VistaPantallaPrincipal menu, VistaDieta vista, DataDieta data) {
         this.menu = menu;
@@ -87,9 +88,11 @@ public class ControladorDieta implements ActionListener, KeyListener {
                     pac = a.pacienteDNI(b);
                     if (pac.getDni() == b) {
                         vista.txNombreP.setText(pac.getNombre());
+                        idPaciente = pac.getIdpaciente();
                         //llamar el metodo para rellenar el combo de dietas
                     } else {
                         JOptionPane.showMessageDialog(vista, "No se encontrado el DNI");
+                        idPaciente = -1;
                         vista.txDNI.requestFocus();
                     }
                 } catch (SQLException ex) {
@@ -107,7 +110,8 @@ public class ControladorDieta implements ActionListener, KeyListener {
 
             if (idDieta == 0 && vista.txNombreD.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "El campo de texto no puede estar en blanco.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
+            } else if(idPaciente > 0){
+                
                 EntidadDieta di = new EntidadDieta();
                 di.setNombre(vista.txNombreD.getText());
                 di.setPesoInicial(Double.parseDouble(vista.txPesoIni.getText()));
@@ -124,14 +128,16 @@ public class ControladorDieta implements ActionListener, KeyListener {
                 di.setFechaFinal(fechaFin);
 
                 // Obten el ID del paciente, por ejemplo, mediante una consulta a la base de datos
-                int idPaciente = data.pacienteID(); // Implementa esta función para obtener el ID del paciente
+                DataPaciente p = new DataPaciente();
+                EntidadPaciente paciente = new EntidadPaciente();
 
                 // Asocia el paciente a la dieta
-                EntidadPaciente paciente = new EntidadPaciente();
+                
                 paciente.setIdpaciente(idPaciente);
                 di.setPaciente(paciente);
                 
-                boolean vRespuesta = data.crearDieta(di);
+            }else{
+                JOptionPane.showMessageDialog(null, "El id el Paciente no existe");
             }
 
         }
