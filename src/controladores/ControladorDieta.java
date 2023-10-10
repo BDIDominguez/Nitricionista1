@@ -129,9 +129,13 @@ public class ControladorDieta implements ActionListener, KeyListener {
                 }
                 boolean estado = true;
             }
+            
         }
         if (d.getSource() == vista.btSalir) {
             vista.dispose();
+        }
+        if (d.getSource() == vista.btEliminar){
+            
         }
     }
 
