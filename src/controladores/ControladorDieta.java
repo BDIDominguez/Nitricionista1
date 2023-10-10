@@ -127,7 +127,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
                     LocalDate fechaFin = instantFinal.atZone(ZoneId.systemDefault()).toLocalDate();
                     di.setFechaFinal(fechaFin);
                 }
-                boolean estado = true;
+                boolean vRespuesta = true;
             }
 
         }
@@ -139,15 +139,15 @@ public class ControladorDieta implements ActionListener, KeyListener {
             if (dietaAEliminar != null) {
 
                 DataDieta dt = new DataDieta();
-                boolean eliminada = DataDieta.eliminarDieta();
-                if (eliminada) {
-                    JOptionPane.showMessageDialog(null, "Dieta eliminada exitosamente.");
+                boolean vRespuesta = DataDieta.eliminarDieta(dt);
+                if (vRespuesta) {
+                    JOptionPane.showMessageDialog(null, "Dieta dada de baja exitosamente.");
                     // Realizar cualquier otra acción necesaria después de dar de baja
                 } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo eliminar la dieta.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No se pudo dar de baja la dieta.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Selecciona una dieta para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Selecciona una dieta para para dar de baja.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
