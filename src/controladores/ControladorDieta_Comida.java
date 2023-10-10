@@ -63,9 +63,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
-        
+                
         if  (e.getSource()== vista.CBPaciente) { //muestra para seleccionar un paciente activo
             
         }
