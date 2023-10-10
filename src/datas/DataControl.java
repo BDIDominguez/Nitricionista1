@@ -81,7 +81,7 @@ public class DataControl {
     public List<EntidadControl> listarControles() throws SQLException{
         List<EntidadControl> lista = new ArrayList<>();
         Connection con = Conexion.getConexion();
-        String sql = "select * from controles where estado = 1";
+        String sql = "select * from controles where estado = 1 order by fecha";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while(rs.next()){
