@@ -114,20 +114,24 @@ public class ControladorDieta implements ActionListener, KeyListener {
                 di.setPesoFinal(Double.parseDouble(vista.txPesoFin.getText()));
 
                 java.util.Date fechaInicio = vista.dcFechInicio.getDate();
-                if (fechaInicio != null) {
-                    Instant instantInicio = fechaInicio.toInstant();
-                    LocalDate fechaInicial = instantInicio.atZone(ZoneId.systemDefault()).toLocalDate();
-                    di.setFechaInicial(fechaInicial);
-                }
+                Instant instantInicio = fechaInicio.toInstant();
+                LocalDate fechaInicial = instantInicio.atZone(ZoneId.systemDefault()).toLocalDate();
+                di.setFechaInicial(fechaInicial);
 
-                // Configurar la fecha final
                 java.util.Date fechaFinal = vista.dcFechFinal.getDate();
-                if (fechaFinal != null) {
-                    Instant instantFinal = fechaFinal.toInstant();
-                    LocalDate fechaFin = instantFinal.atZone(ZoneId.systemDefault()).toLocalDate();
-                    di.setFechaFinal(fechaFin);
-                }
-                boolean vRespuesta = true;
+                Instant instantFinal = fechaFinal.toInstant();
+                LocalDate fechaFin = instantFinal.atZone(ZoneId.systemDefault()).toLocalDate();
+                di.setFechaFinal(fechaFin);
+
+                // Obten el ID del paciente, por ejemplo, mediante una consulta a la base de datos
+                int idPaciente = data.pacienteID(); // Implementa esta función para obtener el ID del paciente
+
+                // Asocia el paciente a la dieta
+                EntidadPaciente paciente = new EntidadPaciente();
+                paciente.setIdpaciente(idPaciente);
+                di.setPaciente(paciente);
+                
+                boolean vRespuesta = data.crearDieta(di);
             }
 
         }
@@ -153,6 +157,14 @@ public class ControladorDieta implements ActionListener, KeyListener {
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(vista, "Error al dar de baja la dieta: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        }
+        if (d.getSource() == vista.cbEstado) {
+            if (vista.cbEstado.isSelected()) {
+                vista.cbEstado.setText("ACTIVO");
+            } else {
+                vista.cbEstado.setText("DEBAJA");
+                vista.cbEstado.setEnabled(false);
             }
         }
     }
