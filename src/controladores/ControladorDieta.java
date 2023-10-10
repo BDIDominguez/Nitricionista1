@@ -129,18 +129,32 @@ public class ControladorDieta implements ActionListener, KeyListener {
                 }
                 boolean estado = true;
             }
-            
+
         }
         if (d.getSource() == vista.btSalir) {
             vista.dispose();
         }
-        if (d.getSource() == vista.btEliminar){
-            
+        if (d.getSource() == vista.btEliminar) {
+            EntidadDieta dietaAEliminar = new EntidadDieta();
+            if (dietaAEliminar != null) {
+
+                DataDieta dt = new DataDieta();
+                boolean eliminada = DataDieta.eliminarDieta();
+                if (eliminada) {
+                    JOptionPane.showMessageDialog(null, "Dieta eliminada exitosamente.");
+                    // Realizar cualquier otra acción necesaria después de dar de baja
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo eliminar la dieta.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecciona una dieta para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }
 
+
     @Override
-    public void keyTyped(KeyEvent e) {
+        public void keyTyped(KeyEvent e) {
         if (e.getSource() == vista.txDNI) {
             char caracter = e.getKeyChar();
             if (caracter < '0' || caracter > '9') {
@@ -150,12 +164,12 @@ public class ControladorDieta implements ActionListener, KeyListener {
     }
 
     @Override
-    public void keyPressed(KeyEvent ke) {
+        public void keyPressed(KeyEvent ke) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void keyReleased(KeyEvent ke) {
+        public void keyReleased(KeyEvent ke) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
