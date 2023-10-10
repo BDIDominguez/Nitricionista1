@@ -7,6 +7,7 @@ package vistas;
 
 import java.awt.Image;
 import java.net.URL;
+import java.util.Date;
 import javax.swing.ImageIcon;
 
 /**
@@ -21,6 +22,8 @@ public class VistaControl extends javax.swing.JInternalFrame {
     public VistaControl() {
         initComponents();
         colocarIconos();
+        dcFecha.setDate(new Date());
+        dcCita.setDate(new Date());
     }
 
     /**
@@ -90,6 +93,7 @@ public class VistaControl extends javax.swing.JInternalFrame {
 
         dcFecha.setFocusable(false);
         dcFecha.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        dcFecha.setMinSelectableDate(new Date());
         jPanel1.add(dcFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 209, 35));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
@@ -98,7 +102,7 @@ public class VistaControl extends javax.swing.JInternalFrame {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
         txPeso.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        txPeso.setText("0.00");
+        txPeso.setText("0,00");
         jPanel1.add(txPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 80, -1));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
@@ -107,7 +111,7 @@ public class VistaControl extends javax.swing.JInternalFrame {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, -1, 30));
 
         txAltura.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        txAltura.setText("0.00");
+        txAltura.setText("0,00");
         jPanel1.add(txAltura, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, 103, -1));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
@@ -116,7 +120,7 @@ public class VistaControl extends javax.swing.JInternalFrame {
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
 
         txCintura.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        txCintura.setText("0.00");
+        txCintura.setText("0,00");
         jPanel1.add(txCintura, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 80, -1));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
@@ -125,11 +129,11 @@ public class VistaControl extends javax.swing.JInternalFrame {
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 143, -1));
 
         txGasto.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        txGasto.setText("0.00");
+        txGasto.setText("0,00");
         jPanel1.add(txGasto, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 103, -1));
 
         txIMC.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        txIMC.setText("0.00");
+        txIMC.setText("0,00");
         txIMC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txIMCActionPerformed(evt);
@@ -144,6 +148,7 @@ public class VistaControl extends javax.swing.JInternalFrame {
 
         dcCita.setFocusable(false);
         dcCita.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        dcCita.setMinSelectableDate(new Date());
         jPanel1.add(dcCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 209, 35));
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N

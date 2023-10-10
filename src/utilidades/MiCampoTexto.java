@@ -16,12 +16,10 @@ public class MiCampoTexto extends JTextField {
     private boolean tienePunto = false;
     private DecimalFormat formato;
     private int tipo;
-    
 
     public MiCampoTexto(int tipo) {
         super();
         this.tipo = tipo;
-        
 
         addKeyListener(new KeyAdapter() {
             @Override
@@ -39,13 +37,14 @@ public class MiCampoTexto extends JTextField {
                         }
                         break;
                     case 3: // acepta numero y punto decimal
-                        if (c == '.') {
+                        /*if (c == '.') {
                             if (!tienePunto) {
                                 e.consume();
                             } else {
                                 tienePunto = true;
                             }
-                        } else if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
+                        } else */
+                        if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || !getText().contains("."))) {
                             e.consume();
                         }
                         break;
@@ -54,7 +53,7 @@ public class MiCampoTexto extends JTextField {
                             e.consume();
                         }
                         break;
-                        case 5: // es un campo texto acepta tanto letras como numeros
+                    case 5: // es un campo texto acepta tanto letras como numeros
                         if (!(c == KeyEvent.VK_SPACE || (Character.isLetter(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
                             e.consume();
                         }
@@ -69,6 +68,16 @@ public class MiCampoTexto extends JTextField {
                 selectAll();
             }
         });
+
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (!getText().contains(".")) {
+                    tienePunto = false;
+                }
+            }
+        });
+
         // Evitar la opcion de pegar texto
         setTransferHandler(null);
     }

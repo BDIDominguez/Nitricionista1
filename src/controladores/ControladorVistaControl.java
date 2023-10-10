@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -65,6 +67,10 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         //Capturando Text
         vista.txAltura.addFocusListener(this);
         vista.txPeso.addFocusListener(this);
+        vista.txCintura.addFocusListener(this);
+        vista.txGasto.addFocusListener(this);
+        vista.txIMC.addFocusListener(this);
+        vista.txPeso.addFocusListener(this);
 
     }
 
@@ -89,11 +95,11 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         if (e.getSource() == vista.btNuevo) {
             idcontrol = -1;
             vista.dcFecha.setDate(new Date());
-            vista.txPeso.setText("0.00");
-            vista.txAltura.setText("0.00");
-            vista.txCintura.setText("0.00");
-            vista.txIMC.setText("0.00");
-            vista.txGasto.setText("0.00");
+            vista.txPeso.setText("0,00");
+            vista.txAltura.setText("0,00");
+            vista.txCintura.setText("0,00");
+            vista.txIMC.setText("0,00");
+            vista.txGasto.setText("0,00");
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
             cal.add(Calendar.DAY_OF_MONTH, 7);
@@ -106,11 +112,11 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
             co.setIdControl(idcontrol);
             co.setIdPaciente(extraerIdPaciente());
             co.setFecha(vista.dcFecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-            co.setPeso(Double.parseDouble(vista.txPeso.getText()));
-            co.setAltura(Double.parseDouble(vista.txAltura.getText()));
-            co.setCintura(Double.parseDouble(vista.txCintura.getText()));
-            co.setGasenergetico(Double.parseDouble(vista.txGasto.getText()));
-            co.setIMC(Double.parseDouble(vista.txIMC.getText()));
+            co.setPeso(Double.parseDouble(vista.txPeso.getText().replace(",", ".")));
+            co.setAltura(Double.parseDouble(vista.txAltura.getText().replace(",", ".")));
+            co.setCintura(Double.parseDouble(vista.txCintura.getText().replace(",", ".")));
+            co.setGasenergetico(Double.parseDouble(vista.txGasto.getText().replace(",", ".")));
+            co.setIMC(Double.parseDouble(vista.txIMC.getText().replace(",", ".")));
             co.setProximacita(vista.dcCita.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             co.setEstado(true);
             co.setObs(vista.txObs.getText());
@@ -158,6 +164,8 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
                         if (vresp) {
                             JOptionPane.showMessageDialog(vista, "Se elimino el control correctamente");
                             llenarTabla(extraerIdPaciente());
+                            limpiarFomulario();
+                            vista.tbControl.requestFocus();
                         } else {
                             JOptionPane.showMessageDialog(vista, "No se pudo eliminar, se desconose la causa!");
                         }
@@ -182,6 +190,59 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
 
     @Override
     public void focusLost(FocusEvent e) {
+
+        if (e.getSource() == vista.txPeso) {
+            double valor = Double.parseDouble(vista.txPeso.getText().replace(",", "."));
+            if (valor >= 0 && valor < 595) {
+                vista.txPeso.setText(formatoDecimal(Double.parseDouble(vista.txPeso.getText().replace(",", "."))));
+            } else {
+                JOptionPane.showMessageDialog(vista, "El peso no es uno que se considera Valida!!!");
+                vista.txPeso.setText("80,00");
+                vista.txPeso.requestFocus();
+            }
+        }
+
+        if (e.getSource() == vista.txAltura) {
+            double valor = Double.parseDouble(vista.txAltura.getText().replace(",", "."));
+            if (valor >= 0.50 && valor < 2.8) {
+                vista.txAltura.setText(formatoDecimal(Double.parseDouble(vista.txAltura.getText().replace(",", "."))));
+            } else {
+                JOptionPane.showMessageDialog(vista, "La altura no es una que se considera Valida!!!");
+                vista.txAltura.setText("1,60");
+                vista.txAltura.requestFocus();
+            }
+        }
+        if (e.getSource() == vista.txCintura) {
+            double valor = Double.parseDouble(vista.txCintura.getText().replace(",", "."));
+            if (valor >= 0 && valor < 100) {
+                vista.txCintura.setText(formatoDecimal(Double.parseDouble(vista.txCintura.getText().replace(",", "."))));
+            } else {
+                JOptionPane.showMessageDialog(vista, "La cintura no es una que se considera Valida!!!");
+                vista.txCintura.setText("35");
+                vista.txCintura.requestFocus();
+            }
+        }
+        if (e.getSource() == vista.txIMC) {
+            double valor = Double.parseDouble(vista.txIMC.getText().replace(",", "."));
+            if (valor >= 0 && valor < 175) {
+                vista.txIMC.setText(formatoDecimal(Double.parseDouble(vista.txIMC.getText().replace(",", "."))));
+            } else {
+                JOptionPane.showMessageDialog(vista, "El IMC no es uno que se considera Valida!!!");
+                vista.txIMC.setText("25");
+                vista.txIMC.requestFocus();
+            }
+        }
+        if (e.getSource() == vista.txGasto) {
+            double valor = Double.parseDouble(vista.txGasto.getText().replace(",", "."));
+            if (valor >= 0 && valor < 100) {
+                vista.txGasto.setText(formatoDecimal(Double.parseDouble(vista.txGasto.getText().replace(",", "."))));
+            } else {
+                JOptionPane.showMessageDialog(vista, "El gasto Energetico no es uno que se considera Valido!!!");
+                vista.txGasto.setText("35");
+                vista.txGasto.requestFocus();
+            }
+        }
+
         if (e.getSource() == vista.txAltura || e.getSource() == vista.txPeso) {
             calcularIMC();
         }
@@ -283,11 +344,11 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
             co = cData.ControlxID(idcontrol);
             idcontrol = co.getIdControl();
             vista.dcFecha.setDate(Date.from(co.getFecha().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-            vista.txPeso.setText(co.getPeso() + "");
-            vista.txAltura.setText(co.getAltura() + "");
-            vista.txCintura.setText(co.getCintura() + "");
-            vista.txIMC.setText(co.getIMC() + "");
-            vista.txGasto.setText(co.getGasenergetico() + "");
+            vista.txPeso.setText(formatoDecimal(co.getPeso()));
+            vista.txAltura.setText(formatoDecimal(co.getAltura()));
+            vista.txCintura.setText(formatoDecimal(co.getCintura()));
+            vista.txIMC.setText(formatoDecimal(co.getIMC()));
+            vista.txGasto.setText(formatoDecimal(co.getGasenergetico()));
             vista.dcCita.setDate(Date.from(co.getProximacita().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             vista.txObs.setText(co.getObs());
             vista.btGuardar.setEnabled(true);
@@ -298,19 +359,44 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
     }
 
     private void calcularIMC() {
-        double altura = Double.parseDouble(vista.txAltura.getText());
-        double peso = Double.parseDouble(vista.txPeso.getText());
+        double altura = Double.parseDouble(vista.txAltura.getText().replace(",", "."));
+        double peso = Double.parseDouble(vista.txPeso.getText().replace(",", "."));
         if (altura > 0 && peso > 0) {
             double imc = peso / (altura * altura);
-            vista.txIMC.setText(imc + "");
+            vista.txIMC.setText(formatoDecimal(imc));
         }
     }
 
     private String formatoDecimal(double valor) {
-        String respuesta = "";
-        DecimalFormat formato = new DecimalFormat("0.00");
+        DecimalFormat formato = new DecimalFormat("#,##0.00");
         String numeroFormateado = formato.format(valor);
-        respuesta = valor + "";
-        return respuesta;
+        return numeroFormateado;
     }
+
+    private double convertirTextDouble(String cadena) {
+        String valor = cadena.replace(",", ".");
+        try {
+            return Double.parseDouble(valor);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(vista, "Error al intentar formatear el string a Double!!! \n" + e.getMessage());
+            return 0.0;
+        }
+    }
+
+    private void limpiarFomulario() {
+        idcontrol = -1;
+        vista.dcFecha.setDate(new Date());
+        vista.txPeso.setText("0,00");
+        vista.txAltura.setText("0,00");
+        vista.txCintura.setText("0,00");
+        vista.txIMC.setText("0,00");
+        vista.txGasto.setText("0,00");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DAY_OF_MONTH, 7);
+        vista.dcCita.setDate(cal.getTime());
+        vista.btEliminar.setEnabled(false);
+        vista.btGuardar.setEnabled(true);
+    }
+
 } //Fin Clase
