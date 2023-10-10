@@ -135,26 +135,31 @@ public class ControladorDieta implements ActionListener, KeyListener {
             vista.dispose();
         }
         if (d.getSource() == vista.btEliminar) {
-            EntidadDieta dietaAEliminar = new EntidadDieta();
-            if (dietaAEliminar != null) {
+            String nombreDieta = vista.txNombreD.getText();
+            int idDieta = Integer.parseInt(vista.txNombreD.getText());
 
-                DataDieta dt = new DataDieta();
-                boolean vRespuesta = DataDieta.eliminarDieta(dt);
-                if (vRespuesta) {
-                    JOptionPane.showMessageDialog(null, "Dieta dada de baja exitosamente.");
-                    // Realizar cualquier otra acción necesaria después de dar de baja
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo dar de baja la dieta.", "Error", JOptionPane.ERROR_MESSAGE);
+            int confirmacion = JOptionPane.showConfirmDialog(vista, "¿Seguro desea dar de baja la Dieta: " + nombreDieta + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                try {
+                    boolean vRespuesta = data.eliminarDieta(idDieta);
+
+                    if (vRespuesta) {
+                        JOptionPane.showMessageDialog(vista, "Dieta dada de baja con éxito.");
+                        // Realiza cualquier otra acción necesaria después de eliminar
+                    } else {
+                        JOptionPane.showMessageDialog(vista, "No se pudo dar de baja la dieta.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(vista, "Error al dar de baja la dieta: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Selecciona una dieta para para dar de baja.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
 
-
     @Override
-        public void keyTyped(KeyEvent e) {
+    public void keyTyped(KeyEvent e
+    ) {
         if (e.getSource() == vista.txDNI) {
             char caracter = e.getKeyChar();
             if (caracter < '0' || caracter > '9') {
@@ -164,12 +169,14 @@ public class ControladorDieta implements ActionListener, KeyListener {
     }
 
     @Override
-        public void keyPressed(KeyEvent ke) {
+    public void keyPressed(KeyEvent ke
+    ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-        public void keyReleased(KeyEvent ke) {
+    public void keyReleased(KeyEvent ke
+    ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
