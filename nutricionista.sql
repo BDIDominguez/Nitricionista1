@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-10-2023 a las 23:19:41
+-- Tiempo de generación: 11-10-2023 a las 02:37:28
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.4
 
@@ -37,7 +37,39 @@ CREATE TABLE `comidas` (
   `calorias` int DEFAULT NULL,
   `estado` tinyint DEFAULT NULL,
   `peso` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `controles`
+--
+
+DROP TABLE IF EXISTS `controles`;
+CREATE TABLE `controles` (
+  `idControl` int NOT NULL,
+  `idPaciente` int DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `peso` double DEFAULT NULL,
+  `altura` double DEFAULT NULL,
+  `cintura` double DEFAULT NULL,
+  `gasenergetico` double DEFAULT NULL,
+  `IMC` double DEFAULT NULL,
+  `proximacita` date DEFAULT NULL,
+  `estado` tinyint DEFAULT NULL,
+  `obs` text COLLATE utf8mb4_general_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Volcado de datos para la tabla `controles`
+--
+
+INSERT INTO `controles` (`idControl`, `idPaciente`, `fecha`, `peso`, `altura`, `cintura`, `gasenergetico`, `IMC`, `proximacita`, `estado`, `obs`) VALUES
+(3, 1, '2023-10-08', 50, 50, 50, 50, 50, '2023-10-15', 1, 'Lechonnnnn!!!'),
+(4, 1, '2023-10-15', 50, 50, 50, 50, 50, '2023-10-22', 0, 'Segunda cita del Lechos!!!'),
+(6, 4, '2023-10-09', 73.5, 1.69, 45.5, 45, 25.73, '2023-10-17', 1, 'La paciende precenta sintomas de transtornos pero siquiatricos!!!!'),
+(7, 4, '2023-10-17', 75.5, 1.69, 48, 60, 26.43, '2023-10-24', 1, 'Sigue con sus claros problemas mentales, no entiende que no necesita\nun nutricionista si no un psicologo XD'),
+(8, 4, '2023-10-10', 74.5, 1.69, 46, 35, 26.08, '2023-10-11', 1, 'Sigue con sus claros problemas mentales, no entiende que no necesita\nun nutricionista si no un psicologo XD');
 
 -- --------------------------------------------------------
 
@@ -52,7 +84,7 @@ CREATE TABLE `dietacomidas` (
   `iddieta` int DEFAULT NULL,
   `porcion` double DEFAULT NULL,
   `horario` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -70,7 +102,7 @@ CREATE TABLE `dietas` (
   `pesoinicial` double DEFAULT NULL,
   `pesofinal` double DEFAULT NULL,
   `estado` tinyint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -86,7 +118,7 @@ CREATE TABLE `pacientes` (
   `domicilio` varchar(60) DEFAULT NULL,
   `telefono` varchar(15) DEFAULT NULL,
   `estado` tinyint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `pacientes`
@@ -107,6 +139,13 @@ INSERT INTO `pacientes` (`idpaciente`, `nombre`, `dni`, `domicilio`, `telefono`,
 --
 ALTER TABLE `comidas`
   ADD PRIMARY KEY (`idcomida`);
+
+--
+-- Indices de la tabla `controles`
+--
+ALTER TABLE `controles`
+  ADD PRIMARY KEY (`idControl`),
+  ADD KEY `idPaciente` (`idPaciente`);
 
 --
 -- Indices de la tabla `dietacomidas`
@@ -141,6 +180,12 @@ ALTER TABLE `comidas`
   MODIFY `idcomida` int NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `controles`
+--
+ALTER TABLE `controles`
+  MODIFY `idControl` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT de la tabla `dietacomidas`
 --
 ALTER TABLE `dietacomidas`
@@ -161,6 +206,12 @@ ALTER TABLE `pacientes`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `controles`
+--
+ALTER TABLE `controles`
+  ADD CONSTRAINT `controles_ibfk_1` FOREIGN KEY (`idPaciente`) REFERENCES `pacientes` (`idpaciente`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Filtros para la tabla `dietacomidas`
