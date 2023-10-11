@@ -25,6 +25,7 @@ import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -178,14 +179,10 @@ public class ControladorDieta implements ActionListener, KeyListener {
             }
         }
         if (d.getSource() == vista.cboxListaDietas) {
-            // Obtiene la dieta seleccionada desde el JComboBox
-            String dietaSeleccionada = (String) vista.cboxListaDietas.getSelectedItem();
+            if (vista.cboxListaDietas.getItemCount() > 0) { //Si tiene elementos >0
+                String selectedItem = (String) vista.cboxListaDietas.getSelectedItem();
 
-            // Llama a un método para obtener las comidas asociadas a la dieta
-            List<EntidadComida> comidas = EntidadDieta(dietaSeleccionada);
-
-            // Actualiza una tabla o lista en la interfaz gráfica para mostrar las comidas
-            actualizarTablaDeComidas(comidas);
+            }
         }
     }
 
@@ -210,5 +207,43 @@ public class ControladorDieta implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent ke
     ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    private void modelarTabla(){
+        modelo.addColumn("DNI");
+        modelo.addcolumn("Nombre");
+        modelo.addcolumn("paciente");
+        
+        
+    }
+
+    private void llenarComboDieta() {
+        List<EntidadDieta> dt = new ArrayList<>();
+        try {
+            dt = data.listarDietas();
+            modelo.setRowCout(0);
+            for (EntidadDieta enti : dt){
+                modelo.addRow(new Object[]{enti.getIdDieta(), enti.getNombre(), enti.getPaciente(), enti.getFechaInicial(), enti.getFechaFinal(), enti.getPesoInicial(), enti.getPesoFinal()});
+            }
+            vista.cboxListaDietas.setModel(modelo);
+            dietas.clear();
+            dietas.addAll(dt);
+        } catch (SQLException ex){
+            JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de dietas \n" + ex.getMessage());
+        }
+    }
+    private void mostrarDieta(int id){
+        try {
+            EntidadDieta dt = new EntidadDieta();
+            dt = data.obtenerDietaPorId(id);
+            vista.txDNI.setText(dt.getIdDieta() + "");
+            vista.txNombreP.setText(dt.getPaciente() + "");
+            vista.txNombreD.setText(dt.getNombre() + "");
+            vista.dcFechInicio.setDateFormatString(dt.getFechaInicial() + "");
+            vista.dcFechFinal.setDateFormatString(dt.getFechaFinal() + "");
+            vista.txPesoIni.setText(dt.getPesoInicial() + "");
+            vista.txPesoFin.setText(dt.getPesoFinal() + "");
+        } catch (SQLException ex){
+            JOptionPane.showMessageDialog(vista, "Error no se puede consultar el ID " + id + " \n" + ex.getMessage());
+        }
     }
 }
