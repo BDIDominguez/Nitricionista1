@@ -31,7 +31,7 @@ public class DataDieta {
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, entidadDieta.getIdDieta());
         ps.setString(2, entidadDieta.getNombre());
-        ps.setInt(3, entidadDieta.getPaciente().getIdpaciente());
+        ps.setInt(3, entidadDieta.getPaciente());
         ps.setDate(4, java.sql.Date.valueOf(entidadDieta.getFechaInicial()));
         ps.setDouble(5, entidadDieta.getPesoInicial());
         ps.setDouble(6, entidadDieta.getPesoFinal());
@@ -47,7 +47,7 @@ public class DataDieta {
         String sql = "UPDATE dietas SET nombre = ?, id_paciente = ?, fecha_inicial = ?, peso_inicial = ?, peso_final = ?, fecha_final = ? WHERE id_dieta = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, entidadDieta.getNombre());
-        ps.setInt(2, entidadDieta.getPaciente().getIdpaciente());
+        ps.setInt(2, entidadDieta.getPaciente());
         ps.setDate(3, java.sql.Date.valueOf(entidadDieta.getFechaInicial()));
         ps.setDouble(4, entidadDieta.getPesoInicial());
         ps.setDouble(5, entidadDieta.getPesoFinal());
@@ -79,10 +79,9 @@ public class DataDieta {
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             EntidadDieta d = new EntidadDieta();
-            DataPaciente p = new DataPaciente();
             d.setIdDieta(rs.getInt("iddieta"));
             d.setNombre(rs.getString("nombre"));
-            d.setPaciente(p.pacienteID(rs.getInt("idpaciente"))); // Obtener el paciente por su ID
+            d.setPaciente((rs.getInt("idpaciente"))); // Obtener el paciente por su ID
             d.setFechaInicial(rs.getDate("fecinicio").toLocalDate());
             d.setFechaFinal(rs.getDate("fecfinal").toLocalDate());
             d.setPesoInicial(rs.getDouble("pesoinicial"));
@@ -95,7 +94,6 @@ public class DataDieta {
 
     public EntidadDieta obtenerDietaPorId(int id) throws SQLException {
         EntidadDieta d = new EntidadDieta();
-        DataPaciente p = new DataPaciente();
         con = Conexion.getConexion();
         String sql = "SELECT * FROM dietas WHERE id_dieta = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -104,7 +102,7 @@ public class DataDieta {
         if (rs.next()) {
             d.setIdDieta(rs.getInt("id_dieta"));
             d.setNombre(rs.getString("nombre"));
-            d.setPaciente(p.pacienteID(rs.getInt("idpaciente"))); 
+            d.setPaciente((rs.getInt("idpaciente"))); 
             d.setFechaInicial(rs.getDate("fecinicio").toLocalDate());
             d.setFechaFinal(rs.getDate("fecfinal").toLocalDate());
             d.setPesoInicial(rs.getDouble("pesoinicial"));

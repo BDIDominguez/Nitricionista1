@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class EntidadDieta {
     private int idDieta;
     private String nombre;
-    private EntidadPaciente paciente;
+    private int paciente;
     private LocalDate fechaInicial;
     private double pesoInicial;
     private double pesoFinal;
@@ -23,7 +23,7 @@ public class EntidadDieta {
     public EntidadDieta() {
     }
 
-    public EntidadDieta(int idDieta, String nombre, EntidadPaciente paciente, LocalDate fechaInicial, double pesoInicial, double pesoFinal, LocalDate fechaFinal) {
+    public EntidadDieta(int idDieta, String nombre, int paciente, LocalDate fechaInicial, double pesoInicial, double pesoFinal, LocalDate fechaFinal) {
         this.idDieta = idDieta;
         this.nombre = nombre;
         this.paciente = paciente;
@@ -49,11 +49,11 @@ public class EntidadDieta {
         this.nombre = nombre;
     }
 
-    public EntidadPaciente getPaciente() {
+    public int getPaciente() {
         return paciente;
     }
 
-    public void setPaciente(EntidadPaciente paciente) {
+    public void setPaciente(int paciente) {
         this.paciente = paciente;
     }
 

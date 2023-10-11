@@ -67,6 +67,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
         vista.txDNI.setText("0");
         vista.btEliminar.setEnabled(false);
         vista.btGuardar.setEnabled(false);
+        llenarComboDieta();
 
     }
 
@@ -81,7 +82,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
             vista.cbEstado.setSelected(true);
             vista.btNuevo.setEnabled(false);
             vista.btGuardar.setEnabled(true);
-            vista.txDNI.requestFocus();
+            vista.txNombreD.requestFocus();
         }
         if (d.getSource() == vista.btBuscar) {
             if (vista.txDNI.getText().equals("") || vista.txDNI.getText().equals("0")) {
@@ -95,6 +96,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
                     if (pac.getDni() == b) {
                         vista.txNombreP.setText(pac.getNombre());
                         idPaciente = pac.getIdpaciente();
+                        llenarComboDieta();
                         //llamar el metodo para rellenar el combo de dietas
                     } else {
                         JOptionPane.showMessageDialog(vista, "No se encontrado el DNI");
@@ -139,7 +141,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
 
                 // Asocia el paciente a la dieta
                 paciente.setIdpaciente(idPaciente);
-                di.setPaciente(paciente);
+                di.setPaciente(idPaciente);
 
             } else {
                 JOptionPane.showMessageDialog(null, "El id el Paciente no existe");
@@ -208,25 +210,20 @@ public class ControladorDieta implements ActionListener, KeyListener {
     ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    private void modelarTabla(){
-        modelo.addColumn("DNI");
-        modelo.addcolumn("Nombre");
-        modelo.addcolumn("paciente");
-        
-        
-    }
 
     private void llenarComboDieta() {
         List<EntidadDieta> dt = new ArrayList<>();
         try {
             dt = data.listarDietas();
-            modelo.setRowCout(0);
+            vista.cboxListaDietas.removeAllItems();
             for (EntidadDieta enti : dt){
-                modelo.addRow(new Object[]{enti.getIdDieta(), enti.getNombre(), enti.getPaciente(), enti.getFechaInicial(), enti.getFechaFinal(), enti.getPesoInicial(), enti.getPesoFinal()});
+                if(enti.getPaciente() == idPaciente){
+                 String cadena = enti.getIdDieta() + "-" + enti.getNombre();
+                vista.cboxListaDietas.addItem(cadena);   
+                }    
             }
-            vista.cboxListaDietas.setModel(modelo);
-            dietas.clear();
-            dietas.addAll(dt);
+            
+
         } catch (SQLException ex){
             JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de dietas \n" + ex.getMessage());
         }
@@ -246,4 +243,4 @@ public class ControladorDieta implements ActionListener, KeyListener {
             JOptionPane.showMessageDialog(vista, "Error no se puede consultar el ID " + id + " \n" + ex.getMessage());
         }
     }
-}
+}    
