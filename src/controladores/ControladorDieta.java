@@ -7,6 +7,8 @@ package controladores;
 
 import datas.DataDieta;
 import datas.DataPaciente;
+import datas.DataComida;
+import datas.DataDieta_Comida;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -17,10 +19,13 @@ import vistas.VistaDieta;
 import vistas.VistaPantallaPrincipal;
 import entidades.EntidadDieta;
 import entidades.EntidadPaciente;
+import entidades.EntidadComida;
+import entidades.EntidadDieta_Comida;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -110,8 +115,8 @@ public class ControladorDieta implements ActionListener, KeyListener {
 
             if (idDieta == 0 && vista.txNombreD.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "El campo de texto no puede estar en blanco.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if(idPaciente > 0){
-                
+            } else if (idPaciente > 0) {
+
                 EntidadDieta di = new EntidadDieta();
                 di.setNombre(vista.txNombreD.getText());
                 di.setPesoInicial(Double.parseDouble(vista.txPesoIni.getText()));
@@ -132,11 +137,10 @@ public class ControladorDieta implements ActionListener, KeyListener {
                 EntidadPaciente paciente = new EntidadPaciente();
 
                 // Asocia el paciente a la dieta
-                
                 paciente.setIdpaciente(idPaciente);
                 di.setPaciente(paciente);
-                
-            }else{
+
+            } else {
                 JOptionPane.showMessageDialog(null, "El id el Paciente no existe");
             }
 
@@ -172,6 +176,16 @@ public class ControladorDieta implements ActionListener, KeyListener {
                 vista.cbEstado.setText("DEBAJA");
                 vista.cbEstado.setEnabled(false);
             }
+        }
+        if (d.getSource() == vista.cboxListaDietas) {
+            // Obtiene la dieta seleccionada desde el JComboBox
+            String dietaSeleccionada = (String) vista.cboxListaDietas.getSelectedItem();
+
+            // Llama a un método para obtener las comidas asociadas a la dieta
+            List<EntidadComida> comidas = EntidadDieta(dietaSeleccionada);
+
+            // Actualiza una tabla o lista en la interfaz gráfica para mostrar las comidas
+            actualizarTablaDeComidas(comidas);
         }
     }
 
