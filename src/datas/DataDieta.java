@@ -27,7 +27,7 @@ public class DataDieta {
 
     public EntidadDieta crearDieta(EntidadDieta entidadDieta) throws SQLException {
         con = Conexion.getConexion();
-        String sql = "INSERT INTO dietas (nombre, idpaciente, fecinicio, pesoinicial, pesofinal, fecfinal) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO dietas (nombre, idpaciente, fecinicio, pesoinicial, pesofinal, fecfinal, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, entidadDieta.getNombre());
         ps.setInt(2, entidadDieta.getPaciente());
@@ -35,6 +35,7 @@ public class DataDieta {
         ps.setDouble(4, entidadDieta.getPesoInicial());
         ps.setDouble(5, entidadDieta.getPesoFinal());
         ps.setDate(6, java.sql.Date.valueOf(entidadDieta.getFechaFinal()));
+        ps.setBoolean(7, entidadDieta.isEstado());
         ps.executeUpdate();
         ps.close();
         return entidadDieta;
@@ -43,7 +44,7 @@ public class DataDieta {
     public boolean modificarDieta(EntidadDieta entidadDieta) throws SQLException {
         boolean vRespuesta = false;
         con = Conexion.getConexion();
-        String sql = "UPDATE dietas SET nombre = ?, idpaciente = ?, fecinicio = ?, pesoinicial = ?, pesofinal = ?, fecfinal = ? WHERE iddieta = ?";
+        String sql = "UPDATE dietas SET nombre = ?, idpaciente = ?, fecinicio = ?, pesoinicial = ?, pesofinal = ?, fecfinal = ?, estado = ? WHERE iddieta = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, entidadDieta.getNombre());
         ps.setInt(2, entidadDieta.getPaciente());
@@ -51,7 +52,8 @@ public class DataDieta {
         ps.setDouble(4, entidadDieta.getPesoInicial());
         ps.setDouble(5, entidadDieta.getPesoFinal());
         ps.setDate(6, java.sql.Date.valueOf(entidadDieta.getFechaFinal()));
-        ps.setInt(7, entidadDieta.getIdDieta());
+        ps.setBoolean(7, entidadDieta.isEstado());
+        ps.setInt(8, entidadDieta.getIdDieta());
         ps.executeUpdate();
         vRespuesta = true;
         ps.close();
@@ -85,6 +87,7 @@ public class DataDieta {
             d.setFechaFinal(rs.getDate("fecfinal").toLocalDate());
             d.setPesoInicial(rs.getDouble("pesoinicial"));
             d.setPesoFinal(rs.getDouble("pesofinal"));
+            d.setEstado(rs.getBoolean("estado"));
             dietas.add(d);
         }
         ps.close();
@@ -106,6 +109,7 @@ public class DataDieta {
             d.setFechaFinal(rs.getDate("fecfinal").toLocalDate());
             d.setPesoInicial(rs.getDouble("pesoinicial"));
             d.setPesoFinal(rs.getDouble("pesofinal"));
+            d.setEstado(rs.getBoolean("estado"));
         }
         ps.close();
         return d;

@@ -135,6 +135,8 @@ public class ControladorDieta implements ActionListener, KeyListener {
                 LocalDate fechaFin = instantFinal.atZone(ZoneId.systemDefault()).toLocalDate();
                 di.setFechaFinal(fechaFin);
                 
+                di.setEstado(vista.cbEstado.isSelected());
+                
                 if (idPaciente > 0){
                     di.setPaciente(idPaciente);
                     DataDieta diet = new DataDieta();
