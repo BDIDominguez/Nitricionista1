@@ -21,6 +21,7 @@ import entidades.EntidadDieta;
 import entidades.EntidadPaciente;
 import entidades.EntidadComida;
 import entidades.EntidadDieta_Comida;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -97,6 +98,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
                         vista.txNombreP.setText(pac.getNombre());
                         idPaciente = pac.getIdpaciente();
                         llenarComboDieta();
+                        
                         //llamar el metodo para rellenar el combo de dietas
                     } else {
                         JOptionPane.showMessageDialog(vista, "No se encontrado el DNI");
@@ -115,6 +117,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
             vista.txNombreD.setEnabled(true);
             vista.txPesoIni.setEnabled(true);
             vista.txPesoFin.setEnabled(true);
+            vista.cboxListaDietas.setEnabled(true);
 
             if (idDieta == 0 && vista.txNombreD.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "El campo de texto no puede estar en blanco.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -189,6 +192,23 @@ public class ControladorDieta implements ActionListener, KeyListener {
         if (d.getSource() == vista.cboxListaDietas) {
             if (vista.cboxListaDietas.getItemCount() > 0) { //Si tiene elementos >0
                 String selectedItem = (String) vista.cboxListaDietas.getSelectedItem();
+                
+                String[] partes = selectedItem.split("-");
+                
+                if (partes.length > 0){
+                    try {
+                        int id = Integer.parseInt(partes[0].trim());
+                        EntidadDieta dt = new EntidadDieta();
+                        dt = data.obtenerDietaPorId(id);
+                        vista.txNombreD.setText(dt.getNombre());
+                        vista.dcFechInicio.setDate(Date.valueOf(dt.getFechaInicial()));
+                        vista.dcFechFinal.setDate(Date.valueOf(dt.getFechaFinal()));
+                        vista.txPesoIni.setText(dt.getPesoInicial()+"");
+                        vista.txPesoFin.setText(dt.getPesoFinal()+"");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ControladorDieta.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
 
             }
         }
