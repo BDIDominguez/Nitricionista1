@@ -27,15 +27,14 @@ public class DataDieta {
 
     public EntidadDieta crearDieta(EntidadDieta entidadDieta) throws SQLException {
         con = Conexion.getConexion();
-        String sql = "INSERT INTO dietas (id_dieta, nombre, id_paciente, fecha_inicial, peso_inicial, peso_final, fecha_final) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO dietas (nombre, idpaciente, fecinicio, pesoinicial, pesofinal, fecfinal) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, entidadDieta.getIdDieta());
-        ps.setString(2, entidadDieta.getNombre());
-        ps.setInt(3, entidadDieta.getPaciente());
-        ps.setDate(4, java.sql.Date.valueOf(entidadDieta.getFechaInicial()));
-        ps.setDouble(5, entidadDieta.getPesoInicial());
-        ps.setDouble(6, entidadDieta.getPesoFinal());
-        ps.setDate(7, java.sql.Date.valueOf(entidadDieta.getFechaFinal()));
+        ps.setString(1, entidadDieta.getNombre());
+        ps.setInt(2, entidadDieta.getPaciente());
+        ps.setDate(3, java.sql.Date.valueOf(entidadDieta.getFechaInicial()));
+        ps.setDouble(4, entidadDieta.getPesoInicial());
+        ps.setDouble(5, entidadDieta.getPesoFinal());
+        ps.setDate(6, java.sql.Date.valueOf(entidadDieta.getFechaFinal()));
         ps.executeUpdate();
         ps.close();
         return entidadDieta;
@@ -44,7 +43,7 @@ public class DataDieta {
     public boolean modificarDieta(EntidadDieta entidadDieta) throws SQLException {
         boolean vRespuesta = false;
         con = Conexion.getConexion();
-        String sql = "UPDATE dietas SET nombre = ?, id_paciente = ?, fecha_inicial = ?, peso_inicial = ?, peso_final = ?, fecha_final = ? WHERE id_dieta = ?";
+        String sql = "UPDATE dietas SET nombre = ?, idpaciente = ?, fecinicio = ?, pesoinicial = ?, pesofinal = ?, fecfinal = ? WHERE iddieta = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, entidadDieta.getNombre());
         ps.setInt(2, entidadDieta.getPaciente());
@@ -62,7 +61,7 @@ public class DataDieta {
     public boolean eliminarDieta(int id) throws SQLException {
         boolean vRespuesta = false;
         con = Conexion.getConexion();
-        String sql = "UPDATE dietas SET estado = 0 WHERE id_dieta = ?";
+        String sql = "UPDATE dietas SET estado = 0 WHERE iddieta = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, id);
         ps.executeUpdate();
@@ -95,12 +94,12 @@ public class DataDieta {
     public EntidadDieta obtenerDietaPorId(int id) throws SQLException {
         EntidadDieta d = new EntidadDieta();
         con = Conexion.getConexion();
-        String sql = "SELECT * FROM dietas WHERE id_dieta = ?";
+        String sql = "SELECT * FROM dietas WHERE iddieta = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
-            d.setIdDieta(rs.getInt("id_dieta"));
+            d.setIdDieta(rs.getInt("iddieta"));
             d.setNombre(rs.getString("nombre"));
             d.setPaciente((rs.getInt("idpaciente"))); 
             d.setFechaInicial(rs.getDate("fecinicio").toLocalDate());

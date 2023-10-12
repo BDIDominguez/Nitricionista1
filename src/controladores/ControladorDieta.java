@@ -134,17 +134,21 @@ public class ControladorDieta implements ActionListener, KeyListener {
                 Instant instantFinal = fechaFinal.toInstant();
                 LocalDate fechaFin = instantFinal.atZone(ZoneId.systemDefault()).toLocalDate();
                 di.setFechaFinal(fechaFin);
-
-                // Obten el ID del paciente, por ejemplo, mediante una consulta a la base de datos
-                DataPaciente p = new DataPaciente();
-                EntidadPaciente paciente = new EntidadPaciente();
-
-                // Asocia el paciente a la dieta
-                paciente.setIdpaciente(idPaciente);
-                di.setPaciente(idPaciente);
-
-            } else {
-                JOptionPane.showMessageDialog(null, "El id el Paciente no existe");
+                
+                if (idPaciente > 0){
+                    di.setPaciente(idPaciente);
+                    DataDieta diet = new DataDieta();
+                    try{
+                        EntidadDieta dietaGuardada = diet.crearDieta(di);
+                        JOptionPane.showMessageDialog(null, "Dieta guardada exitosamente con ID: " + dietaGuardada.getIdDieta());
+                    } catch (SQLException ex){
+                        JOptionPane.showMessageDialog(null, "Error al guardar la dieta en la base de datos: " + ex.getMessage());
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "El ID del paciente no es válido.");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "El ID del Paciente no existe.");
             }
 
         }
