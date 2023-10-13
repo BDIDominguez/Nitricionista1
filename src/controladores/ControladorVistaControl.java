@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -37,7 +38,7 @@ import vistas.VistaPantallaPrincipal;
  *
  * @author Dario
  */
-public class ControladorVistaControl implements ActionListener, FocusListener, ListSelectionListener {
+public class ControladorVistaControl implements ActionListener, FocusListener, ListSelectionListener, KeyListener {
 
     private VistaControl vista;
     private VistaPantallaPrincipal menu;
@@ -64,13 +65,28 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         //Agregando la Tabla
         vista.tbControl.getSelectionModel().addListSelectionListener(this);
 
-        //Capturando Text
+        //Capturando El Foco de los Text
         vista.txAltura.addFocusListener(this);
         vista.txPeso.addFocusListener(this);
         vista.txCintura.addFocusListener(this);
         vista.txGasto.addFocusListener(this);
         vista.txIMC.addFocusListener(this);
         vista.txPeso.addFocusListener(this);
+
+        //Capturando las teclas de los Text
+        vista.txAltura.addKeyListener(this);
+        vista.txCintura.addKeyListener(this);
+        vista.txGasto.addKeyListener(this);
+        vista.txIMC.addKeyListener(this);
+        vista.txPeso.addKeyListener(this);
+        
+        // Se impide Copiar y pegar en los jTextField
+        vista.txAltura.setTransferHandler(null);
+        vista.txCintura.setTransferHandler(null);
+        vista.txGasto.setTransferHandler(null);
+        vista.txIMC.setTransferHandler(null);
+        vista.txObs.setTransferHandler(null);
+        vista.txPeso.setTransferHandler(null);
 
     }
 
@@ -111,13 +127,15 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
             EntidadControl co = new EntidadControl();
             co.setIdControl(idcontrol);
             co.setIdPaciente(extraerIdPaciente());
-            co.setFecha(vista.dcFecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            //co.setFecha(vista.dcFecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            co.setFecha(fechasALocalDate("fecha"));
             co.setPeso(Double.parseDouble(vista.txPeso.getText().replace(",", ".")));
             co.setAltura(Double.parseDouble(vista.txAltura.getText().replace(",", ".")));
             co.setCintura(Double.parseDouble(vista.txCintura.getText().replace(",", ".")));
             co.setGasenergetico(Double.parseDouble(vista.txGasto.getText().replace(",", ".")));
             co.setIMC(Double.parseDouble(vista.txIMC.getText().replace(",", ".")));
-            co.setProximacita(vista.dcCita.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            //co.setProximacita(vista.dcCita.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            co.setProximacita(fechasALocalDate("cita"));
             co.setEstado(true);
             co.setObs(vista.txObs.getText());
             if (co.getIdControl() == -1) { // Crear uno nuevo
@@ -185,61 +203,96 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
 
     @Override
     public void focusGained(FocusEvent e) {
-
+        if (e.getSource() == vista.txAltura){
+            vista.txAltura.selectAll();
+        }
+        if (e.getSource() == vista.txPeso){
+            vista.txPeso.selectAll();
+        }
+        if (e.getSource() == vista.txGasto){
+            vista.txGasto.selectAll();
+        }
+        if (e.getSource() == vista.txIMC){
+            vista.txIMC.selectAll();
+        }
+        if (e.getSource() == vista.txCintura){
+            vista.txCintura.selectAll();
+        }
+            
     }
 
     @Override
     public void focusLost(FocusEvent e) {
-
         if (e.getSource() == vista.txPeso) {
-            double valor = Double.parseDouble(vista.txPeso.getText().replace(",", "."));
-            if (valor >= 0 && valor < 595) {
-                vista.txPeso.setText(formatoDecimal(Double.parseDouble(vista.txPeso.getText().replace(",", "."))));
+            if (!vista.txPeso.getText().isEmpty()) {
+                double valor = Double.parseDouble(vista.txPeso.getText().replace(",", "."));
+                if (valor >= 0 && valor < 595) {
+                    vista.txPeso.setText(formatoDecimal(Double.parseDouble(vista.txPeso.getText().replace(",", "."))));
+                } else {
+                    JOptionPane.showMessageDialog(vista, "El peso no es uno que se considera Valida!!!");
+                    vista.txPeso.setText("80,00");
+                    vista.txPeso.requestFocus();
+                }
             } else {
-                JOptionPane.showMessageDialog(vista, "El peso no es uno que se considera Valida!!!");
-                vista.txPeso.setText("80,00");
-                vista.txPeso.requestFocus();
+                vista.txPeso.setText("0,00");
             }
         }
 
         if (e.getSource() == vista.txAltura) {
-            double valor = Double.parseDouble(vista.txAltura.getText().replace(",", "."));
-            if (valor >= 0.50 && valor < 2.8) {
-                vista.txAltura.setText(formatoDecimal(Double.parseDouble(vista.txAltura.getText().replace(",", "."))));
+            if (!vista.txAltura.getText().isEmpty()) {
+                double valor = Double.parseDouble(vista.txAltura.getText().replace(",", "."));
+                if (valor >= 0.50 && valor < 2.8) {
+                    vista.txAltura.setText(formatoDecimal(Double.parseDouble(vista.txAltura.getText().replace(",", "."))));
+                } else {
+                    JOptionPane.showMessageDialog(vista, "La altura no es una que se considera Valida!!!");
+                    vista.txAltura.setText("1,60");
+                    vista.txAltura.requestFocus();
+                }
             } else {
-                JOptionPane.showMessageDialog(vista, "La altura no es una que se considera Valida!!!");
-                vista.txAltura.setText("1,60");
-                vista.txAltura.requestFocus();
+                vista.txAltura.setText("0,00");
             }
+
         }
         if (e.getSource() == vista.txCintura) {
-            double valor = Double.parseDouble(vista.txCintura.getText().replace(",", "."));
-            if (valor >= 0 && valor < 100) {
-                vista.txCintura.setText(formatoDecimal(Double.parseDouble(vista.txCintura.getText().replace(",", "."))));
+            if (!vista.txCintura.getText().isEmpty()) {
+                double valor = Double.parseDouble(vista.txCintura.getText().replace(",", "."));
+                if (valor >= 0 && valor < 100) {
+                    vista.txCintura.setText(formatoDecimal(Double.parseDouble(vista.txCintura.getText().replace(",", "."))));
+                } else {
+                    JOptionPane.showMessageDialog(vista, "La cintura no es una que se considera Valida!!!");
+                    vista.txCintura.setText("35");
+                    vista.txCintura.requestFocus();
+                }
             } else {
-                JOptionPane.showMessageDialog(vista, "La cintura no es una que se considera Valida!!!");
-                vista.txCintura.setText("35");
-                vista.txCintura.requestFocus();
+                vista.txCintura.setText("0,00");
             }
         }
         if (e.getSource() == vista.txIMC) {
-            double valor = Double.parseDouble(vista.txIMC.getText().replace(",", "."));
-            if (valor >= 0 && valor < 175) {
-                vista.txIMC.setText(formatoDecimal(Double.parseDouble(vista.txIMC.getText().replace(",", "."))));
+            if (!vista.txIMC.getText().isEmpty()) {
+                double valor = Double.parseDouble(vista.txIMC.getText().replace(",", "."));
+                if (valor >= 0 && valor < 175) {
+                    vista.txIMC.setText(formatoDecimal(Double.parseDouble(vista.txIMC.getText().replace(",", "."))));
+                } else {
+                    JOptionPane.showMessageDialog(vista, "El IMC no es uno que se considera Valida!!!");
+                    vista.txIMC.setText("25");
+                    vista.txIMC.requestFocus();
+                }
             } else {
-                JOptionPane.showMessageDialog(vista, "El IMC no es uno que se considera Valida!!!");
-                vista.txIMC.setText("25");
-                vista.txIMC.requestFocus();
+                vista.txIMC.setText("0,00");
             }
         }
         if (e.getSource() == vista.txGasto) {
-            double valor = Double.parseDouble(vista.txGasto.getText().replace(",", "."));
-            if (valor >= 0 && valor < 100) {
-                vista.txGasto.setText(formatoDecimal(Double.parseDouble(vista.txGasto.getText().replace(",", "."))));
+            if (!vista.txGasto.getText().isEmpty()) {
+                double valor = Double.parseDouble(vista.txGasto.getText().replace(",", "."));
+                if (valor >= 0 && valor < 100) {
+                    vista.txGasto.setText(formatoDecimal(Double.parseDouble(vista.txGasto.getText().replace(",", "."))));
+                } else {
+                    JOptionPane.showMessageDialog(vista, "El gasto Energetico no es uno que se considera Valido!!!");
+                    vista.txGasto.setText("35");
+                    vista.txGasto.requestFocus();
+                }
             } else {
-                JOptionPane.showMessageDialog(vista, "El gasto Energetico no es uno que se considera Valido!!!");
-                vista.txGasto.setText("35");
-                vista.txGasto.requestFocus();
+                vista.txGasto.setText("0,00");
             }
         }
 
@@ -258,6 +311,51 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
                 mostrarControl();
             }
         }
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        if (e.getSource() == vista.txAltura) {
+            char c = e.getKeyChar();
+            if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || (c == '.' && !vista.txAltura.getText().contains(".")))) {
+                e.consume();
+            }
+        }
+        if (e.getSource() == vista.txPeso) {
+            char c = e.getKeyChar();
+            if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || (c == '.' && !vista.txPeso.getText().contains(".")))) {
+                e.consume();
+            }
+        }
+        if (e.getSource() == vista.txCintura) {
+            char c = e.getKeyChar();
+            if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || (c == '.' && !vista.txCintura.getText().contains(".")))) {
+                e.consume();
+            }
+        }
+        if (e.getSource() == vista.txIMC) {
+            char c = e.getKeyChar();
+            if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || (c == '.' && !vista.txIMC.getText().contains(".")))) {
+                e.consume();
+            }
+        }
+        if (e.getSource() == vista.txGasto) {
+            char c = e.getKeyChar();
+            if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || (c == '.' && !vista.txGasto.getText().contains(".")))) {
+                e.consume();
+            }
+        }
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
 
     }
 
@@ -397,6 +495,56 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         vista.dcCita.setDate(cal.getTime());
         vista.btEliminar.setEnabled(false);
         vista.btGuardar.setEnabled(true);
+    }
+    private LocalDate fechasALocalDate(String cual){
+        LocalDate da ;
+        try{
+            if (cual.equals("fecha")){
+            da = vista.dcFecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }else{
+            da = vista.dcCita.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+        if (da.isBefore(LocalDate.now())){
+            JOptionPane.showMessageDialog(vista,"La fecha no esta cargada correctamente!");
+            da = LocalDate.now();
+            if (cual.equals("fecha")){
+                vista.dcFecha.setDate(Date.from(da.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                vista.dcFecha.requestFocus();
+            }else{
+                vista.dcCita.setDate(Date.from(da.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                vista.dcCita.requestFocus();
+            }
+        }
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(vista,"Fecha mal cargada se pondra por defecto la fecha Actual" );
+            da = LocalDate.now();
+        }
+        return da;
+    }
+    private Date fechasADate(String cual){
+        Date da ;
+        try{
+            if (cual.equals("fecha")){
+            da = vista.dcFecha.getDate();
+        }else{
+            da = vista.dcCita.getDate();
+        }
+        if (da.before(new Date())){
+            JOptionPane.showMessageDialog(vista,"La fecha no esta cargada correctamente!");
+            da = new Date();
+            if (cual.equals("fecha")){
+                vista.dcFecha.setDate(new Date());
+                vista.dcFecha.requestFocus();
+            }else{
+                vista.dcCita.setDate(new Date());
+                vista.dcCita.requestFocus();
+            }
+        }
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(vista,"Fecha mal cargada se pondra por defecto la fecha Actual");
+            da = new Date();
+        }
+        return da;
     }
 
 } //Fin Clase

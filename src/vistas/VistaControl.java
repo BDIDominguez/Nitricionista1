@@ -42,19 +42,14 @@ public class VistaControl extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         dcFecha = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
-        txPeso = new utilidades.MiCampoTexto(3);
-        ;
+        txPeso = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txAltura = new utilidades.MiCampoTexto(3);
-        ;
+        txAltura = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txCintura = new utilidades.MiCampoTexto(3);
-        ;
+        txCintura = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txGasto = new utilidades.MiCampoTexto(3);
-        ;
-        txIMC = new utilidades.MiCampoTexto(3);
-        ;
+        txGasto = new javax.swing.JTextField();
+        txIMC = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         dcCita = new com.toedter.calendar.JDateChooser();
         jLabel9 = new javax.swing.JLabel();
@@ -84,7 +79,7 @@ public class VistaControl extends javax.swing.JInternalFrame {
 
         btEliminar.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         btEliminar.setText("Eliminar");
-        jPanel1.add(btEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 156, -1));
+        jPanel1.add(btEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 570, 156, -1));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -94,7 +89,7 @@ public class VistaControl extends javax.swing.JInternalFrame {
         dcFecha.setFocusable(false);
         dcFecha.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         dcFecha.setMinSelectableDate(new Date());
-        jPanel1.add(dcFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 209, 35));
+        jPanel1.add(dcFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 150, 35));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -126,11 +121,11 @@ public class VistaControl extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Gasto Energetico");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 143, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 143, -1));
 
         txGasto.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         txGasto.setText("0,00");
-        jPanel1.add(txGasto, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 103, -1));
+        jPanel1.add(txGasto, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 170, 103, -1));
 
         txIMC.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         txIMC.setText("0,00");
@@ -143,25 +138,25 @@ public class VistaControl extends javax.swing.JInternalFrame {
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Proxima Cita");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 110, -1));
+        jLabel8.setText("Proxi. Cita");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 80, -1));
 
         dcCita.setFocusable(false);
         dcCita.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         dcCita.setMinSelectableDate(new Date());
-        jPanel1.add(dcCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 209, 35));
+        jPanel1.add(dcCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, 150, 35));
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Observaciones");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 159, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 130, -1));
 
         txObs.setColumns(20);
         txObs.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         txObs.setRows(5);
         jScrollPane1.setViewportView(txObs);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 483, 340));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 483, 350));
 
         tbControl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -180,15 +175,15 @@ public class VistaControl extends javax.swing.JInternalFrame {
 
         btNuevo.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         btNuevo.setText("Nuevo");
-        jPanel1.add(btNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 156, -1));
+        jPanel1.add(btNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 570, 156, -1));
 
         btGuardar.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         btGuardar.setText("Guardar");
-        jPanel1.add(btGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 156, -1));
+        jPanel1.add(btGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 570, 156, -1));
 
         btSalir.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         btSalir.setText("Salir");
-        jPanel1.add(btSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 156, -1));
+        jPanel1.add(btSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 610, 156, -1));
 
         jLabel13.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));

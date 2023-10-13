@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-10-2023 a las 02:37:28
+-- Tiempo de generación: 11-10-2023 a las 03:23:16
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.4
 
@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `nutricionista`
 --
-CREATE DATABASE IF NOT EXISTS `nutricionista` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE IF NOT EXISTS `nutricionista` DEFAULT CHARACTER SET utf8mb4 ;
 USE `nutricionista`;
 
 -- --------------------------------------------------------
@@ -32,12 +32,29 @@ USE `nutricionista`;
 DROP TABLE IF EXISTS `comidas`;
 CREATE TABLE `comidas` (
   `idcomida` int NOT NULL,
-  `nombre` varchar(30) DEFAULT NULL,
+  `nombre` varchar(45) DEFAULT NULL,
   `receta` varchar(120) DEFAULT NULL,
   `calorias` int DEFAULT NULL,
   `estado` tinyint DEFAULT NULL,
   `peso` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Volcado de datos para la tabla `comidas`
+--
+
+INSERT INTO `comidas` (`idcomida`, `nombre`, `receta`, `calorias`, `estado`, `peso`) VALUES
+(1, 'Ensalada de Garbanzos y Aguacate', 'Garbanzos cocidos, aguacate, tomate, cilantro, limón', 340, 1, 280),
+(2, 'Pescado a la Parrilla con Espárragos y Quinua', 'Filete de pescado, espárragos, quinua cocida, limón', 410, 1, 380),
+(3, 'Ensalada de Espinacas con Fresas', 'Espinacas frescas, fresas, almendras tostadas', 350, 1, 380),
+(4, 'Pavo al Horno con Batatas', 'Pechuga de pavo, batatas asadas, romero, aceite de oliva', 420, 1, 350),
+(5, 'Ensalada de Col Rizada con Aguacate', 'Col rizada, aguacate, nueces, vinagreta de limón', 380, 1, 280),
+(6, 'Tofu Salteado con Verduras', 'Tofu, brócoli, zanahorias, pimientos, salsa de soja baja en sodio', 290, 1, 320),
+(7, 'Ensalada de Atún y Garbanzos', 'Atún enlatado, garbanzos, tomate, cebolla roja, aceite de oliva', 320, 1, 280),
+(8, 'Pollo al Curry con Brócoli', 'Pechuga de pollo, brócoli, cebolla, curry en polvo, leche de coco', 520, 1, 400),
+(9, 'Quinua con Verduras Asadas', 'Quinua cocida, zanahorias, calabacines, pimientos, aceite de oliva', 380, 1, 300),
+(10, 'Salmón a la Parrilla con Espárragos', 'Filete de salmón, espárragos, aceite de oliva, limón', 450, 1, 350),
+(11, 'Ensalada de Espinacas con Fresas', 'Espinacas frescas, fresas, almendras tostadas', 350, 1, 250);
 
 -- --------------------------------------------------------
 
@@ -58,7 +75,7 @@ CREATE TABLE `controles` (
   `proximacita` date DEFAULT NULL,
   `estado` tinyint DEFAULT NULL,
   `obs` text COLLATE utf8mb4_general_ci
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `controles`
@@ -102,7 +119,7 @@ CREATE TABLE `dietas` (
   `pesoinicial` double DEFAULT NULL,
   `pesofinal` double DEFAULT NULL,
   `estado` tinyint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -118,7 +135,7 @@ CREATE TABLE `pacientes` (
   `domicilio` varchar(60) DEFAULT NULL,
   `telefono` varchar(15) DEFAULT NULL,
   `estado` tinyint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Volcado de datos para la tabla `pacientes`
@@ -177,7 +194,7 @@ ALTER TABLE `pacientes`
 -- AUTO_INCREMENT de la tabla `comidas`
 --
 ALTER TABLE `comidas`
-  MODIFY `idcomida` int NOT NULL AUTO_INCREMENT;
+  MODIFY `idcomida` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `controles`

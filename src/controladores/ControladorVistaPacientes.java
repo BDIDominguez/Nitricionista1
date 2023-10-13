@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import datas.DataPaciente;
 import entidades.EntidadPaciente;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.event.ListSelectionEvent;
@@ -123,9 +124,11 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
         if (e.getSource() == vista.chEstado) {
             if (vista.chEstado.isSelected()) {
                 vista.chEstado.setText("ACTIVO");
+                vista.chEstado.setBackground(Color.BLUE);
             } else {
                 vista.chEstado.setText("DE BAJA");
                 vista.btEliminar.setEnabled(false);
+                vista.chEstado.setBackground(Color.RED);
             }
         }
         if (e.getSource() == vista.btSalir) {
@@ -167,6 +170,12 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
                             vista.txNombre.setText(pa.getNombre());
                             vista.txDomicilio.setText(pa.getDomicilio());
                             vista.txTelefono.setText(pa.getTelefono());
+                            vista.chEstado.setSelected(pa.isEstado());
+                            if (pa.isEstado()){
+                                vista.chEstado.setBackground(Color.BLUE);
+                            }else{
+                                vista.chEstado.setBackground(Color.RED);
+                            }
                         } else {
                             JOptionPane.showMessageDialog(vista, "No se encontro algun paciente con ese DNI");
                             vista.txDNI.requestFocus();
@@ -233,9 +242,11 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
             if (pa.isEstado()) {
                 vista.chEstado.setText("ACTIVO");
                 vista.btEliminar.setEnabled(true);
+                vista.chEstado.setBackground(Color.BLUE);
             } else {
                 vista.chEstado.setText("DE BAJA");
                 vista.btEliminar.setEnabled(false);
+                vista.chEstado.setBackground(Color.RED);
             }
             vista.btGuardar.setEnabled(true);
 
