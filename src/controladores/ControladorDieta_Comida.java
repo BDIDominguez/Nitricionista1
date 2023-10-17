@@ -74,6 +74,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         vista.requestFocus();
         modelarTabla();
         llenarComboBPaciente();
+        llenarComboBDietas();
     }
 
     private void modelarTabla() {
@@ -136,20 +137,21 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
 
     private void llenarComboBDietas() {
         List<entidades.EntidadDieta> diet = new ArrayList<>();
+
         try {
             DataDieta e = new DataDieta();
             diet = e.listarDietas();
             vista.CBDietas1.removeAllItems();
-            
-            
+
             System.out.println("valor de pac" + diet.size());
             for (entidades.EntidadDieta dieta : diet) {
-//                if (paciente.isEstado()) {
-                String cadena = dieta.getNombre();
-                vista.CBPaciente.addItem(cadena);
+                if (dieta.getPaciente()==paciente) {
+                    String cadena = dieta.getNombre();
+                    vista.CBDietas1.addItem(cadena);
+                    System.out.println("cadena de dieta funciona");
+                }
             }
-
-            AutoCompleteDecorator.decorate(vista.CBPaciente);
+            AutoCompleteDecorator.decorate(vista.CBDietas1);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de dietas \n" + ex.getMessage());
         }
@@ -159,14 +161,15 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == vista.CBPaciente) { //muestra para seleccionar un paciente activo
-
+            llenarComboBPaciente();
             paciente = extraerIdPaciente();
-            llenarJTComidas();
+            llenarComboBDietas();
         }
 
         if (e.getSource() == vista.CBDietas1) {// muestra las dietas disponibles activas para elegir
 //        rellenarTabla(); // rellena la tabla con los datos del paciente
-            llenarComboBDietas();
+
+            llenarJTComidas();
         }
 
         if (e.getSource() == vista.BtNuevaDieta) { //llama a la vista Dieta para cargar nueva dieta y actualiza el JTable JTComidas
