@@ -33,7 +33,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     private final VistaDieta_Comida vista;
     private final DataDieta_Comida dataDietaComida;
     private DefaultTableModel tablaModelo;
-    private int paciente;
+    private int paciente=0;
     private int dietaSeleccionada = -1;
     private boolean edicionActiva = false;
 //    private DataPaciente  = data;
@@ -94,9 +94,12 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         }
     }
 
-       private void llenarJTComidas() {
+    private void llenarJTComidas() {
         try {
-            List<EntidadDieta_Comida> comidas = dataDietaComida.obtenerDietasComidaPorDieta(paciente);
+            List<EntidadDieta_Comida> comidas = new ArrayList<>();
+            System.out.println("valor pac"+paciente);
+                    comidas=dataDietaComida.obtenerDietasComidaPorDieta(paciente);
+                    
             modelo.setRowCount(0);
 
             for (EntidadDieta_Comida comida : comidas) {
@@ -112,29 +115,33 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         }
     }
 
-   private void llenarComboBPaciente() {
+    private void llenarComboBPaciente() {
         List<EntidadPaciente> pac = new ArrayList<>();
         try {
             DataPaciente e = new DataPaciente();
             pac = e.listarPacientes();
             vista.CBPaciente.removeAllItems();
+            System.out.println("valor de pac" + pac.size());
             for (EntidadPaciente paciente : pac) {
-                if (paciente.isEstado()) {
-                    String cadena = paciente.getNombre() + "-" + paciente.getDni();
-                    vista.CBPaciente.addItem(cadena);
-                }
+//                if (paciente.isEstado()) {
+                String cadena = paciente.getNombre() + "-" + paciente.getDni() + "-" + paciente.getIdpaciente();
+                vista.CBPaciente.addItem(cadena);
             }
+
             AutoCompleteDecorator.decorate(vista.CBPaciente);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de pacientes \n" + ex.getMessage());
         }
     }
-       
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == vista.CBPaciente) { //muestra para seleccionar un paciente activo
 
+            paciente = extraerIdPaciente();
+                
+            llenarJTComidas();
         }
 
         if (e.getSource() == vista.CBDietas1) {// muestra las dietas disponibles activas para elegir
@@ -168,7 +175,6 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             vista.dispose();
         }
 
-        llenarJTComidas();
     }
 
     @Override
@@ -189,4 +195,15 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private int extraerIdPaciente() {
+        int id = -1;
+        try {
+            String combobox = vista.CBPaciente.getSelectedItem().toString();
+            String partes[] = combobox.split("-");
+            id = Integer.parseInt(partes[2].trim());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "A ocurrido un error al cargar los indices en el combobox, revices la posicion del idPaciente");
+        }
+        return id;
+    }
 }

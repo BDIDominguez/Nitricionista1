@@ -32,7 +32,7 @@ public class DataDieta_Comida {
             e.printStackTrace();
         }
     }
-    
+
     public boolean eliminarDietaComida(int idDietaComida) throws SQLException {
         boolean vResp = false;
         String sql = "DELETE FROM dieta_comida WHERE id_dieta_comida = ?";
@@ -40,7 +40,7 @@ public class DataDieta_Comida {
         ps.setInt(1, idDietaComida);
         ps.executeUpdate();
         ps.close();
-        vResp=true;
+        vResp = true;
         ps.close();
         return vResp;
     }
@@ -70,7 +70,6 @@ public class DataDieta_Comida {
         return dietaComida;
     }
 
-    
     public List<EntidadDieta_Comida> obtenerDietasComidaPorDieta(int idDieta) throws SQLException {
         List<EntidadDieta_Comida> dietasComida = new ArrayList<>();
         String sql = "SELECT * FROM dieta_comida WHERE id_dieta = ?";
@@ -78,11 +77,14 @@ public class DataDieta_Comida {
         ps.setInt(1, idDieta);
         ResultSet rs = ps.executeQuery();
 
+        System.out.println("sql obtenerDietasComidaPorDieta " + rs.getMetaData()+rs.rowUpdated());
+
         while (rs.next()) {
-            int idDietaComida = rs.getInt("id_dieta_comida");
-            int idComida = rs.getInt("id_comida");
+            int idDietaComida = rs.getInt("iddietacomida");
+            int idComida = rs.getInt("idcomida");
             int porcion = rs.getInt("porcion");
             String horarioStr = rs.getString("horario");
+            System.out.println("entró linea 86 data comida");
             EntidadDieta_Comida.HorarioComida horario = EntidadDieta_Comida.HorarioComida.valueOf(horarioStr);
 
             EntidadDieta_Comida dietaComida = new EntidadDieta_Comida(idDietaComida, idDieta, idComida, porcion, horario);
