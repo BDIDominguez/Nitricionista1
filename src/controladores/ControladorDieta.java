@@ -75,8 +75,8 @@ public class ControladorDieta implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent d) {
         if (d.getSource() == vista.btNuevo) {
-            vista.txDNI.setText("-1");
-            vista.txNombreP.setText("");
+            //vista.txDNI.setText("-1");
+            //vista.txNombreP.setText("");
             vista.txNombreD.setText("");
             vista.txPesoIni.setText("");
             vista.txPesoFin.setText("");
