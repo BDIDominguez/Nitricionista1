@@ -179,16 +179,19 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             ctrl.iniciar();
         }
 
-//        if (e.getSource() == vista.BtEliminar) {// elimina la dieta seleccionada del CBComidasActivas del paciente actual
-//            if (JOptionPane.showConfirmDialog(vista, "Seguro de elimiar la dieta " + vista.CBDietas1.getSelectedItem(), "Confirme", JOptionPane.YES_NO_OPTION) == 0) {
-//
-//            }
-//            try {
-//                boolean vResp = dataDietaComida.eliminarDietaComida(dietaSeleccionada);
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(vista, "Error al eliminar la dieta \n" + Exception.getMessage);
-//            }
-//        }
+        if (e.getSource() == vista.BtEliminar) {// elimina la dieta seleccionada del CBComidasActivas del paciente actual
+            DataDieta e = new dataDieta();
+            if (JOptionPane.showConfirmDialog(vista, "Seguro de eliminar la dieta " + vista.CBDietas1.getSelectedItem(), "Confirme", JOptionPane.YES_NO_OPTION) == 0) {
+              
+            }
+            try {
+                boolean vResp = dataDietaComida.eliminarDietaComida(dietaSeleccionada);
+                  e.eliminarDieta(dietaSeleccionada);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(vista, "Error al eliminar la dieta \n" + Exception.getMessage);
+            }
+        }
+
         if (e.getSource()
                 == vista.CBComidasActivas) { // combobox muestra las comidas activas
 
