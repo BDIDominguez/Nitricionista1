@@ -145,7 +145,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
 
             System.out.println("valor de pac" + diet.size());
             for (entidades.EntidadDieta dieta : diet) {
-                if (dieta.getPaciente()==paciente) {
+                if (dieta.getPaciente() == paciente) {
                     String cadena = dieta.getNombre();
                     vista.CBDietas1.addItem(cadena);
                     System.out.println("cadena de dieta funciona");
@@ -173,8 +173,10 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         }
 
         if (e.getSource() == vista.BtNuevaDieta) { //llama a la vista Dieta para cargar nueva dieta y actualiza el JTable JTComidas
-            VistaDieta vistaDieta = new VistaDieta();
-            vistaDieta.setVisible(true);
+            VistaDieta vista = new VistaDieta();
+            DataDieta data = new DataDieta();
+            ControladorDieta ctrl = new ControladorDieta(menu, vista, data);
+            ctrl.iniciar();
         }
 
 //        if (e.getSource() == vista.BtEliminar) {// elimina la dieta seleccionada del CBComidasActivas del paciente actual
@@ -187,15 +189,18 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
 //                JOptionPane.showMessageDialog(vista, "Error al eliminar la dieta \n" + Exception.getMessage);
 //            }
 //        }
-        if (e.getSource() == vista.CBComidasActivas) { // combobox muestra las comidas activas
+        if (e.getSource()
+                == vista.CBComidasActivas) { // combobox muestra las comidas activas
 
         }
 
-        if (e.getSource() == vista.BtAgregarComida) { //agrega la comida seleccionada del combo box CBComidasActivas a la dieta del paciente
+        if (e.getSource()
+                == vista.BtAgregarComida) { //agrega la comida seleccionada del combo box CBComidasActivas a la dieta del paciente
 
         }
 
-        if (e.getSource() == vista.BtSalir) {
+        if (e.getSource()
+                == vista.BtSalir) {
             vista.dispose();
         }
 
