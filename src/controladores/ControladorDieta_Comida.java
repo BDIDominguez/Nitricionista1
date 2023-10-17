@@ -73,7 +73,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         menu.dpFondo.moveToFront(vista);
         vista.requestFocus();
         modelarTabla();
-        llenarJTComidas();
+        llenarComboBPaciente();
     }
 
     private void modelarTabla() {
@@ -112,22 +112,23 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         }
     }
 
-    private void llenarComboBPaciente() {
+   private void llenarComboBPaciente() {
         List<EntidadPaciente> pac = new ArrayList<>();
         try {
-            pac = DataPaciente.;
+            DataPaciente e = new DataPaciente();
+            pac = e.listarPacientes();
             vista.CBPaciente.removeAllItems();
-            for (EntidadDieta_Comida enti : pac) {
-                if (enti.getPaciente() == idPaciente) {
-                    String cadena = paciente.Nombre() + "-" + paciente.getDni();
-                    vista.CBPacientes.addItem(cadena);
+            for (EntidadPaciente paciente : pac) {
+                if (paciente.isEstado()) {
+                    String cadena = paciente.getNombre() + "-" + paciente.getDni();
+                    vista.CBPaciente.addItem(cadena);
                 }
             }
             AutoCompleteDecorator.decorate(vista.CBPaciente);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de pacientes \n" + ex.getMessage());
         }
-    }    
+    }
        
     @Override
     public void actionPerformed(ActionEvent e) {
