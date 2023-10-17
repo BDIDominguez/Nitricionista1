@@ -127,9 +127,11 @@ public class VistaPaciente extends javax.swing.JInternalFrame {
         btSalir.setText("Salir");
         jPanel1.add(btSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(117, 330, -1, -1));
 
+        chEstado.setBackground(new java.awt.Color(51, 51, 255));
         chEstado.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        chEstado.setText("Activo");
-        jPanel1.add(chEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 199, 200, -1));
+        chEstado.setForeground(new java.awt.Color(0, 0, 0));
+        chEstado.setText("ACTIVO");
+        jPanel1.add(chEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 199, 130, -1));
 
         txDNI.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0"))));
         txDNI.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N

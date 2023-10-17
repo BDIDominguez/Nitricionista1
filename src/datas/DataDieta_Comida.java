@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import entidades.EntidadDieta_Comida;
 
-/** @author DIEGO G. */
+/**
+ * @author DIEGO G.
+ */
 public class DataDieta_Comida {
 
     private Connection con;
@@ -17,37 +19,33 @@ public class DataDieta_Comida {
     public DataDieta_Comida() {
     }
 
-    public void agregarDietaComida(EntidadDieta_Comida dietaComida) throws SQLException {
+    public void GuardarDietaComida(EntidadDieta_Comida dietaComida) throws SQLException {
         String sql = "INSERT INTO dieta_comida (id_dieta, id_comida, porcion, horario) VALUES (?, ?, ?, ?)";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, dietaComida.getIdDieta());
-        ps.setInt(2, dietaComida.getIdComida());
-        ps.setDouble(3, dietaComida.getPorcion());
-        ps.setString(4, dietaComida.getHorario().toString());
-        ps.executeUpdate();
-        ps.close();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, dietaComida.getIdDieta());
+            ps.setInt(2, dietaComida.getIdComida());
+            ps.setInt(3, (int) dietaComida.getPorcion());
+            ps.setString(4, dietaComida.getHorario().toString());
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void editarDietaComida(EntidadDieta_Comida dietaComida) throws SQLException {
-        String sql = "UPDATE dieta_comida SET id_dieta = ?, id_comida = ?, porcion = ?, horario = ? WHERE id_dieta_comida = ?";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, dietaComida.getIdDieta());
-        ps.setInt(2, dietaComida.getIdComida());
-        ps.setDouble(3, dietaComida.getPorcion());
-        ps.setString(4, dietaComida.getHorario().toString());
-        ps.setInt(5, dietaComida.getIdDieta_Comida());
-        ps.executeUpdate();
-        ps.close();
-    }
-
-    public void eliminarDietaComida(int idDietaComida) throws SQLException {
+    public boolean eliminarDietaComida(int idDietaComida) throws SQLException {
+        boolean vResp = false;
         String sql = "DELETE FROM dieta_comida WHERE id_dieta_comida = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, idDietaComida);
         ps.executeUpdate();
         ps.close();
+        vResp = true;
+        ps.close();
+        return vResp;
     }
 
+    //Obtener todas las comidas de una dieta
     public EntidadDieta_Comida obtenerDietaComidaPorId(int idDietaComida) throws SQLException {
         String sql = "SELECT * FROM dieta_comida WHERE id_dieta_comida = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -59,7 +57,7 @@ public class DataDieta_Comida {
         if (rs.next()) {
             int idDieta = rs.getInt("id_dieta");
             int idComida = rs.getInt("id_comida");
-            double porcion = rs.getDouble("porcion");
+            int porcion = rs.getInt("porcion");
             String horarioStr = rs.getString("horario");
             EntidadDieta_Comida.HorarioComida horario = EntidadDieta_Comida.HorarioComida.valueOf(horarioStr);
 
@@ -79,11 +77,14 @@ public class DataDieta_Comida {
         ps.setInt(1, idDieta);
         ResultSet rs = ps.executeQuery();
 
+        System.out.println("sql obtenerDietasComidaPorDieta " + rs.getMetaData()+rs.rowUpdated());
+
         while (rs.next()) {
-            int idDietaComida = rs.getInt("id_dieta_comida");
-            int idComida = rs.getInt("id_comida");
-            double porcion = rs.getDouble("porcion");
+            int idDietaComida = rs.getInt("iddietacomida");
+            int idComida = rs.getInt("idcomida");
+            int porcion = rs.getInt("porcion");
             String horarioStr = rs.getString("horario");
+            System.out.println("entró linea 86 data comida");
             EntidadDieta_Comida.HorarioComida horario = EntidadDieta_Comida.HorarioComida.valueOf(horarioStr);
 
             EntidadDieta_Comida dietaComida = new EntidadDieta_Comida(idDietaComida, idDieta, idComida, porcion, horario);
@@ -95,4 +96,5 @@ public class DataDieta_Comida {
 
         return dietasComida;
     }
+
 }

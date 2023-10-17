@@ -12,9 +12,6 @@ import javax.swing.JTextField;
  * @author Dario
  */
 public class MiCampoTexto extends JTextField {
-
-    private boolean tienePunto = false;
-    private DecimalFormat formato;
     private int tipo;
 
     public MiCampoTexto(int tipo) {
@@ -37,13 +34,6 @@ public class MiCampoTexto extends JTextField {
                         }
                         break;
                     case 3: // acepta numero y punto decimal
-                        /*if (c == '.') {
-                            if (!tienePunto) {
-                                e.consume();
-                            } else {
-                                tienePunto = true;
-                            }
-                        } else */
                         if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE || !getText().contains("."))) {
                             e.consume();
                         }
@@ -68,24 +58,7 @@ public class MiCampoTexto extends JTextField {
                 selectAll();
             }
         });
-
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (!getText().contains(".")) {
-                    tienePunto = false;
-                }
-            }
-        });
-
         // Evitar la opcion de pegar texto
         setTransferHandler(null);
-    }
-
-// Método para formatear el texto en el campo
-    @Override
-    public void setText(String t) {
-        super.setText(t);
-        tienePunto = t.contains(".");
     }
 }

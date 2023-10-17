@@ -9,7 +9,7 @@ public class EntidadDieta_Comida {
     private int idDieta;            // Declaración de atributo para el ID de la dieta relacionada
     private int idComida;           // Declaración de atributo para el ID de la comida relacionada
     private HorarioComida horario;  // Declaración de atributo para el horario en que se asigna la comida
-    private double porcion;         // Añadido para representar la cantidad en gramos
+    private int porcion;         // Añadido para representar la cantidad en gramos
 
 
     public EntidadDieta_Comida() {
@@ -20,7 +20,7 @@ public class EntidadDieta_Comida {
     }
 
     // Creo el constructor que recibe todos los atributos de la relación
-    public EntidadDieta_Comida(int idDieta_Comida, int idDieta, int idComida, double porcion, HorarioComida horario) {
+    public EntidadDieta_Comida(int idDieta_Comida, int idDieta, int idComida, int porcion, HorarioComida horario) {
         this.idDieta_Comida = idDieta_Comida;
         this.idDieta = idDieta;
         this.idComida = idComida;
@@ -28,7 +28,7 @@ public class EntidadDieta_Comida {
         this.horario = horario;
     }
 
-    public EntidadDieta_Comida(int idDieta, int idComida, double porcion, HorarioComida horario) {
+    public EntidadDieta_Comida(int idDieta, int idComida, int porcion, HorarioComida horario) {
         this.idDieta = idDieta;
         this.idComida = idComida;
         this.horario = horario;
@@ -62,7 +62,7 @@ public class EntidadDieta_Comida {
        return porcion;
     }
 
-    public void setPorcion(double porcion) {
+    public void setPorcion(int porcion) {
         this.porcion = porcion;
     }
 
