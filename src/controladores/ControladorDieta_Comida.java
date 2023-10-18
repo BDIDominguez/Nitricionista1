@@ -74,6 +74,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         vista.requestFocus();
         modelarTabla();
         llenarComboBPaciente();
+        llenarComboBDietas();
     }
 
     private void modelarTabla() {
@@ -136,20 +137,21 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
 
     private void llenarComboBDietas() {
         List<entidades.EntidadDieta> diet = new ArrayList<>();
+
         try {
             DataDieta e = new DataDieta();
             diet = e.listarDietas();
             vista.CBDietas1.removeAllItems();
-            
-            
+
             System.out.println("valor de pac" + diet.size());
             for (entidades.EntidadDieta dieta : diet) {
-//                if (paciente.isEstado()) {
-                String cadena = dieta.getNombre();
-                vista.CBPaciente.addItem(cadena);
+                if (dieta.getPaciente() == paciente) {
+                    String cadena = dieta.getNombre();
+                    vista.CBDietas1.addItem(cadena);
+                    System.out.println("cadena de dieta funciona");
+                }
             }
-
-            AutoCompleteDecorator.decorate(vista.CBPaciente);
+            AutoCompleteDecorator.decorate(vista.CBDietas1);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de dietas \n" + ex.getMessage());
         }
@@ -159,40 +161,52 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == vista.CBPaciente) { //muestra para seleccionar un paciente activo
-
+            llenarComboBPaciente();
             paciente = extraerIdPaciente();
-           // llenarJTComidas();
+llenarJTComidas();
+ 
+            llenarComboBDietas();
+ 
         }
 
         if (e.getSource() == vista.CBDietas1) {// muestra las dietas disponibles activas para elegir
 //        rellenarTabla(); // rellena la tabla con los datos del paciente
-            llenarComboBDietas();
+
+            llenarJTComidas();
         }
 
         if (e.getSource() == vista.BtNuevaDieta) { //llama a la vista Dieta para cargar nueva dieta y actualiza el JTable JTComidas
-            VistaDieta vistaDieta = new VistaDieta();
-            vistaDieta.setVisible(true);
+            VistaDieta vista = new VistaDieta();
+            DataDieta data = new DataDieta();
+            ControladorDieta ctrl = new ControladorDieta(menu, vista, data);
+            ctrl.iniciar();
         }
 
-//        if (e.getSource() == vista.BtEliminar) {// elimina la dieta seleccionada del CBComidasActivas del paciente actual
-//            if (JOptionPane.showConfirmDialog(vista, "Seguro de elimiar la dieta " + vista.CBDietas1.getSelectedItem(), "Confirme", JOptionPane.YES_NO_OPTION) == 0) {
-//
-//            }
-//            try {
-//                boolean vResp = dataDietaComida.eliminarDietaComida(dietaSeleccionada);
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(vista, "Error al eliminar la dieta \n" + Exception.getMessage);
-//            }
-//        }
-        if (e.getSource() == vista.CBComidasActivas) { // combobox muestra las comidas activas
+        if (e.getSource() == vista.BtEliminar) {// elimina la dieta seleccionada del CBComidasActivas del paciente actual
+            DataDieta e = new dataDieta();
+            if (JOptionPane.showConfirmDialog(vista, "Seguro de eliminar la dieta " + vista.CBDietas1.getSelectedItem(), "Confirme", JOptionPane.YES_NO_OPTION) == 0) {
+              
+            }
+            try {
+                boolean vResp = dataDietaComida.eliminarDietaComida(dietaSeleccionada);
+                  e.eliminarDieta(dietaSeleccionada);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(vista, "Error al eliminar la dieta \n" + Exception.getMessage);
+            }
+        }
+
+        if (e.getSource()
+                == vista.CBComidasActivas) { // combobox muestra las comidas activas
 
         }
 
-        if (e.getSource() == vista.BtAgregarComida) { //agrega la comida seleccionada del combo box CBComidasActivas a la dieta del paciente
+        if (e.getSource()
+                == vista.BtAgregarComida) { //agrega la comida seleccionada del combo box CBComidasActivas a la dieta del paciente
 
         }
 
-        if (e.getSource() == vista.BtSalir) {
+        if (e.getSource()
+                == vista.BtSalir) {
             vista.dispose();
         }
 

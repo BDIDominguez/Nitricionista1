@@ -99,7 +99,7 @@ CREATE TABLE `dietacomidas` (
   `iddietacomida` int NOT NULL,
   `idcomida` int DEFAULT NULL,
   `iddieta` int DEFAULT NULL,
-  `porcion` double DEFAULT NULL,
+  `porcion` int DEFAULT NULL,
   `horario` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 

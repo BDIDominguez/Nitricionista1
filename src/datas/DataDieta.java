@@ -114,4 +114,16 @@ public class DataDieta {
         ps.close();
         return d;
     }
+    
+    public boolean definirDietaUnica (int idpaciente, int iddieta) throws SQLException {
+        boolean vRespuesta = false;
+        con = Conexion.getConexion();
+        String sql = "UPDATE dietas set estado = 0 where idpaciente = ? and iddieta != ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, idpaciente);
+        ps.setInt(2, iddieta);
+        ps.executeUpdate();    
+        vRespuesta = true;
+        return vRespuesta;
+    }
 }

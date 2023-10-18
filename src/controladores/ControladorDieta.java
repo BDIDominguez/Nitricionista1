@@ -75,8 +75,8 @@ public class ControladorDieta implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent d) {
         if (d.getSource() == vista.btNuevo) {
-            vista.txDNI.setText("-1");
-            vista.txNombreP.setText("");
+            //vista.txDNI.setText("-1");
+            //vista.txNombreP.setText("");
             vista.txNombreD.setText("");
             vista.txPesoIni.setText("");
             vista.txPesoFin.setText("");
@@ -151,6 +151,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
                     try {
                         EntidadDieta dietaGuardada = diet.crearDieta(di);
                         JOptionPane.showMessageDialog(null, "Dieta guardada exitosamente con ID: " + dietaGuardada.getIdDieta());
+                        data.definirDietaUnica(idPaciente, dietaGuardada.getIdDieta());
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(null, "Error al guardar la dieta en la base de datos: " + ex.getMessage());
                     }
@@ -162,6 +163,9 @@ public class ControladorDieta implements ActionListener, KeyListener {
                         boolean dietaModificada = diet.modificarDieta(di);
                         if (dietaModificada) {
                             JOptionPane.showMessageDialog(null, "Dieta modificada exitosamente.");
+                            if(vista.cbEstado.isSelected()){
+                               data.definirDietaUnica(idPaciente, idDieta); 
+                            }
                         } else {
                             JOptionPane.showMessageDialog(null, "Error al modificar la dieta en la base de datos.");
                         }
