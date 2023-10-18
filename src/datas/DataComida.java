@@ -40,7 +40,7 @@ public class DataComida {
           }
         cerrarRecursos(ps, rs);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al intentar agegar una comida" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al intentar agregar una nueva comida" + ex.getMessage());
         }
         return comida;
     }
@@ -300,7 +300,7 @@ public class DataComida {
         ps.setInt(6, comida.getIdComida());
             int fila = ps.executeUpdate();
             if (fila == 1) {
-                JOptionPane.showMessageDialog(null, "Porcion de comida actualizada");
+                JOptionPane.showMessageDialog(null, "Se ha actualizado correctamente la comida");
             } else if (fila == 0) {
                 JOptionPane.showMessageDialog(null, "La comida no existe en la base de datos");
             }
