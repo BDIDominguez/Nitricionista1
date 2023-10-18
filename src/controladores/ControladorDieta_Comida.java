@@ -112,7 +112,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
 
         } catch (SQLException ex) {
             //Logger.getLogger(ControladorVistaDieta_Comida.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(vista, "error al tratar de obtener una lista de comidas \n" + ex.getMessage());
+            JOptionPane.showMessageDialog(vista, "error al llenar JTComidas al tratar de obtener una lista de comidas \n" + ex.getMessage());
         }
     }
 
@@ -131,7 +131,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
 
             AutoCompleteDecorator.decorate(vista.CBPaciente);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de pacientes \n" + ex.getMessage());
+            JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de pacientes para llenar Combo pacientes \n" + ex.getMessage());
         }
     }
 
@@ -153,7 +153,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             }
             AutoCompleteDecorator.decorate(vista.CBDietas1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de dietas \n" + ex.getMessage());
+            JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de dietas para llenar el combo Dietas\n" + ex.getMessage());
         }
     }
 
@@ -179,7 +179,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             DataDieta data = new DataDieta();
             ControladorDieta ctrl = new ControladorDieta(menu, vista, data);
             ctrl.iniciar();
-            JOptionPane.showMessageDialog(vista, "Cargue aquí su nueva dieta, luego cierre la ventana Dietas y continúe usando el plan Nutricional");
+            JOptionPane.showMessageDialog(vista, "Por favor cargue aquí su nueva dieta, luego cierre la ventana Dietas y continúe usando el plan Nutricional");
         }
 
         if (e.getSource() == vista.BtEliminar) {// elimina la dieta seleccionada del CBComidasActivas del paciente actual
@@ -207,16 +207,14 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                 }
             }
         }
-        if (e.getSource()
-                == vista.CBComidasActivas) { // combobox muestra las comidas activas
+        if (e.getSource()== vista.CBComidasActivas) { // combobox muestra las comidas activas
             String comidaSelect = (String) vista.CBComidasActivas.getSelectedItem();
             if (comidaSelect != null) {
                 JOptionPane.showMessageDialog(vista, "Comida seleccionada: " + comidaSelect);
             }
         }
 
-        if (e.getSource()
-                == vista.BtAgregarComida) { //agrega la comida seleccionada del combo box CBComidasActivas a la dieta del paciente
+        if (e.getSource()== vista.BtAgregarComida) { //agrega la comida seleccionada del combo box CBComidasActivas a la dieta del paciente
             String comida = vista.CBComidasActivas.getSelectedItem().toString(); 	// Obtiene comida seleccionada del Combo
             String porcion = vista.TxPorcion.getText(); 					// Obtiene texto del JTextField porción
             String horario = vista.CbHorario.getSelectedItem().toString();		// Obtiene horario seleccionado del Combo
