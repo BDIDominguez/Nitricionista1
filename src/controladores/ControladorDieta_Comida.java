@@ -100,9 +100,8 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     private void llenarJTComidas() {
         try {
             List<EntidadDieta_Comida> comidas = new ArrayList<>();
-            System.out.println("valor pac" + paciente);
+
             comidas = dataDietaComida.obtenerDietasComidaPorDieta(paciente);
-            System.out.println("cuantas comidas hay" + comidas.size());
             modelo.setRowCount(0);
 
             for (EntidadDieta_Comida comida : comidas) {
@@ -124,10 +123,10 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             DataPaciente e = new DataPaciente();
             pac = e.listarPacientes();
             vista.CBPaciente.removeAllItems();
-            System.out.println("valor de pac" + pac.size());
+
             for (EntidadPaciente paciente : pac) {
                 //                if (paciente.isEstado()) {
-                String cadena = paciente.getNombre() + "-" + paciente.getDni() + "-" + paciente.getIdpaciente();
+                String cadena = paciente.getIdpaciente()  + "-" + paciente.getDni() + "-" + paciente.getNombre() ;
                 vista.CBPaciente.addItem(cadena);
             }
 
@@ -145,12 +144,10 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             diet = e.listarDietas();
             vista.CBDietas1.removeAllItems();
 
-            System.out.println("valor de pac" + diet.size());
             for (entidades.EntidadDieta dieta : diet) {
                 if (dieta.getPaciente() == paciente) {
                     String cadena = dieta.getNombre();
                     vista.CBDietas1.addItem(cadena);
-                    System.out.println("cadena de dieta funciona");
                 }
             }
             AutoCompleteDecorator.decorate(vista.CBDietas1);
@@ -262,7 +259,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
 
         for (EntidadComida comida1 : comida) {
             //                if (paciente.isEstado()) {
-            String cadena = comida1.getNombreComida() + "-" + comida1.getIdComida();
+            String cadena = comida1.getIdComida() + "-" + comida1.getNombreComida();
             vista.CBComidasActivas.addItem(cadena);
         }
         AutoCompleteDecorator.decorate(vista.CBComidasActivas);
@@ -272,9 +269,8 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         int id = -1;
         try {
             String combobox = vista.CBPaciente.getSelectedItem().toString();
-            System.out.println("linea 263" + combobox);
             String partes[] = combobox.split("-");
-            id = Integer.parseInt(partes[2].trim());
+            id = Integer.parseInt(partes[0].trim());
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "A ocurrido un error al cargar los indices en el combobox, revices la posicion del idPaciente");
         }
