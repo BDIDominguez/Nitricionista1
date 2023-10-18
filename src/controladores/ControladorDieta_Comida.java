@@ -265,7 +265,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             String cadena = comida1.getNombreComida() + "-" + comida1.getIdComida();
             vista.CBComidasActivas.addItem(cadena);
         }
-        AutoCompleteDecorator.decorate(vista.CBPaciente);
+        AutoCompleteDecorator.decorate(vista.CBComidasActivas);
     }
 
     private int extraerIdPaciente() {
