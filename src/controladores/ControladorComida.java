@@ -139,7 +139,18 @@ public class ControladorComida implements ActionListener {
     String receta = vista.txReceta.getText();
     int calorias = Integer.parseInt(vista.txKcal.getText());
     double peso = Double.parseDouble(vista.txPeso.getText());
-    boolean estado = true; // Asumiendo que la comida es inicialmente habilitada
+   boolean estado; // Declarar el estado sin inicializarlo
+    // Verificar la selección de radio buttons para establecer el estado
+    if (vista.rbHabilitada.isSelected()) {
+        estado = true; // Habilitada
+    } else if (vista.rbDeshabilitada.isSelected()) {
+        estado = false; // Deshabilitada
+    } else {
+        // Si ningún radio button está seleccionado, puedes mostrar un mensaje de error o manejarlo de otra forma.
+        JOptionPane.showMessageDialog(null, "Debes seleccionar un estado (Habilitada o Deshabilitada).");
+        return; // Salir del método
+    }
+
     // Crear una instancia de EntidadComida con los datos ingresados
     EntidadComida nuevaComida = new EntidadComida(nombre, receta, calorias, estado, peso);
     // Llamar al método de DataComida para agregar la comida
