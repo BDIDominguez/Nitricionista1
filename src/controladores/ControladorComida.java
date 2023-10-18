@@ -5,8 +5,8 @@ import entidades.EntidadComida;
 import vistas.VistaComida;
 import vistas.VistaPantallaPrincipal;
 import java.awt.event.ActionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
+//import javax.swing.event.TableModelEvent;
+//import javax.swing.event.TableModelListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -68,7 +68,7 @@ public class ControladorComida implements ActionListener {
         vista.rbDeshabilitada.addActionListener(this);
         vista.rbHabilitada.addActionListener(this);
         vista.tbComidas.setModel(modeloTabla);
-        vista.tbComidas.getModel().addTableModelListener(new MiTableModelListener());
+        //vista.tbComidas.getModel().addTableModelListener(new MiTableModelListener());
         
         UIManager.put("OptionPane.messageFont", UIManager.getFont("Label.font").deriveFont(20.0f));
 
@@ -195,7 +195,7 @@ public class ControladorComida implements ActionListener {
     DefaultTableModel modelo = (DefaultTableModel) vista.tbComidas.getModel();
     modelo.setValueAt("Habilitada", filaSeleccionada, 0);
 }
-      public class MiTableModelListener implements TableModelListener {
+      /*public class MiTableModelListener implements TableModelListener {
        @Override
             public void tableChanged(TableModelEvent e) {
                 if (e.getType() == TableModelEvent.UPDATE) {
@@ -217,9 +217,9 @@ public class ControladorComida implements ActionListener {
                     }
                 }
             }
-      }
+      }*/
     
-      public void modificarComidas() {
+    public void modificarComidas() {
     DefaultTableModel modelo = (DefaultTableModel) vista.tbComidas.getModel();
     int filaSeleccionada = vista.tbComidas.getSelectedRow();
 
@@ -243,7 +243,7 @@ public class ControladorComida implements ActionListener {
     modelo.setValueAt(receta, filaSeleccionada, 2);
     modelo.setValueAt(calorias, filaSeleccionada, 3);
     modelo.setValueAt(peso, filaSeleccionada, 4);
-    JOptionPane.showMessageDialog(null, "Comida modificada con éxito.");
+  
 }
       
     public class MultilineCellRenderer extends DefaultTableCellRenderer {

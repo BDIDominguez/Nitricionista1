@@ -144,7 +144,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
 
                 di.setEstado(vista.cbEstado.isSelected());
 
-                if (idDieta > 0) {
+                if (idDieta < 0) {
                     // Guardar una nueva dieta
                     di.setPaciente(idPaciente);
                     DataDieta diet = new DataDieta();

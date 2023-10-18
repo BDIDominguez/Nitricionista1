@@ -5,6 +5,11 @@
  */
 package vistas;
 
+import java.net.URL;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Dario
@@ -16,6 +21,7 @@ public class VistaDieta extends javax.swing.JInternalFrame {
      */
     public VistaDieta() {
         initComponents();
+        colocarIconos();
     }
 
     /**
@@ -176,4 +182,25 @@ public class VistaDieta extends javax.swing.JInternalFrame {
     public javax.swing.JTextField txPesoFin;
     public javax.swing.JTextField txPesoIni;
     // End of variables declaration//GEN-END:variables
+private void colocarIconos() {
+        int alto = 30;
+        int ancho = 30;
+
+        btNuevo.setIcon(prepararIcono("nuevo.png", alto, ancho));
+        btGuardar.setIcon(prepararIcono("salvado.png", alto, ancho));
+        btEliminar.setIcon(prepararIcono("inactivo.png", alto, ancho));
+        btSalir.setIcon(prepararIcono("salida3.png", alto, ancho));
+        ImageIcon icono = new ImageIcon();
+        //icono = prepararIcono();
+        this.setFrameIcon(icono);
+    }
+
+    private ImageIcon prepararIcono(String nombre, int alto, int ancho) {
+        ClassLoader directorio = getClass().getClassLoader();
+        URL imagen = directorio.getResource("iconos/" + nombre);
+        ImageIcon icono = new ImageIcon(imagen);
+        Image imagenRedimensionada = icono.getImage().getScaledInstance(alto, ancho, Image.SCALE_SMOOTH);
+        icono = new ImageIcon(imagenRedimensionada);
+        return icono;
+    }
 }
