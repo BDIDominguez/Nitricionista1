@@ -23,7 +23,7 @@ import javax.swing.ButtonGroup;
 
 
 /**
- *
+ *EN CONSTRUCCION LA VALIDACION DESHABILITANDO CAMPOS ESTA REGADO POR TODA LA CLASE
  * @author louis
  */
 public class ControladorComida implements ActionListener {
@@ -118,8 +118,8 @@ public class ControladorComida implements ActionListener {
            deshabilitarComidaSeleccionada();
         } else if (e.getSource() == vista.btHabilitarLista) {
             habilitarComidaSeleccionada();
-//       } else if (e.getSource() == vista.jbModificar) {}
-//            modificarComidas();
+       } else if (e.getSource() == vista.jbModificar) {
+            modificarComidas();
 } else if (e.getSource() == vista.jbSalir) {
         vista.dispose();
 //    } else if (e.getSource() == vista.txNombre) {
@@ -219,6 +219,33 @@ public class ControladorComida implements ActionListener {
             }
       }
     
+      public void modificarComidas() {
+    DefaultTableModel modelo = (DefaultTableModel) vista.tbComidas.getModel();
+    int filaSeleccionada = vista.tbComidas.getSelectedRow();
+
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(null, "Selecciona una fila en la tabla para modificar.");
+        return;
+    }
+    // Obtener los valores de las celdas de la fila seleccionada
+    int idComida = (int) modelo.getValueAt(filaSeleccionada, 0);
+    String nombre = (String) modelo.getValueAt(filaSeleccionada, 1);
+    String receta = (String) modelo.getValueAt(filaSeleccionada, 2);
+    int calorias = (int) modelo.getValueAt(filaSeleccionada, 3);
+    double peso = (double) modelo.getValueAt(filaSeleccionada, 4);
+    boolean estado = true; // Asumiendo que la comida es inicialmente habilitada
+    // Crear un objeto EntidadComida con los datos de la fila seleccionada
+    EntidadComida comidaModificada = new EntidadComida(idComida, nombre, receta, calorias, estado, peso);
+    // Llamada al método de DataComida para modificar la comida
+    data.modificarComidas(comidaModificada);
+    //  actualizar la tabla
+    modelo.setValueAt(nombre, filaSeleccionada, 1);
+    modelo.setValueAt(receta, filaSeleccionada, 2);
+    modelo.setValueAt(calorias, filaSeleccionada, 3);
+    modelo.setValueAt(peso, filaSeleccionada, 4);
+    JOptionPane.showMessageDialog(null, "Comida modificada con éxito.");
+}
+      
     public class MultilineCellRenderer extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {

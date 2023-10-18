@@ -161,7 +161,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         if (e.getSource() == vista.CBPaciente) { //muestra para seleccionar un paciente activo
 
             paciente = extraerIdPaciente();
-            llenarJTComidas();
+           // llenarJTComidas();
         }
 
         if (e.getSource() == vista.CBDietas1) {// muestra las dietas disponibles activas para elegir
