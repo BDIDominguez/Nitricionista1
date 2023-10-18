@@ -36,7 +36,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     private int paciente = 0;
     private int dietaSeleccionada = -1;
     private boolean edicionActiva = false;
-//    private DataPaciente  = data;
+    //    private DataPaciente  = data;
     MyModelo modelo = new MyModelo();
     private List<EntidadPaciente> pacientes = new ArrayList<>();
 
@@ -44,10 +44,10 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         this.vista = vista;
         this.menu = menu;
         this.dataDietaComida = dataDietaComida;
-//        this.tablaModelo = (DefaultTableModel) VistaDieta_Comida.getJTComidas().getModel();
-
-//        vista.CBPaciente.setModel(pacientesModel);
-//        vista.CBDietas1.setModel(dietasModel);
+        //        this.tablaModelo = (DefaultTableModel) VistaDieta_Comida.getJTComidas().getModel();
+        //        vista.CBPaciente.setModel(pacientesModel);
+        //        vista.CBDietas1.setModel(dietasModel);
+        
         //Escucha de botones 
         vista.BtNuevaDieta.addActionListener(this);
         vista.BtEliminar.addActionListener(this);
@@ -124,7 +124,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             vista.CBPaciente.removeAllItems();
             System.out.println("valor de pac" + pac.size());
             for (EntidadPaciente paciente : pac) {
-//                if (paciente.isEstado()) {
+                //                if (paciente.isEstado()) {
                 String cadena = paciente.getNombre() + "-" + paciente.getDni() + "-" + paciente.getIdpaciente();
                 vista.CBPaciente.addItem(cadena);
             }
@@ -163,15 +163,14 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         if (e.getSource() == vista.CBPaciente) { //muestra para seleccionar un paciente activo
             llenarComboBPaciente();
             paciente = extraerIdPaciente();
-llenarJTComidas();
- 
+
+            llenarJTComidas();
             llenarComboBDietas();
- 
+
         }
 
         if (e.getSource() == vista.CBDietas1) {// muestra las dietas disponibles activas para elegir
-//        rellenarTabla(); // rellena la tabla con los datos del paciente
-
+            //        rellenarTabla(); // rellena la tabla con los datos del paciente
             llenarJTComidas();
         }
 
@@ -180,36 +179,62 @@ llenarJTComidas();
             DataDieta data = new DataDieta();
             ControladorDieta ctrl = new ControladorDieta(menu, vista, data);
             ctrl.iniciar();
+            JOptionPane.showMessageDialog(vista, "Cargue aquí su nueva dieta, luego cierre la ventana Dietas y continúe usando el plan Nutricional");
         }
 
         if (e.getSource() == vista.BtEliminar) {// elimina la dieta seleccionada del CBComidasActivas del paciente actual
-            DataDieta e = new dataDieta();
+            DataDieta dataDieta = new DataDieta();
             if (JOptionPane.showConfirmDialog(vista, "Seguro de eliminar la dieta " + vista.CBDietas1.getSelectedItem(), "Confirme", JOptionPane.YES_NO_OPTION) == 0) {
-              
-            }
-            try {
-                boolean vResp = dataDietaComida.eliminarDietaComida(dietaSeleccionada);
-                  e.eliminarDieta(dietaSeleccionada);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(vista, "Error al eliminar la dieta \n" + Exception.getMessage);
+                try {
+                    String dietaSeleccionada = (String) vista.CBDietas1.getSelectedItem();
+                    String[] partes = dietaSeleccionada.split("-");
+                    int idDieta = Integer.parseInt(partes[0].trim());
+                    boolean eliminacionOK = dataDietaComida.eliminarDietaComida(idDieta);
+
+                    //  boolean vResp = dataDietaComida.eliminarDietaComida(dietaSeleccionada);
+                    //  dataDieta.eliminarDieta(dietaSeleccionada);
+                    if (eliminacionOK) {
+                        JOptionPane.showMessageDialog(vista, "Dieta eliminada con éxito.");
+                    } else {
+                        JOptionPane.showMessageDialog(vista, "Error al eliminar la dieta.");
+                    }
+
+                    llenarComboBDietas();
+                    modelo.setRowCount(0);
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(vista, "Error al eliminar la dieta \n" + ex.getMessage());
+                }
             }
         }
-
         if (e.getSource()
                 == vista.CBComidasActivas) { // combobox muestra las comidas activas
-
+            String comidaSelect = (String) vista.CBComidasActivas.getSelectedItem();
+            if (comidaSelect != null) {
+                JOptionPane.showMessageDialog(vista, "Comida seleccionada: " + comidaSelect);
+            }
         }
 
         if (e.getSource()
                 == vista.BtAgregarComida) { //agrega la comida seleccionada del combo box CBComidasActivas a la dieta del paciente
+            String comida = vista.CBComidasActivas.getSelectedItem().toString(); 	// Obtiene comida seleccionada del Combo
+            String porcion = vista.TxPorcion.getText(); 					// Obtiene texto del JTextField porción
+            String horario = vista.CbHorario.getSelectedItem().toString();		// Obtiene horario seleccionado del Combo
 
+            DefaultTableModel modelaT = (DefaultTableModel) vista.JTComidas.getModel(); // modelo de la tabla
+
+            modelaT.addRow(new Object[]{comida, porcion, horario}); // Agregar valores a una nueva fila
+
+            // Limpia los componentes después de agregar la fila
+            vista.CBComidasActivas.setSelectedIndex(0); 	//  reiniciar el ComboBox con 1er elemento selecc
+            vista.TxPorcion.setText(""); 			// vacia contenido del JTextField
+            vista.CbHorario.setSelectedIndex(0); 		// reiniciar el ComboBox con primer element selecc
         }
 
         if (e.getSource()
                 == vista.BtSalir) {
             vista.dispose();
         }
-
     }
 
     @Override
