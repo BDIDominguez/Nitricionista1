@@ -161,9 +161,8 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == vista.CBPaciente) { //muestra para seleccionar un paciente activo
-            llenarComboBPaciente();
+            
             paciente = extraerIdPaciente();
-
             llenarJTComidas();
             llenarComboBDietas();
 
@@ -260,6 +259,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         int id = -1;
         try {
             String combobox = vista.CBPaciente.getSelectedItem().toString();
+            System.out.println("linea 263"+combobox);
             String partes[] = combobox.split("-");
             id = Integer.parseInt(partes[2].trim());
         } catch (NumberFormatException ex) {

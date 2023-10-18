@@ -18,7 +18,7 @@ public class DataDieta_Comida {
     }
 
     public void GuardarDietaComida(EntidadDieta_Comida dietaComida) throws SQLException {
-        
+        con = Conexion.getConexion();
         String sql = "INSERT INTO dieta_comida (id_dieta, id_comida, porcion, horario) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, dietaComida.getIdDieta());
@@ -35,7 +35,7 @@ public class DataDieta_Comida {
     public boolean eliminarDietaComida(int idDietaComida) throws SQLException {
         
         boolean vResp = false;
-        
+        con = Conexion.getConexion();
         String sql = "DELETE FROM dieta_comida WHERE id_dieta_comida = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, idDietaComida);
@@ -73,15 +73,14 @@ public class DataDieta_Comida {
 //    }
 
     public List<EntidadDieta_Comida> obtenerDietasComidaPorDieta(int idDieta) throws SQLException {
-       
+       con = Conexion.getConexion();
         List<EntidadDieta_Comida> dietasComida = new ArrayList<>();
-        String sql = "SELECT * FROM dieta_comida WHERE id_dieta = ?";
+        System.out.println("valor de id dieta"+ idDieta);
+        String sql = "SELECT * FROM dietacomidas WHERE iddieta = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, idDieta);
         ResultSet rs = ps.executeQuery();
-
-        System.out.println("sql obtenerDietasComidaPorDieta " + rs.getMetaData()+rs.rowUpdated());
-
+      
         while (rs.next()) {
             int idDietaComida = rs.getInt("iddietacomida");
             int idComida = rs.getInt("idcomida");
