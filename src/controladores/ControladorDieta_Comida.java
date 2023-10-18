@@ -53,7 +53,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         vista.BtEliminar.addActionListener(this);
         vista.BtAgregarComida.addActionListener(this);
         vista.BtEditar.addActionListener(this);
-        vista.jBGuardar.addActionListener(this);
+        vista.BtGuardar.addActionListener(this);
         vista.BtSalir.addActionListener(this);
         //Combos
         vista.CBPaciente.addActionListener(this);
@@ -228,9 +228,12 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             vista.TxPorcion.setText(""); 			// vacia contenido del JTextField
             vista.CbHorario.setSelectedIndex(0); 		// reiniciar el ComboBox con primer element selecc
         }
-
-        if (e.getSource()
-                == vista.BtSalir) {
+        
+        if (e.getSource()== vista.BtGuardar) {
+        
+        }
+        
+        if (e.getSource() == vista.BtSalir) {
             vista.dispose();
         }
     }

@@ -36,7 +36,7 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         CbHorario = new javax.swing.JComboBox<>();
-        jBGuardar = new javax.swing.JButton();
+        BtGuardar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         CBComidasActivas = new javax.swing.JComboBox<>();
         TxPorcion = new javax.swing.JTextField();
@@ -89,10 +89,10 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
 
         CbHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Desayuno", "Almuerzo", "Merienda", "Cena", "Snack" }));
 
-        jBGuardar.setText("Guardar");
-        jBGuardar.addActionListener(new java.awt.event.ActionListener() {
+        BtGuardar.setText("Guardar");
+        BtGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBGuardarActionPerformed(evt);
+                BtGuardarActionPerformed(evt);
             }
         });
 
@@ -172,7 +172,7 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
                                 .addGap(24, 24, 24)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(BtAgregarComida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jBGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(BtGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(6, 6, 6))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -237,7 +237,7 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BtEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(jBGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(BtGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(67, 67, 67)
                         .addComponent(BtSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -273,9 +273,9 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_BtEditarActionPerformed
 
-    private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
+    private void BtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtGuardarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jBGuardarActionPerformed
+    }//GEN-LAST:event_BtGuardarActionPerformed
 
     private void BtNuevaDietaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtNuevaDietaActionPerformed
         // TODO add your handling code here:
@@ -290,6 +290,7 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
     public javax.swing.JButton BtAgregarComida;
     public javax.swing.JButton BtEditar;
     public javax.swing.JButton BtEliminar;
+    public javax.swing.JButton BtGuardar;
     public javax.swing.JButton BtNuevaDieta;
     public javax.swing.JButton BtSalir;
     public javax.swing.JComboBox<String> CBComidasActivas;
@@ -299,7 +300,6 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
     public javax.swing.JTable JTComidas;
     public javax.swing.JTextField TxPorcion;
     private javax.swing.JCheckBox jBEstado;
-    public javax.swing.JButton jBGuardar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

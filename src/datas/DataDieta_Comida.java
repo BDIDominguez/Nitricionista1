@@ -87,7 +87,7 @@ public class DataDieta_Comida {
             int idComida = rs.getInt("idcomida");
             int porcion = rs.getInt("porcion");
             String horarioStr = rs.getString("horario");
-            System.out.println("entró linea 86 data comida");
+            System.out.println("entró while linea 90 data comida obtenerDietasComidaPorDieta");
             EntidadDieta_Comida.HorarioComida horario = EntidadDieta_Comida.HorarioComida.valueOf(horarioStr);
 
             EntidadDieta_Comida dietaComida = new EntidadDieta_Comida(idDietaComida, idDieta, idComida, porcion, horario);
