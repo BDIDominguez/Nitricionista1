@@ -86,6 +86,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
             vista.btNuevo.setEnabled(false);
             vista.btGuardar.setEnabled(true);
             vista.txNombreD.requestFocus();
+            idDieta = -1;
         }
         if (d.getSource() == vista.btBuscar) {
             if (vista.txDNI.getText().equals("") || vista.txDNI.getText().equals("0")) {
