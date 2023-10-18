@@ -86,6 +86,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
             vista.btNuevo.setEnabled(false);
             vista.btGuardar.setEnabled(true);
             vista.txNombreD.requestFocus();
+            idDieta = -1;
         }
         if (d.getSource() == vista.btBuscar) {
             if (vista.txDNI.getText().equals("") || vista.txDNI.getText().equals("0")) {
@@ -144,7 +145,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
 
                 di.setEstado(vista.cbEstado.isSelected());
 
-                if (idDieta > 0) {
+                if (idDieta < 0) {
                     // Guardar una nueva dieta
                     di.setPaciente(idPaciente);
                     DataDieta diet = new DataDieta();
@@ -176,6 +177,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
             } else {
                 JOptionPane.showMessageDialog(null, "El ID del paciente no es válido.");
             }
+            llenarComboDieta();
 
         }
         if (d.getSource() == vista.btSalir) {
