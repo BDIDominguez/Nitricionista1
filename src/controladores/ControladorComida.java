@@ -109,7 +109,8 @@ public class ControladorComida implements ActionListener {
     } else if (e.getSource() == vista.btLimpiar) {
         limpiarOpciones();
     } else if (e.getSource() == vista.btAgregar) {
-            agregarComidas();
+          modeloTabla.setRowCount(0);
+          agregarComidas();
 //        } else if (e.getSource() == vista.rbDeshabilitada) {
 //            obtenerComidasxEstado();
 //        } else if (e.getSource() == vista.rbHabilitada) {
@@ -135,6 +136,7 @@ public class ControladorComida implements ActionListener {
 }
 
     private void agregarComidas() {
+    try {
     String nombre = vista.txNombre.getText();
     String receta = vista.txReceta.getText();
     int calorias = Integer.parseInt(vista.txKcal.getText());
@@ -150,7 +152,6 @@ public class ControladorComida implements ActionListener {
         JOptionPane.showMessageDialog(null, "Debes seleccionar un estado (Habilitada o Deshabilitada).");
         return; // Salir del método
     }
-
     // Crear una instancia de EntidadComida con los datos ingresados
     EntidadComida nuevaComida = new EntidadComida(nombre, receta, calorias, estado, peso);
     // Llamar al método de DataComida para agregar la comida
@@ -167,13 +168,18 @@ public class ControladorComida implements ActionListener {
             comidaAgregada.getPeso()
         };
         modelo.addRow(fila);
+        JOptionPane.showMessageDialog(null, "Comida agregada exitosamente");
         // Limpiar los campos de entrada
         vista.txNombre.setText("");
         vista.txReceta.setText("");
         vista.txKcal.setText("");
         vista.txPeso.setText("");
-    } else {
-        JOptionPane.showMessageDialog(null, "Error al agregar la comida");
+         vista.txIdComida.setText("");
+  } else {
+            JOptionPane.showMessageDialog(null, "Error al agregar la comida");
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Debes completar todos los datos del formulario para agregar una comida");
     }
 }
     
@@ -286,6 +292,15 @@ public void buscarComidas() {
     vista.txKcal.setEditable(true);
     vista.txReceta.setEditable(true);
      vista.txPeso.setEditable(true);
+     if (vista.txNombre.getText().isEmpty() &&
+        vista.txIdComida.getText().isEmpty() &&
+        vista.txKcal.getText().isEmpty() &&
+        vista.txPeso.getText().isEmpty() &&
+        vista.txReceta.getText().isEmpty() &&
+        (!vista.rbHabilitada.isSelected() && !vista.rbDeshabilitada.isSelected())) {
+        JOptionPane.showMessageDialog(null, "Debes ingresar al menos una opción de búsqueda o seleccionar un estado");
+        return;
+    }
 
     if (vista.rbHabilitada.isSelected()) {
         resultado.addAll(data.obtenerComidasxEstado(true));
@@ -306,17 +321,17 @@ public void buscarComidas() {
         String input = vista.txIdComida.getText().trim();
         try {
             int idComida = Integer.parseInt(input);
-            if (idComida >= 1 && idComida <= 11) {
             resultado.addAll(data.obtenerComidasxidComida(idComida));
             vista.txNombre.setEditable(false);
             vista.txKcal.setEditable(false);
             vista.txReceta.setEditable(false);
-             vista.txPeso.setEditable(false);
-       } else {
-            JOptionPane.showMessageDialog(null, "El ID de comida debe estar en un rango del 1 al 11");
+            vista.txPeso.setEditable(false);
+        // Verificar si no se encontraron resultados
+        if (resultado.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se encontraron comidas con el ID de comida especificado");
         }
     } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(null, "No debe ingresar texto, solo se aceptan números del 1 al 11 como ID de comida");
+        JOptionPane.showMessageDialog(null, "Se aceptan números únicamente");
     }
   } else if (!vista.txKcal.getText().isEmpty()) {
     try {
@@ -399,7 +414,7 @@ public void buscarComidas() {
          modeloTabla = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
-            // La columna cero (índice 0) no es editable
+            // La columna cero (índice 0) no es editable es el idComida
             return column != 0;
         }
     };
