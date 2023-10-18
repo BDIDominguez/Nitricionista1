@@ -10,6 +10,7 @@ import datas.DataPaciente;
 
 import entidades.EntidadDieta_Comida;
 import entidades.EntidadPaciente;
+import entidades.EntidadComida;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -47,7 +48,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         //        this.tablaModelo = (DefaultTableModel) VistaDieta_Comida.getJTComidas().getModel();
         //        vista.CBPaciente.setModel(pacientesModel);
         //        vista.CBDietas1.setModel(dietasModel);
-        
+
         //Escucha de botones 
         vista.BtNuevaDieta.addActionListener(this);
         vista.BtEliminar.addActionListener(this);
@@ -75,6 +76,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         modelarTabla();
         llenarComboBPaciente();
         llenarComboBDietas();
+        llenarComboComidasActivas();
     }
 
     private void modelarTabla() {
@@ -100,7 +102,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             List<EntidadDieta_Comida> comidas = new ArrayList<>();
             System.out.println("valor pac" + paciente);
             comidas = dataDietaComida.obtenerDietasComidaPorDieta(paciente);
-
+            System.out.println("cuantas comidas hay" + comidas.size());
             modelo.setRowCount(0);
 
             for (EntidadDieta_Comida comida : comidas) {
@@ -161,7 +163,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == vista.CBPaciente) { //muestra para seleccionar un paciente activo
-            
+
             paciente = extraerIdPaciente();
             llenarJTComidas();
             llenarComboBDietas();
@@ -206,14 +208,11 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                 }
             }
         }
-        if (e.getSource()== vista.CBComidasActivas) { // combobox muestra las comidas activas
+        if (e.getSource() == vista.CBComidasActivas) { // combobox muestra las comidas activas
             String comidaSelect = (String) vista.CBComidasActivas.getSelectedItem();
-            if (comidaSelect != null) {
-                JOptionPane.showMessageDialog(vista, "Comida seleccionada: " + comidaSelect);
-            }
         }
 
-        if (e.getSource()== vista.BtAgregarComida) { //agrega la comida seleccionada del combo box CBComidasActivas a la dieta del paciente
+        if (e.getSource() == vista.BtAgregarComida) { //agrega la comida seleccionada del combo box CBComidasActivas a la dieta del paciente
             String comida = vista.CBComidasActivas.getSelectedItem().toString(); 	// Obtiene comida seleccionada del Combo
             String porcion = vista.TxPorcion.getText(); 					// Obtiene texto del JTextField porción
             String horario = vista.CbHorario.getSelectedItem().toString();		// Obtiene horario seleccionado del Combo
@@ -227,11 +226,11 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             vista.TxPorcion.setText(""); 			// vacia contenido del JTextField
             vista.CbHorario.setSelectedIndex(0); 		// reiniciar el ComboBox con primer element selecc
         }
-        
-        if (e.getSource()== vista.BtGuardar) {
-        
+
+        if (e.getSource() == vista.BtGuardar) {
+
         }
-        
+
         if (e.getSource() == vista.BtSalir) {
             vista.dispose();
         }
@@ -240,26 +239,40 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     @Override
     public void focusGained(FocusEvent e
     ) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void focusLost(FocusEvent e
     ) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e
     ) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void llenarComboComidasActivas() {
+        List<entidades.EntidadComida> comida = new ArrayList<>();
+        DataComida e = new DataComida();
+        comida = e.obtenerComidasHabilitadas(true);
+        vista.CBComidasActivas.removeAllItems();
+
+        for (EntidadComida comida1 : comida) {
+            //                if (paciente.isEstado()) {
+            String cadena = comida1.getNombreComida() + "-" + comida1.getIdComida();
+            vista.CBComidasActivas.addItem(cadena);
+        }
+        AutoCompleteDecorator.decorate(vista.CBComidasActivas);
     }
 
     private int extraerIdPaciente() {
         int id = -1;
         try {
             String combobox = vista.CBPaciente.getSelectedItem().toString();
-            System.out.println("linea 263"+combobox);
+            System.out.println("linea 263" + combobox);
             String partes[] = combobox.split("-");
             id = Integer.parseInt(partes[2].trim());
         } catch (NumberFormatException ex) {
