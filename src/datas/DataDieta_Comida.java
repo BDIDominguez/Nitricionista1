@@ -75,7 +75,6 @@ public class DataDieta_Comida {
     public List<EntidadDieta_Comida> obtenerDietasComidaPorDieta(int idDieta) throws SQLException {
        con = Conexion.getConexion();
         List<EntidadDieta_Comida> dietasComida = new ArrayList<>();
-        System.out.println("valor de id dieta"+ idDieta);
         String sql = "SELECT * FROM dietacomidas WHERE iddieta = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, idDieta);
@@ -86,7 +85,6 @@ public class DataDieta_Comida {
             int idComida = rs.getInt("idcomida");
             int porcion = rs.getInt("porcion");
             String horarioStr = rs.getString("horario");
-            System.out.println("entró while linea 90 data comida obtenerDietasComidaPorDieta");
             EntidadDieta_Comida.HorarioComida horario = EntidadDieta_Comida.HorarioComida.valueOf(horarioStr);
 
             EntidadDieta_Comida dietaComida = new EntidadDieta_Comida(idDietaComida, idDieta, idComida, porcion, horario);
