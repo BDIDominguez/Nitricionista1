@@ -176,6 +176,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
             } else {
                 JOptionPane.showMessageDialog(null, "El ID del paciente no es válido.");
             }
+            llenarComboDieta();
 
         }
         if (d.getSource() == vista.btSalir) {
