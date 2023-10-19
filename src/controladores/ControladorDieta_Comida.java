@@ -53,7 +53,6 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         vista.BtNuevaDieta.addActionListener(this);
         vista.BtEliminar.addActionListener(this);
         vista.BtAgregarComida.addActionListener(this);
-        vista.BtEditar.addActionListener(this);
         vista.BtGuardar.addActionListener(this);
         vista.BtSalir.addActionListener(this);
         //Combos
@@ -71,6 +70,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     public void iniciar() {
         menu.dpFondo.add(vista);
         vista.setVisible(true);
+        vista.setLocation(40, 70);
         menu.dpFondo.moveToFront(vista);
         vista.requestFocus();
         modelarTabla();
@@ -126,7 +126,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
 
             for (EntidadPaciente paciente : pac) {
                 //                if (paciente.isEstado()) {
-                String cadena = paciente.getIdpaciente()  + "-" + paciente.getDni() + "-" + paciente.getNombre() ;
+                String cadena = paciente.getIdpaciente() + "-" + paciente.getDni() + "-" + paciente.getNombre();
                 vista.CBPaciente.addItem(cadena);
             }
 
@@ -173,10 +173,12 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         }
 
         if (e.getSource() == vista.BtNuevaDieta) { //llama a la vista Dieta para cargar nueva dieta y actualiza el JTable JTComidas
+
             VistaDieta vista = new VistaDieta();
             DataDieta data = new DataDieta();
             ControladorDieta ctrl = new ControladorDieta(menu, vista, data);
             ctrl.iniciar();
+            vista.setLocation(300, 80);
             JOptionPane.showMessageDialog(vista, "Por favor cargue aquí su nueva dieta, luego cierre la ventana Dietas y continúe usando el plan Nutricional");
         }
 
@@ -210,22 +212,39 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         }
 
         if (e.getSource() == vista.BtAgregarComida) { //agrega la comida seleccionada del combo box CBComidasActivas a la dieta del paciente
-            String comida = vista.CBComidasActivas.getSelectedItem().toString(); 	// Obtiene comida seleccionada del Combo
-            String porcion = vista.TxPorcion.getText(); 					// Obtiene texto del JTextField porción
-            String horario = vista.CbHorario.getSelectedItem().toString();		// Obtiene horario seleccionado del Combo
+            vista.CBPaciente.setEnabled(false);
+            vista.CBDietas1.setEnabled(false);
+            vista.BtGuardar.setEnabled(false);
+            vista.BtNuevaDieta.setEnabled(false);
+            vista.BtEliminar.setEnabled(false);
 
-            DefaultTableModel modelaT = (DefaultTableModel) vista.JTComidas.getModel(); // modelo de la tabla
+            if (vista.TxPorcion.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "El campo porción no puede estar en blanco. Por favor indique una cantidad", "Error: ", JOptionPane.ERROR_MESSAGE);
+            } else {
+                vista.BtGuardar.setEnabled(true);
+                String comida = vista.CBComidasActivas.getSelectedItem().toString(); 	// Obtiene comida seleccionada del Combo
+                String porcion = vista.TxPorcion.getText(); 					// Obtiene texto del JTextField porción
+                String horario = vista.CbHorario.getSelectedItem().toString();		// Obtiene horario seleccionado del Combo
 
-            modelaT.addRow(new Object[]{comida, porcion, horario}); // Agregar valores a una nueva fila
+                DefaultTableModel modelaT = (DefaultTableModel) vista.JTComidas.getModel(); // modelo de la tabla
 
-            // Limpia los componentes después de agregar la fila
-            vista.CBComidasActivas.setSelectedIndex(0); 	//  reiniciar el ComboBox con 1er elemento selecc
-            vista.TxPorcion.setText(""); 			// vacia contenido del JTextField
-            vista.CbHorario.setSelectedIndex(0); 		// reiniciar el ComboBox con primer element selecc
+                modelaT.addRow(new Object[]{comida, porcion, horario}); // Agregar valores a una nueva fila
+
+                // Limpia los componentes después de agregar la fila
+                vista.CBComidasActivas.setSelectedIndex(0); 	//  reiniciar el ComboBox con 1er elemento selecc
+                vista.TxPorcion.setText(""); 			// vacia contenido del JTextField
+                vista.CbHorario.setSelectedIndex(0); 		// reiniciar el ComboBox con primer element selecc
+            }
         }
 
         if (e.getSource() == vista.BtGuardar) {
+//            data
 
+
+        vista.BtNuevaDieta.setEnabled(true);
+        vista.BtEliminar.setEnabled(true);
+        vista.CBPaciente.setEnabled(true);
+        vista.CBDietas1.setEnabled(true);
         }
 
         if (e.getSource() == vista.BtSalir) {
