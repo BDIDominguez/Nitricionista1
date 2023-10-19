@@ -15,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import vistas.VistaDieta_Comida;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -211,6 +213,16 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             String comidaSelect = (String) vista.CBComidasActivas.getSelectedItem();
         }
 
+        vista.TxPorcion.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();  // Consume el evento si no es un dígito
+                }
+            }
+        });
+        
         if (e.getSource() == vista.BtAgregarComida) { //agrega la comida seleccionada del combo box CBComidasActivas a la dieta del paciente
             vista.CBPaciente.setEnabled(false);
             vista.CBDietas1.setEnabled(false);
@@ -219,7 +231,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             vista.BtEliminar.setEnabled(false);
 
             if (vista.TxPorcion.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "El campo porción no puede estar en blanco. Por favor indique una cantidad", "Error: ", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "El campo porción no puede estar en blanco. Por favor indique una cantidad. (recuerde seleccionar la comida y el horario también antes de agregar)", "Error: ", JOptionPane.ERROR_MESSAGE);
             } else {
                 vista.BtGuardar.setEnabled(true);
                 String comida = vista.CBComidasActivas.getSelectedItem().toString(); 	// Obtiene comida seleccionada del Combo
@@ -240,11 +252,10 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         if (e.getSource() == vista.BtGuardar) {
 //            data
 
-
-        vista.BtNuevaDieta.setEnabled(true);
-        vista.BtEliminar.setEnabled(true);
-        vista.CBPaciente.setEnabled(true);
-        vista.CBDietas1.setEnabled(true);
+            vista.BtNuevaDieta.setEnabled(true);
+            vista.BtEliminar.setEnabled(true);
+            vista.CBPaciente.setEnabled(true);
+            vista.CBDietas1.setEnabled(true);
         }
 
         if (e.getSource() == vista.BtSalir) {
