@@ -44,16 +44,15 @@ public class DataDieta {
     public boolean modificarDieta(EntidadDieta entidadDieta) throws SQLException {
         boolean vRespuesta = false;
         con = Conexion.getConexion();
-        String sql = "UPDATE dietas SET nombre = ?, idpaciente = ?, fecinicio = ?, pesoinicial = ?, pesofinal = ?, fecfinal = ?, estado = ? WHERE iddieta = ?";
+        String sql = "UPDATE dietas SET nombre = ?,fecinicio = ?, pesoinicial = ?, pesofinal = ?, fecfinal = ?, estado = ? WHERE iddieta = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, entidadDieta.getNombre());
-        ps.setInt(2, entidadDieta.getPaciente());
-        ps.setDate(3, java.sql.Date.valueOf(entidadDieta.getFechaInicial()));
-        ps.setDouble(4, entidadDieta.getPesoInicial());
-        ps.setDouble(5, entidadDieta.getPesoFinal());
-        ps.setDate(6, java.sql.Date.valueOf(entidadDieta.getFechaFinal()));
-        ps.setBoolean(7, entidadDieta.isEstado());
-        ps.setInt(8, entidadDieta.getIdDieta());
+        ps.setDate(2, java.sql.Date.valueOf(entidadDieta.getFechaInicial()));
+        ps.setDouble(3, entidadDieta.getPesoInicial());
+        ps.setDouble(4, entidadDieta.getPesoFinal());
+        ps.setDate(5, java.sql.Date.valueOf(entidadDieta.getFechaFinal()));
+        ps.setBoolean(6, entidadDieta.isEstado());
+        ps.setInt(7, entidadDieta.getIdDieta());
         ps.executeUpdate();
         vRespuesta = true;
         ps.close();

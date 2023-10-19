@@ -124,15 +124,16 @@ public class ControladorDieta implements ActionListener, KeyListener {
             vista.txPesoFin.setEnabled(true);
             vista.cboxListaDietas.setEnabled(true);
 
-            if (idDieta == 0 && vista.txNombreD.getText().equals("")) {
+            if (idDieta == 0 && vista.txNombreD.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "El campo de texto no puede estar en blanco.", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (idPaciente > 0) {
-                
+                // Crear o modificar una dieta
                 EntidadDieta di = new EntidadDieta();
                 di.setNombre(vista.txNombreD.getText());
                 di.setPesoInicial(Double.parseDouble(vista.txPesoIni.getText()));
                 di.setPesoFinal(Double.parseDouble(vista.txPesoFin.getText()));
 
+                // Configurar fechas
                 java.util.Date fechaInicio = vista.dcFechInicio.getDate();
                 Instant instantInicio = fechaInicio.toInstant();
                 LocalDate fechaInicial = instantInicio.atZone(ZoneId.systemDefault()).toLocalDate();
@@ -143,36 +144,32 @@ public class ControladorDieta implements ActionListener, KeyListener {
                 LocalDate fechaFin = instantFinal.atZone(ZoneId.systemDefault()).toLocalDate();
                 di.setFechaFinal(fechaFin);
 
+                // Configurar el estado de la dieta (activo o inactivo)
                 di.setEstado(vista.cbEstado.isSelected());
 
-                if (idDieta < 0) {
-                    // Guardar una nueva dieta
-                    di.setPaciente(idPaciente);
-                    DataDieta diet = new DataDieta();
-                    try {
+                DataDieta diet = new DataDieta();
+                try {
+                    if (idDieta < 0) {
+                        // Guardar una nueva dieta
+                        di.setPaciente(idPaciente);
                         EntidadDieta dietaGuardada = diet.crearDieta(di);
                         JOptionPane.showMessageDialog(null, "Dieta guardada exitosamente con ID: " + dietaGuardada.getIdDieta());
                         data.definirDietaUnica(idPaciente, dietaGuardada.getIdDieta());
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(null, "Error al guardar la dieta en la base de datos: " + ex.getMessage());
-                    }
-                } else {
-                    // Modificar una dieta existente
-                    di.setIdDieta(idDieta); // Asegúrate de configurar el ID correcto de la dieta que deseas modificar
-                    DataDieta diet = new DataDieta();
-                    try {
+                    } else {
+                        // Modificar una dieta existente
+                        di.setIdDieta(idDieta);
                         boolean dietaModificada = diet.modificarDieta(di);
                         if (dietaModificada) {
                             JOptionPane.showMessageDialog(null, "Dieta modificada exitosamente.");
-                            if(vista.cbEstado.isSelected()){
-                               data.definirDietaUnica(idPaciente, idDieta); 
+                            if (vista.cbEstado.isSelected()) {
+                                data.definirDietaUnica(idPaciente, idDieta);
                             }
                         } else {
                             JOptionPane.showMessageDialog(null, "Error al modificar la dieta en la base de datos.");
                         }
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(null, "Error al modificar la dieta en la base de datos: " + ex.getMessage());
                     }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Error al guardar o modificar la dieta en la base de datos: " + ex.getMessage());
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "El ID del paciente no es válido.");
@@ -191,7 +188,6 @@ public class ControladorDieta implements ActionListener, KeyListener {
             if (confirmacion == JOptionPane.YES_OPTION) {
                 try {
                     boolean vRespuesta = data.eliminarDieta(idDieta);
-                    
 
                     if (vRespuesta) {
                         JOptionPane.showMessageDialog(vista, "Dieta dada de baja con éxito.");
