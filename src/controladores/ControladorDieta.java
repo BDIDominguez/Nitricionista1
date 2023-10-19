@@ -21,6 +21,7 @@ import entidades.EntidadDieta;
 import entidades.EntidadPaciente;
 import entidades.EntidadComida;
 import entidades.EntidadDieta_Comida;
+import java.awt.Color;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -203,9 +204,11 @@ public class ControladorDieta implements ActionListener, KeyListener {
         if (d.getSource() == vista.cbEstado) {
             if (vista.cbEstado.isSelected()) {
                 vista.cbEstado.setText("ACTIVO");
+                vista.cbEstado.setBackground(Color.BLUE);
             } else {
                 vista.cbEstado.setText("DEBAJA");
                 vista.cbEstado.setEnabled(true);
+                vista.cbEstado.setBackground(Color.RED);
             }
         }
         if (d.getSource() == vista.cboxListaDietas) {
@@ -225,6 +228,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
                         vista.dcFechFinal.setDate(Date.valueOf(dt.getFechaFinal()));
                         vista.txPesoIni.setText(dt.getPesoInicial() + "");
                         vista.txPesoFin.setText(dt.getPesoFinal() + "");
+                        vista.cbEstado.setSelected(dt.isEstado());
                     } catch (SQLException ex) {
                         Logger.getLogger(ControladorDieta.class.getName()).log(Level.SEVERE, null, ex);
                     }
