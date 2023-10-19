@@ -5,8 +5,6 @@ import entidades.EntidadComida;
 import vistas.VistaComida;
 import vistas.VistaPantallaPrincipal;
 import java.awt.event.ActionListener;
-//import javax.swing.event.TableModelEvent;
-//import javax.swing.event.TableModelListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -23,7 +21,7 @@ import javax.swing.ButtonGroup;
 
 
 /**
- *EN CONSTRUCCION LA VALIDACION DESHABILITANDO CAMPOS ESTA REGADO POR TODA LA CLASE
+ *EN CONSTRUCCION LA VALIDACION
  * @author louis
  */
 public class ControladorComida implements ActionListener {
@@ -33,7 +31,7 @@ public class ControladorComida implements ActionListener {
     private VistaComida vista;
     private Image comidaimg;
     private ArrayList<EntidadComida> comidas = new ArrayList<>();
-    private DefaultTableModel modeloTabla; // Esta es una variable miembro de la clase
+    private DefaultTableModel modeloTabla;
     private ButtonGroup radioGroup;
 
     public ControladorComida(VistaPantallaPrincipal menu, DataComida data, VistaComida vista) {
@@ -41,17 +39,7 @@ public class ControladorComida implements ActionListener {
         this.data = data;
         this.vista = vista;
          this.modeloTabla = new DefaultTableModel();
-        //this.modeloTabla = (DefaultTableModel) vista.tbComidas.getModel();
-        //obteniendo el modelo de datos de la tabla en vista.tbComidas.getModel() y asigno a la variable miembro this.modeloTabla. 
-        //El modelo de datos se utiliza para manipular y mostrar los datos en la tabla. Una vez que se ha realizado esta asignación,
-        //se utiliza this.modeloTabla para agregar, eliminar o actualizar filas de la tabla.
         this.radioGroup = new ButtonGroup();
-
-            // Configura todos los campos de búsqueda y habilita inicialmente
-//    vista.txNombre.setEditable(true);
-//    vista.txIdComida.setEditable(true);
-//    vista.txKcal.setEditable(true);
-//    vista.txReceta.setEditable(true);
     
         vista.btBuscar.addActionListener(this);
         vista.btLimpiar.addActionListener(this);
@@ -68,7 +56,6 @@ public class ControladorComida implements ActionListener {
         vista.rbDeshabilitada.addActionListener(this);
         vista.rbHabilitada.addActionListener(this);
         vista.tbComidas.setModel(modeloTabla);
-        //vista.tbComidas.getModel().addTableModelListener(new MiTableModelListener());
         
         UIManager.put("OptionPane.messageFont", UIManager.getFont("Label.font").deriveFont(20.0f));
 
@@ -92,29 +79,21 @@ public class ControladorComida implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-         // Deshabilitar todos los campos al inicio
-//         vista.txNombre.setEditable(false);
-//         vista.txIdComida.setEditable(false);
-//         vista.txKcal.setEditable(false);
-//         vista.txReceta.setEditable(false);
-         
        if (e.getSource() == vista.btBuscar) {
-//        if (alMenosUnCampoTieneTexto()) {
-//            vista.txNombre.setEditable(false);
-//            vista.txIdComida.setEditable(false);
-//            vista.txKcal.setEditable(false);
-//            vista.txReceta.setEditable(false);
-//        }
         buscarComidas();
+         vista.txNombre.setEditable(false);
+         vista.txIdComida.setEditable(false);
+         vista.txKcal.setEditable(false);
+         vista.txPeso.setEditable(false);
+         vista.txReceta.setEditable(false);
+         vista.btAgregar.setEnabled(false);
+         vista.rbHabilitada.setEnabled(false);
+         vista.rbDeshabilitada.setEnabled(false);
     } else if (e.getSource() == vista.btLimpiar) {
         limpiarOpciones();
     } else if (e.getSource() == vista.btAgregar) {
           modeloTabla.setRowCount(0);
           agregarComidas();
-//        } else if (e.getSource() == vista.rbDeshabilitada) {
-//            obtenerComidasxEstado();
-//        } else if (e.getSource() == vista.rbHabilitada) {
-//            obtenerComidasxEstado();
          } else if (e.getSource() == vista.btDeshabilitarLista) {
            deshabilitarComidaSeleccionada();
         } else if (e.getSource() == vista.btHabilitarLista) {
@@ -123,15 +102,6 @@ public class ControladorComida implements ActionListener {
             modificarComidas();
 } else if (e.getSource() == vista.jbSalir) {
         vista.dispose();
-//    } else if (e.getSource() == vista.txNombre) {
-//        vista.txNombre.setEditable(true);
-//    } else if (e.getSource() == vista.txIdComida) {
-//        vista.txIdComida.setEditable(true);
-//    } else if (e.getSource() == vista.txKcal) {
-//        vista.txKcal.setEditable(true);
-//    } else if (e.getSource() == vista.txReceta) {
-//        vista.txReceta.setEditable(true);
-//    }
    }
 }
 
@@ -148,9 +118,8 @@ public class ControladorComida implements ActionListener {
     } else if (vista.rbDeshabilitada.isSelected()) {
         estado = false; // Deshabilitada
     } else {
-        // Si ningún radio button está seleccionado, puedes mostrar un mensaje de error o manejarlo de otra forma.
         JOptionPane.showMessageDialog(null, "Debes seleccionar un estado (Habilitada o Deshabilitada).");
-        return; // Salir del método
+        return;
     }
     // Crear una instancia de EntidadComida con los datos ingresados
     EntidadComida nuevaComida = new EntidadComida(nombre, receta, calorias, estado, peso);
@@ -196,9 +165,10 @@ public class ControladorComida implements ActionListener {
     // Actualiza la tabla para reflejar el cambio de estado
     DefaultTableModel modelo = (DefaultTableModel) vista.tbComidas.getModel();
     modelo.setValueAt("Deshabilitado", filaSeleccionada, 0);
+     limpiarOpciones();
 }
     
-      public void habilitarComidaSeleccionada() {
+    public void habilitarComidaSeleccionada() {
     int filaSeleccionada = vista.tbComidas.getSelectedRow();
     if (filaSeleccionada == -1) {
         JOptionPane.showMessageDialog(null, "Selecciona una comida en la tabla para habilitarla");
@@ -211,30 +181,8 @@ public class ControladorComida implements ActionListener {
     // Actualiza la tabla para reflejar el cambio de estado
     DefaultTableModel modelo = (DefaultTableModel) vista.tbComidas.getModel();
     modelo.setValueAt("Habilitada", filaSeleccionada, 0);
+    limpiarOpciones();
 }
-      /*public class MiTableModelListener implements TableModelListener {
-       @Override
-            public void tableChanged(TableModelEvent e) {
-                if (e.getType() == TableModelEvent.UPDATE) {
-                    int fila = e.getFirstRow();
-                    int columna = e.getColumn();
-                    if (columna != 0) { // Asegurarte de no modificar la columna 0 (idComida)
-                        DefaultTableModel model = (DefaultTableModel) vista.tbComidas.getModel();
-                        int idComida = (int) model.getValueAt(fila, 0);
-                        String nombre = (String) model.getValueAt(fila, 1);
-                        String receta = (String) model.getValueAt(fila, 2);
-                        int calorias = (int) model.getValueAt(fila, 3);
-                        double peso = (double) model.getValueAt(fila, 4);
-                        
-                        // Crea un objeto EntidadComida con los datos modificados
-                        EntidadComida comida = new EntidadComida(idComida, nombre, receta, calorias, true, peso);
-                        
-                        // Llama al método de DataComida para actualizar la comida
-                        data.modificarComidas(comida);
-                    }
-                }
-            }
-      }*/
     
     public void modificarComidas() {
     DefaultTableModel modelo = (DefaultTableModel) vista.tbComidas.getModel();
@@ -251,16 +199,13 @@ public class ControladorComida implements ActionListener {
     int calorias = (int) modelo.getValueAt(filaSeleccionada, 3);
     double peso = (double) modelo.getValueAt(filaSeleccionada, 4);
     boolean estado = true; // Asumiendo que la comida es inicialmente habilitada
-    // Crear un objeto EntidadComida con los datos de la fila seleccionada
     EntidadComida comidaModificada = new EntidadComida(idComida, nombre, receta, calorias, estado, peso);
-    // Llamada al método de DataComida para modificar la comida
     data.modificarComidas(comidaModificada);
     //  actualizar la tabla
     modelo.setValueAt(nombre, filaSeleccionada, 1);
     modelo.setValueAt(receta, filaSeleccionada, 2);
     modelo.setValueAt(calorias, filaSeleccionada, 3);
     modelo.setValueAt(peso, filaSeleccionada, 4);
-  
 }
       
     public class MultilineCellRenderer extends DefaultTableCellRenderer {
@@ -283,26 +228,40 @@ public class ControladorComida implements ActionListener {
     
 public void buscarComidas() {
     DefaultTableModel modelo = (DefaultTableModel) vista.tbComidas.getModel();
-    modelo.setRowCount(0); // Limpiar la tabla antes de mostrar nuevos resultados
+   modelo.setRowCount(0); // Limpiar la tabla antes de mostrar nuevos resultados
 
     List<EntidadComida> resultado = new ArrayList<>();
-      // Primero, habilita todos los campos
-    vista.txNombre.setEditable(true);
-    vista.txIdComida.setEditable(true);
-    vista.txKcal.setEditable(true);
-    vista.txReceta.setEditable(true);
-     vista.txPeso.setEditable(true);
-     if (vista.txNombre.getText().isEmpty() &&
-        vista.txIdComida.getText().isEmpty() &&
-        vista.txKcal.getText().isEmpty() &&
-        vista.txPeso.getText().isEmpty() &&
-        vista.txReceta.getText().isEmpty() &&
-        (!vista.rbHabilitada.isSelected() && !vista.rbDeshabilitada.isSelected())) {
-        JOptionPane.showMessageDialog(null, "Debes ingresar al menos una opción de búsqueda o seleccionar un estado");
+    
+    if (vista.txNombre.getText().isEmpty() &&
+    vista.txIdComida.getText().isEmpty() &&
+    vista.txKcal.getText().isEmpty() &&
+    vista.txPeso.getText().isEmpty() &&
+    vista.txReceta.getText().isEmpty() &&
+    (!vista.rbHabilitada.isSelected() && !vista.rbDeshabilitada.isSelected())) {
+    JOptionPane.showMessageDialog(null, "Debes ingresar al menos una opción de búsqueda o seleccionar un estado");
+    return;
+} else if (!vista.txNombre.getText().isEmpty() ||
+           !vista.txIdComida.getText().isEmpty() ||
+           !vista.txKcal.getText().isEmpty() ||
+           !vista.txPeso.getText().isEmpty() ||
+           !vista.txReceta.getText().isEmpty() ||
+           vista.rbHabilitada.isSelected() ||
+           vista.rbDeshabilitada.isSelected()) {
+    int opcionesSeleccionadas = 0;
+    if (!vista.txNombre.getText().isEmpty()) opcionesSeleccionadas++;
+    if (!vista.txIdComida.getText().isEmpty()) opcionesSeleccionadas++;
+    if (!vista.txKcal.getText().isEmpty()) opcionesSeleccionadas++;
+    if (!vista.txPeso.getText().isEmpty()) opcionesSeleccionadas++;
+    if (!vista.txReceta.getText().isEmpty()) opcionesSeleccionadas++;
+    if (vista.rbHabilitada.isSelected()) opcionesSeleccionadas++;
+    if (vista.rbDeshabilitada.isSelected()) opcionesSeleccionadas++;
+    if (opcionesSeleccionadas !=1) {
+        JOptionPane.showMessageDialog(null, "Debes ingresar solo 1 opción de búsqueda o seleccionar un estado");
         return;
-    }
+    } 
+}
 
-    if (vista.rbHabilitada.isSelected()) {
+     if (vista.rbHabilitada.isSelected()) {
         resultado.addAll(data.obtenerComidasxEstado(true));
     } else if (vista.rbDeshabilitada.isSelected()) {
         resultado.addAll(data.obtenerComidasxEstado(false));
@@ -312,20 +271,12 @@ public void buscarComidas() {
         JOptionPane.showMessageDialog(null, "El nombre de comida solo puede contener texto");
     } else {
         resultado.addAll(data.obtenerComidasxNombre(nombre));
-        vista.txIdComida.setEditable(false);
-        vista.txKcal.setEditable(false);
-        vista.txReceta.setEditable(false);
-        vista.txPeso.setEditable(false);
 }
     } else if (!vista.txIdComida.getText().isEmpty()) {
         String input = vista.txIdComida.getText().trim();
         try {
             int idComida = Integer.parseInt(input);
             resultado.addAll(data.obtenerComidasxidComida(idComida));
-            vista.txNombre.setEditable(false);
-            vista.txKcal.setEditable(false);
-            vista.txReceta.setEditable(false);
-            vista.txPeso.setEditable(false);
         // Verificar si no se encontraron resultados
         if (resultado.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No se encontraron comidas con el ID de comida especificado");
@@ -340,10 +291,6 @@ public void buscarComidas() {
             JOptionPane.showMessageDialog(null, "Las calorías deben ser un número entero mayor que cero.");
         } else {
             resultado.addAll(data.obtenerComidasxCalorias(calorias));
-            vista.txNombre.setEditable(false);
-            vista.txIdComida.setEditable(false);
-            vista.txReceta.setEditable(false);
-            vista.txPeso.setEditable(false);
         }
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(null, "Debe ingresar un número entero para las calorías");
@@ -352,12 +299,8 @@ public void buscarComidas() {
         try {
             double peso = Double.parseDouble(vista.txPeso.getText());
             resultado.addAll(data.obtenerComidasxpeso(peso));
-            vista.txNombre.setEditable(false);
-            vista.txIdComida.setEditable(false);
-            vista.txReceta.setEditable(false);
-            vista.txKcal.setEditable(false);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar un número en gramos para el peso");
+            JOptionPane.showMessageDialog(null, "Debe ingresar un número de gramos para el peso");
             return;
         }
     } else if (!vista.txReceta.getText().isEmpty()) {
@@ -366,10 +309,6 @@ public void buscarComidas() {
         JOptionPane.showMessageDialog(null, "El nombre de la receta solo puede contener texto");
     } else {
         resultado.addAll(data.obtenerComidasxReceta(receta));
-         vista.txNombre.setEditable(false);
-         vista.txIdComida.setEditable(false);
-         vista.txKcal.setEditable(false);
-          vista.txPeso.setEditable(false);
     }
 }
     mostrarResultadoBusqueda(resultado); 
@@ -396,10 +335,18 @@ public void buscarComidas() {
     vista.txIdComida.setText("");
     vista.txKcal.setText("");
     vista.txReceta.setText("");  
-     vista.txPeso.setText("");
+    vista.txPeso.setText("");
+    vista.btAgregar.setEnabled(true);
+    vista.btBuscar.setEnabled(true);
+     vista.btHabilitarLista.setEnabled(true);
+    vista.btDeshabilitarLista.setEnabled(true);
+    vista.jbModificar.setEnabled(true);
+     vista.rbHabilitada.setEnabled(true);
+     vista.rbDeshabilitada.setEnabled(true);
    // Reiniciar la selección de los botones de radio
-    vista.rbHabilitada.setSelected(false);
+   vista.rbHabilitada.setSelected(false);
     vista.rbDeshabilitada.setSelected(false);
+      // Editar los textfields
     vista.txNombre.setEditable(true);
     vista.txIdComida.setEditable(true);
     vista.txKcal.setEditable(true);
@@ -460,9 +407,4 @@ public void buscarComidas() {
         // Mostrar el mensaje utilizando JOptionPane.showMessageDialog con el tamaño de fuente configurado
         JOptionPane.showMessageDialog(null, JOptionPane.INFORMATION_MESSAGE);
     }
-    
-//    private boolean alMenosUnCampoTieneTexto() {
-//    return !vista.txNombre.getText().isEmpty() || !vista.txIdComida.getText().isEmpty() ||
-//           !vista.txKcal.getText().isEmpty() || !vista.txReceta.getText().isEmpty();
-//}
 }
