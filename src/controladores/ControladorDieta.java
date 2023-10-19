@@ -127,7 +127,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
             if (idDieta == 0 && vista.txNombreD.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "El campo de texto no puede estar en blanco.", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (idPaciente > 0) {
-
+                
                 EntidadDieta di = new EntidadDieta();
                 di.setNombre(vista.txNombreD.getText());
                 di.setPesoInicial(Double.parseDouble(vista.txPesoIni.getText()));
@@ -185,13 +185,13 @@ public class ControladorDieta implements ActionListener, KeyListener {
         }
         if (d.getSource() == vista.btEliminar) {
             String nombreDieta = vista.txNombreD.getText();
-            int idDieta = Integer.parseInt(vista.txNombreD.getText());
 
             int confirmacion = JOptionPane.showConfirmDialog(vista, "¿Seguro desea dar de baja la Dieta: " + nombreDieta + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
 
             if (confirmacion == JOptionPane.YES_OPTION) {
                 try {
                     boolean vRespuesta = data.eliminarDieta(idDieta);
+                    
 
                     if (vRespuesta) {
                         JOptionPane.showMessageDialog(vista, "Dieta dada de baja con éxito.");
@@ -217,6 +217,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
                 String selectedItem = (String) vista.cboxListaDietas.getSelectedItem();
 
                 String[] partes = selectedItem.split("-");
+                idDieta = Integer.parseInt(partes[0].trim());
 
                 if (partes.length > 0) {
                     try {
