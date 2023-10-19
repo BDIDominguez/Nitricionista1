@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import entidades.EntidadComida;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -228,6 +230,24 @@ public class DataComida {
         return comidasxid;
     }
     
+    public String obtenerNombrexidComida(int idComida) {
+        String nombreComida = null;
+        con = Conexion.getConexion();
+        String sql = "SELECT nombre FROM comidas WHERE idcomida = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idComida);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+               nombreComida = resultSet.getString("nombre");
+            }
+            cerrarRecursos(ps, resultSet);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Fallo al recuperar el nombre de la comida por su idComida" + ex.getMessage());
+        }  
+        return nombreComida;
+    }
+    
      //➢➢	Consultar la búsqueda de comidas por peso 
  //SELECT nombre, receta, calorias, estado, peso FROM comidas WHERE peso = 280;
     public List<EntidadComida> obtenerComidasxpeso(double peso) {
@@ -367,6 +387,8 @@ public class DataComida {
         return comidasxreceta;
        
     }
+    
+    
     
     // metodo auxiliar para cerrar tanto resultSet como prepare statement
     private void cerrarRecursos(PreparedStatement ps, ResultSet resultSet) throws SQLException {

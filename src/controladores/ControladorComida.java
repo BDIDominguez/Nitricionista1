@@ -106,19 +106,46 @@ public class ControladorComida implements ActionListener {
 }
 
     private void agregarComidas() {
-    try {
+    if (vista.txNombre.getText().isEmpty() ||
+    vista.txIdComida.getText().isEmpty() ||
+    vista.txKcal.getText().isEmpty() ||
+    vista.txPeso.getText().isEmpty() ||
+    vista.txReceta.getText().isEmpty() ||
+    (!vista.rbHabilitada.isSelected() && !vista.rbDeshabilitada.isSelected())) {
+    JOptionPane.showMessageDialog(null, "Debes completar todos los datos del formulario y seleccionar un estado para agregar una comida");
+     limpiarOpciones();
+    return;
+    } else if (!vista.txNombre.getText().isEmpty() &&
+    !vista.txIdComida.getText().isEmpty() &&
+    !vista.txKcal.getText().isEmpty() &&
+    !vista.txPeso.getText().isEmpty() &&
+   ! vista.txReceta.getText().isEmpty() &&
+    (vista.rbHabilitada.isSelected() || vista.rbDeshabilitada.isSelected())) {
+    vista.btBuscar.setEnabled(false);
+    vista.btHabilitarLista.setEnabled(false);
+    vista.btDeshabilitarLista.setEnabled(false);
+    vista.jbModificar.setEnabled(false);
+   vista.txNombre.setEditable(false);
+    vista.txIdComida.setEditable(false);
+    vista.txKcal.setEditable(false);
+    vista.txReceta.setEditable(false);
+    vista.txPeso.setEditable(false);
+    vista.rbHabilitada.setEnabled(false);
+    vista.rbDeshabilitada.setEnabled(false);
+    }
+            try {
     String nombre = vista.txNombre.getText();
     String receta = vista.txReceta.getText();
     int calorias = Integer.parseInt(vista.txKcal.getText());
     double peso = Double.parseDouble(vista.txPeso.getText());
-   boolean estado; // Declarar el estado sin inicializarlo
+    boolean estado; // Declarar el estado sin inicializarlo
     // Verificar la selección de radio buttons para establecer el estado
     if (vista.rbHabilitada.isSelected()) {
         estado = true; // Habilitada
     } else if (vista.rbDeshabilitada.isSelected()) {
         estado = false; // Deshabilitada
     } else {
-        JOptionPane.showMessageDialog(null, "Debes seleccionar un estado (Habilitada o Deshabilitada).");
+        JOptionPane.showMessageDialog(null, "Debes seleccionar un estado (Habilitada o Deshabilitada");
         return;
     }
     // Crear una instancia de EntidadComida con los datos ingresados
