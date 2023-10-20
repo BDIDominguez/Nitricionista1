@@ -11,6 +11,7 @@ import datas.DataPaciente;
 import entidades.EntidadDieta_Comida;
 import entidades.EntidadPaciente;
 import entidades.EntidadComida;
+import entidades.EntidadDieta_Comida.HorarioComida;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -222,7 +223,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                 }
             }
         });
-        
+
         if (e.getSource() == vista.BtAgregarComida) { //agrega la comida seleccionada del combo box CBComidasActivas a la dieta del paciente
             vista.CBPaciente.setEnabled(false);
             vista.CBDietas1.setEnabled(false);
@@ -250,12 +251,58 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         }
 
         if (e.getSource() == vista.BtGuardar) {
-//            data
 
             vista.BtNuevaDieta.setEnabled(true);
             vista.BtEliminar.setEnabled(true);
             vista.CBPaciente.setEnabled(true);
             vista.CBDietas1.setEnabled(true);
+
+            String dietaSeleccionada = (String) vista.CBDietas1.getSelectedItem();
+            String[] partes = dietaSeleccionada.split("-");
+            int idDieta = Integer.parseInt(partes[0].trim());
+
+            DefaultTableModel modelaT = (DefaultTableModel) vista.JTComidas.getModel();
+            int rowCount = modelaT.getRowCount();
+
+            for (int i = 0; i < rowCount; i++) {
+                String comida = modelaT.getValueAt(i, 0).toString();
+                int porcion = Integer.parseInt(modelaT.getValueAt(i, 1).toString());
+                String horario = modelaT.getValueAt(i, 2).toString();
+
+                // Ahora, aquí debes obtener el ID de la comida seleccionada en el ComboBox CBComidasActivas
+                String comidaSeleccionada = vista.CBComidasActivas.getSelectedItem().toString();
+                String[] partesComida = comidaSeleccionada.split("-");
+                int idComida = Integer.parseInt(partesComida[0].trim());
+
+                // Luego, crea la instancia de EntidadDieta_Comida con el ID de la dieta, ID de la comida, porción y horario
+                EntidadDieta_Comida dietaComida = new EntidadDieta_Comida(idDieta, idComida, porcion, HorarioComida.valueOf(horario));
+
+                try {
+                    dataDietaComida.GuardarDietaComida(dietaComida);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(vista, "Error al guardar los datos en la base de datos:\n" + ex.getMessage());
+                }
+            }
+
+            modelaT.setRowCount(0);
+            vista.CBComidasActivas.setSelectedIndex(0);
+            vista.TxPorcion.setText("");
+            vista.CbHorario.setSelectedIndex(0);
+
+            llenarComboComidasActivas();
+
+            JOptionPane.showMessageDialog(vista, "Datos guardados en la base de datos con éxito.");
+
+            // Restablecer la tabla y campos después de guardar datos
+            modelaT.setRowCount(0);
+            vista.CBComidasActivas.setSelectedIndex(0);
+            vista.TxPorcion.setText("");
+            vista.CbHorario.setSelectedIndex(0);
+
+            llenarComboComidasActivas(); // Vuelve a cargar las comidas en el ComboBox de comidas activas
+
+            JOptionPane.showMessageDialog(vista, "Datos guardados en la base de datos con éxito.");
+
         }
 
         if (e.getSource() == vista.BtSalir) {
