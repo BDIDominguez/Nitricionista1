@@ -150,7 +150,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
 
             for (entidades.EntidadDieta dieta : diet) {
                 if (dieta.getPaciente() == paciente) {
-                    String cadena = dieta.getIdDieta() + " - " + dieta.getNombre();
+                    String cadena = dieta.getIdDieta() + "-" + dieta.getNombre();
                     vista.CBDietas1.addItem(cadena);
                 }
             }
@@ -281,13 +281,12 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(vista, "Error al guardar los datos en la base de datos:\n" + ex.getMessage());
                 }
-
             }
 
 //            modelaT.setRowCount(0);
 //            vista.CBComidasActivas.setSelectedIndex(0);
-//            vista.TxPorcion.setText("");
-//            vista.CbHorario.setSelectedIndex(0);
+            vista.TxPorcion.setText("");
+            vista.CbHorario.setSelectedIndex(0);
             llenarComboComidasActivas();
 
             JOptionPane.showMessageDialog(vista, "Datos guardados en la base de datos con éxito.");
@@ -345,10 +344,13 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     private int extraerIdDieta() {
         int id = -1;
         try {
-            if (!vista.CBDietas1.getSelectedItem().toString().equals("")) {
-                String combobox = vista.CBDietas1.getSelectedItem().toString();
-                String partes[] = combobox.split("-");
+           String dietaSeleccionada = (String) vista.CBDietas1.getSelectedItem();
+           if (dietaSeleccionada != null && dietaSeleccionada.contains("-")) {
+               
+              String[] partes = dietaSeleccionada.split("-");
+                 if (partes.length > 0) {
                 id = Integer.parseInt(partes[0].trim());
+                 }
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "A ocurrido un error al cargar los indices en el combobox, revices la posicion del idDieta");
