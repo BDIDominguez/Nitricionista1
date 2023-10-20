@@ -269,12 +269,10 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                 int porcion = Integer.parseInt(modelaT.getValueAt(i, 1).toString());
                 String horario = modelaT.getValueAt(i, 2).toString();
 
-                // Ahora, aquí debes obtener el ID de la comida seleccionada en el ComboBox CBComidasActivas
                 String comidaSeleccionada = vista.CBComidasActivas.getSelectedItem().toString();
                 String[] partesComida = comidaSeleccionada.split("-");
                 int idComida = Integer.parseInt(partesComida[0].trim());
 
-                // Luego, crea la instancia de EntidadDieta_Comida con el ID de la dieta, ID de la comida, porción y horario
                 EntidadDieta_Comida dietaComida = new EntidadDieta_Comida(idDieta, idComida, porcion, HorarioComida.valueOf(horario));
 
                 try {
