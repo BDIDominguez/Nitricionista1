@@ -233,6 +233,15 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
                         vista.txPesoIni.setText(dt.getPesoInicial() + "");
                         vista.txPesoFin.setText(dt.getPesoFinal() + "");
                         vista.cbEstado.setSelected(dt.isEstado());
+                        if (dt.isEstado()) {
+                            vista.cbEstado.setText("ACTIVO");
+                            vista.btEliminar.setEnabled(true);
+                            vista.cbEstado.setBackground(Color.BLUE);
+                        } else {
+                            vista.cbEstado.setText("DE BAJA");
+                            vista.btEliminar.setEnabled(true);
+                            vista.cbEstado.setBackground(Color.RED);
+                        }
                     } catch (SQLException ex) {
                         Logger.getLogger(ControladorDieta.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -320,7 +329,7 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
             if (dniText.equals("0")) {
                 JOptionPane.showMessageDialog(vista, "El DNI no puede ser 0");
                 vista.txDNI.requestFocus();
-            } else if(dniText.length() <= 7) {
+            } else if (dniText.length() <= 7) {
                 vista.txDNI.requestFocus();
             }
         }
