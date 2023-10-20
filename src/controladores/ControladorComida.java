@@ -56,6 +56,12 @@ public class ControladorComida implements ActionListener {
         vista.rbDeshabilitada.addActionListener(this);
         vista.rbHabilitada.addActionListener(this);
         vista.tbComidas.setModel(modeloTabla);
+         // Se impide Copiar y pegar en los jTextField
+        vista.txNombre.setTransferHandler(null);
+        vista.txKcal.setTransferHandler(null);
+        vista.txReceta.setTransferHandler(null);
+        vista.txPeso.setTransferHandler(null);
+        vista.txIdComida.setTransferHandler(null);
         
         UIManager.put("OptionPane.messageFont", UIManager.getFont("Label.font").deriveFont(20.0f));
 
@@ -87,6 +93,7 @@ public class ControladorComida implements ActionListener {
          vista.txPeso.setEditable(false);
          vista.txReceta.setEditable(false);
          vista.btAgregar.setEnabled(false);
+         vista.btBuscar.setEnabled(false);
          vista.rbHabilitada.setEnabled(false);
          vista.rbDeshabilitada.setEnabled(false);
     } else if (e.getSource() == vista.btLimpiar) {
@@ -122,16 +129,6 @@ public class ControladorComida implements ActionListener {
    ! vista.txReceta.getText().isEmpty() &&
     (vista.rbHabilitada.isSelected() || vista.rbDeshabilitada.isSelected())) {
     vista.btBuscar.setEnabled(false);
-    vista.btHabilitarLista.setEnabled(false);
-    vista.btDeshabilitarLista.setEnabled(false);
-    vista.jbModificar.setEnabled(false);
-   vista.txNombre.setEditable(false);
-    vista.txIdComida.setEditable(false);
-    vista.txKcal.setEditable(false);
-    vista.txReceta.setEditable(false);
-    vista.txPeso.setEditable(false);
-    vista.rbHabilitada.setEnabled(false);
-    vista.rbDeshabilitada.setEnabled(false);
     }
             try {
     String nombre = vista.txNombre.getText();
@@ -175,7 +172,8 @@ public class ControladorComida implements ActionListener {
             JOptionPane.showMessageDialog(null, "Error al agregar la comida");
         }
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Debes completar todos los datos del formulario para agregar una comida");
+        JOptionPane.showMessageDialog(null, "Debes completar todos los datos del formulario correctamente para agregar una comida");
+           limpiarOpciones();
     }
 }
     
@@ -214,7 +212,6 @@ public class ControladorComida implements ActionListener {
     public void modificarComidas() {
     DefaultTableModel modelo = (DefaultTableModel) vista.tbComidas.getModel();
     int filaSeleccionada = vista.tbComidas.getSelectedRow();
-
     if (filaSeleccionada == -1) {
         JOptionPane.showMessageDialog(null, "Selecciona una fila en la tabla para modificar.");
         return;
@@ -223,8 +220,31 @@ public class ControladorComida implements ActionListener {
     int idComida = (int) modelo.getValueAt(filaSeleccionada, 0);
     String nombre = (String) modelo.getValueAt(filaSeleccionada, 1);
     String receta = (String) modelo.getValueAt(filaSeleccionada, 2);
-    int calorias = (int) modelo.getValueAt(filaSeleccionada, 3);
-    double peso = (double) modelo.getValueAt(filaSeleccionada, 4);
+//Peso y calorias conversion desde String
+ double peso = 0.0; // Inicializa la variable
+Object parpeso = modelo.getValueAt(filaSeleccionada, 4); // Obtén el valor de la celda
+if (parpeso instanceof Number) {
+    peso = ((Number) parpeso).doubleValue(); // Si es un Number, conviértelo a double
+} else if (parpeso instanceof String) {
+    try {
+        peso = Double.parseDouble((String) parpeso); // Si es una cadena, intenta convertirla a double
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(null, "No debe ingresar texto, solo se aceptan pesos en gramos.");
+        return;
+    }
+}
+int calorias=0; // Inicializa la variable
+Object parscal = modelo.getValueAt(filaSeleccionada, 3); // Obtén el valor de la celda
+if (parscal instanceof Number) {
+    calorias = ((Number) parscal).intValue(); // Si es un Number, conviértelo a int
+} else if (parscal instanceof String) {
+    try {
+        calorias = Integer.parseInt((String) parscal); // Si es una cadena, intenta convertirla a double
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(null, "No debe ingresar texto, solo se aceptan pesos en gramos.");
+        return;
+    }
+}
     boolean estado = true; // Asumiendo que la comida es inicialmente habilitada
     EntidadComida comidaModificada = new EntidadComida(idComida, nombre, receta, calorias, estado, peso);
     data.modificarComidas(comidaModificada);
@@ -233,8 +253,9 @@ public class ControladorComida implements ActionListener {
     modelo.setValueAt(receta, filaSeleccionada, 2);
     modelo.setValueAt(calorias, filaSeleccionada, 3);
     modelo.setValueAt(peso, filaSeleccionada, 4);
+   // limpiarOpciones();
 }
-      
+
     public class MultilineCellRenderer extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -325,10 +346,13 @@ public void buscarComidas() {
     } else if (!vista.txPeso.getText().isEmpty()) {
         try {
             double peso = Double.parseDouble(vista.txPeso.getText());
+             if (peso <= 0) {
+            JOptionPane.showMessageDialog(null, "El peso debe ser un número mayor que cero");
+        } else {
             resultado.addAll(data.obtenerComidasxpeso(peso));
+             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Debe ingresar un número de gramos para el peso");
-            return;
         }
     } else if (!vista.txReceta.getText().isEmpty()) {
         String receta = vista.txReceta.getText();
@@ -344,7 +368,6 @@ public void buscarComidas() {
     private void mostrarResultadoBusqueda(List<EntidadComida> resultado) {
         DefaultTableModel modelo = (DefaultTableModel) vista.tbComidas.getModel();
         modelo.setRowCount(0); // Limpiar la tabla antes de mostrar nuevos resultados
-
         for (EntidadComida comida : resultado) {
             Object[] fila ={
                 comida.getIdComida(),
