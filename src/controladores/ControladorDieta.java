@@ -288,8 +288,8 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
             dt = data.obtenerDietaPorId(id);
             vista.txDNI.setText(dt.getIdDieta() + "");
             vista.txNombreD.setText(dt.getNombre() + "");
-            vista.dcFechInicio.setDateFormatString(dt.getFechaInicial() + "");
-            vista.dcFechFinal.setDateFormatString(dt.getFechaFinal() + "");
+            vista.dcFechInicio.setDate(Date.valueOf(dt.getFechaInicial()));
+            vista.dcFechFinal.setDate(Date.valueOf(dt.getFechaFinal()));
             vista.txPesoIni.setText(dt.getPesoInicial() + "");
             vista.txPesoFin.setText(dt.getPesoFinal() + "");
             vista.cbEstado.setSelected(dt.isEstado());
