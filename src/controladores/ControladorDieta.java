@@ -22,6 +22,8 @@ import entidades.EntidadPaciente;
 import entidades.EntidadComida;
 import entidades.EntidadDieta_Comida;
 import java.awt.Color;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -36,7 +38,7 @@ import java.util.logging.Logger;
  *
  * @author Matias
  */
-public class ControladorDieta implements ActionListener, KeyListener {
+public class ControladorDieta implements ActionListener, KeyListener, FocusListener {
 
     private Connection con;
     private final VistaDieta vista;
@@ -58,6 +60,8 @@ public class ControladorDieta implements ActionListener, KeyListener {
         vista.cboxListaDietas.addActionListener(this);
         //Check
         vista.cbEstado.addActionListener(this);
+        //Cuadros de Texto
+        vista.txDNI.addFocusListener(this);
 
     }
 
@@ -283,14 +287,42 @@ public class ControladorDieta implements ActionListener, KeyListener {
             EntidadDieta dt = new EntidadDieta();
             dt = data.obtenerDietaPorId(id);
             vista.txDNI.setText(dt.getIdDieta() + "");
-            vista.txNombreP.setText(dt.getPaciente() + "");
             vista.txNombreD.setText(dt.getNombre() + "");
             vista.dcFechInicio.setDateFormatString(dt.getFechaInicial() + "");
             vista.dcFechFinal.setDateFormatString(dt.getFechaFinal() + "");
             vista.txPesoIni.setText(dt.getPesoInicial() + "");
             vista.txPesoFin.setText(dt.getPesoFinal() + "");
+            vista.cbEstado.setSelected(dt.isEstado());
+            if (dt.isEstado()) {
+                vista.cbEstado.setText("ACTIVO");
+                vista.btEliminar.setEnabled(true);
+                vista.cbEstado.setBackground(Color.BLUE);
+            } else {
+                vista.cbEstado.setText("DE BAJA");
+                vista.btEliminar.setEnabled(true);
+                vista.cbEstado.setBackground(Color.RED);
+            }
+            vista.btGuardar.setEnabled(true);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "Error no se puede consultar el ID " + id + " \n" + ex.getMessage());
+        }
+    }
+
+    @Override
+    public void focusGained(FocusEvent fe) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        if (e.getSource() == vista.txDNI) {
+            String dniText = vista.txDNI.getText();
+            if (dniText.equals("0")) {
+                JOptionPane.showMessageDialog(vista, "El DNI no puede ser 0");
+                vista.txDNI.requestFocus();
+            } else if(dniText.length() <= 7) {
+                vista.txDNI.requestFocus();
+            }
         }
     }
 }
