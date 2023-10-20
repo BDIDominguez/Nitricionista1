@@ -149,7 +149,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
 
             for (entidades.EntidadDieta dieta : diet) {
                 if (dieta.getPaciente() == paciente) {
-                    String cadena = dieta.getNombre();
+                    String cadena = dieta.getIdDieta()+ " - " + dieta.getNombre();
                     vista.CBDietas1.addItem(cadena);
                 }
             }
@@ -290,17 +290,6 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             llenarComboComidasActivas();
 
             JOptionPane.showMessageDialog(vista, "Datos guardados en la base de datos con éxito.");
-
-            // Restablecer la tabla y campos después de guardar datos
-            modelaT.setRowCount(0);
-            vista.CBComidasActivas.setSelectedIndex(0);
-            vista.TxPorcion.setText("");
-            vista.CbHorario.setSelectedIndex(0);
-
-            llenarComboComidasActivas(); // Vuelve a cargar las comidas en el ComboBox de comidas activas
-
-            JOptionPane.showMessageDialog(vista, "Datos guardados en la base de datos con éxito.");
-
         }
 
         if (e.getSource() == vista.BtSalir) {
