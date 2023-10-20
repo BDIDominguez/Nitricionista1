@@ -158,6 +158,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de dietas para llenar el combo Dietas\n" + ex.getMessage());
         }
+        llenarJTComidas();
     }
 
     @Override
