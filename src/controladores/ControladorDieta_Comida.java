@@ -104,11 +104,12 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         try {
             List<EntidadDieta_Comida> comidas = new ArrayList<>();
 
-            comidas = dataDietaComida.obtenerDietasComidaPorDieta(paciente);
+            comidas = dataDietaComida.obtenerDietasComidaPorDieta(extraerIdDieta());
             modelo.setRowCount(0);
-
+            System.out.println("linea 109 comida tiene: " + comidas.size());
             for (EntidadDieta_Comida comida : comidas) {
                 modelo.addRow(new Object[]{comida.getIdComida(), comida.getPorcion(), comida.getHorario()});
+                System.out.println("linea 112" + comida.toString());
             }
             vista.JTComidas.setModel(modelo);
             pacientes.clear();
@@ -149,7 +150,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
 
             for (entidades.EntidadDieta dieta : diet) {
                 if (dieta.getPaciente() == paciente) {
-                    String cadena = dieta.getIdDieta()+ " - " + dieta.getNombre();
+                    String cadena = dieta.getIdDieta() + " - " + dieta.getNombre();
                     vista.CBDietas1.addItem(cadena);
                 }
             }
@@ -280,13 +281,13 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(vista, "Error al guardar los datos en la base de datos:\n" + ex.getMessage());
                 }
+
             }
 
-            modelaT.setRowCount(0);
-            vista.CBComidasActivas.setSelectedIndex(0);
-            vista.TxPorcion.setText("");
-            vista.CbHorario.setSelectedIndex(0);
-
+//            modelaT.setRowCount(0);
+//            vista.CBComidasActivas.setSelectedIndex(0);
+//            vista.TxPorcion.setText("");
+//            vista.CbHorario.setSelectedIndex(0);
             llenarComboComidasActivas();
 
             JOptionPane.showMessageDialog(vista, "Datos guardados en la base de datos con éxito.");
@@ -337,6 +338,20 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             id = Integer.parseInt(partes[0].trim());
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "A ocurrido un error al cargar los indices en el combobox, revices la posicion del idPaciente");
+        }
+        return id;
+    }
+
+    private int extraerIdDieta() {
+        int id = -1;
+        try {
+            if (!vista.CBDietas1.getSelectedItem().toString().equals("")) {
+                String combobox = vista.CBDietas1.getSelectedItem().toString();
+                String partes[] = combobox.split("-");
+                id = Integer.parseInt(partes[0].trim());
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "A ocurrido un error al cargar los indices en el combobox, revices la posicion del idDieta");
         }
         return id;
     }
