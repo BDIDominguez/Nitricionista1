@@ -210,7 +210,7 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
                 vista.cbEstado.setText("ACTIVO");
                 vista.cbEstado.setBackground(Color.BLUE);
             } else {
-                vista.cbEstado.setText("DEBAJA");
+                vista.cbEstado.setText("DE BAJA");
                 vista.cbEstado.setEnabled(true);
                 vista.cbEstado.setBackground(Color.RED);
             }
