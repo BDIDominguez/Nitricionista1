@@ -111,7 +111,7 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
 
                         //llamar el metodo para rellenar el combo de dietas
                     } else {
-                        JOptionPane.showMessageDialog(vista, "No se encontrado el DNI");
+                        JOptionPane.showMessageDialog(vista, "No se encontró el DNI");
                         idPaciente = -1;
                         vista.txDNI.requestFocus();
                     }
@@ -328,9 +328,11 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
             String dniText = vista.txDNI.getText();
             if (dniText.equals("0")) {
                 JOptionPane.showMessageDialog(vista, "El DNI no puede ser 0");
-                vista.txDNI.requestFocus();
-            } else if (dniText.length() <= 7) {
-                vista.txDNI.requestFocus();
+                vista.txDNI.setText(""); // Limpia el campo DNI
+                vista.txDNI.requestFocus(); // Vuelve a enfocar el campo DNI
+            } else if (dniText.length() < 7) {
+                JOptionPane.showMessageDialog(vista, "El DNI debe tener al menos 7 caracteres.");
+                vista.txDNI.requestFocus(); // Vuelve a enfocar el campo DNI
             }
         }
     }
