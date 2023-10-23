@@ -115,7 +115,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             
             DataComida a= new DataComida();
             for (EntidadDieta_Comida comida : comidas) {
-                
+                comidasAgregadas.add(comida.getIdComida()+"-"+a.obtenerNombrexidComida(comida.getIdComida())); //rellena el set para que no vuelva a agregar una comida repetida
                 modelo.addRow(new Object[]{comida.getIdDieta_Comida(),comida.getIdComida()+"-"+a.obtenerNombrexidComida(comida.getIdComida()), comida.getPorcion(), comida.getHorario()});
                 System.out.println("linea 112" + comida.toString());
             }
