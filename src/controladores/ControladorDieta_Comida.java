@@ -38,7 +38,6 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     private VistaPantallaPrincipal menu;
     private final VistaDieta_Comida vista;
     private final DataDieta_Comida dataDietaComida;
-    private DefaultTableModel tablaModelo;
     private int paciente = 0;
     private int dietaSeleccionada = -1;
     private boolean edicionActiva = false;
@@ -112,8 +111,10 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             modelo.setRowCount(0);
             System.out.println("linea 109 comida tiene: " + comidas.size());
             
+            DataComida a= new DataComida();
             for (EntidadDieta_Comida comida : comidas) {
-                modelo.addRow(new Object[]{comida.getNombreComida(), comida.getPorcion(), comida.getHorario()});
+                
+                modelo.addRow(new Object[]{a.obtenerNombrexidComida(comida.getIdComida()), comida.getPorcion(), comida.getHorario()});
                 System.out.println("linea 112" + comida.toString());
             }
             vista.JTComidas.setModel(modelo);
@@ -251,9 +252,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                 String horario = vista.CbHorario.getSelectedItem().toString();		// Obtiene horario seleccionado del Combo
 
                 if(!comidasAgregadas.contains(comida)){
-                DefaultTableModel modelaT = (DefaultTableModel) vista.JTComidas.getModel(); // modelo de la tabla
-
-                modelaT.addRow(new Object[]{nombreComida, porcion, horario});                 // Agregar valores a una nueva fila
+                modelo.addRow(new Object[]{nombreComida, porcion, horario});                 // Agregar valores a una nueva fila
                 
                 comidasAgregadas.add(comida);
                 }else{
@@ -276,14 +275,12 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             String dietaSeleccionada = (String) vista.CBDietas1.getSelectedItem();
             String[] partes = dietaSeleccionada.split("-");
             int idDieta = Integer.parseInt(partes[0].trim());
-
-            DefaultTableModel modelaT = (DefaultTableModel) vista.JTComidas.getModel();
-            int rowCount = modelaT.getRowCount();
+            int rowCount = modelo.getRowCount();
 
             for (int i = 0; i < rowCount; i++) {
-                String nombreComida = modelaT.getValueAt(i, 0).toString();
-                int porcion = Integer.parseInt(modelaT.getValueAt(i, 1).toString());
-                String horario = modelaT.getValueAt(i, 2).toString();
+                String nombreComida = modelo.getValueAt(i, 0).toString();
+                int porcion = Integer.parseInt(modelo.getValueAt(i, 1).toString());
+                String horario = modelo.getValueAt(i, 2).toString();
 
                 String comidaSeleccionada = vista.CBComidasActivas.getSelectedItem().toString();
                 String[] partesComida = comidaSeleccionada.split("-");
