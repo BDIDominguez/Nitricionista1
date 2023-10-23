@@ -55,6 +55,7 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        BtAgregarComida1 = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Plan Nutricional");
@@ -158,6 +159,15 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setText("(Unidades)");
 
+        BtAgregarComida1.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        BtAgregarComida1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/inactivo.png"))); // NOI18N
+        BtAgregarComida1.setText("<< Quitar comida");
+        BtAgregarComida1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtAgregarComida1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -188,10 +198,11 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel4))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(BtAgregarComida, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                                    .addComponent(BtAgregarComida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(BtGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                        .addGap(6, 6, 6))))))
+                                        .addGap(6, 6, 6))
+                                    .addComponent(BtAgregarComida1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(jLabel3))
@@ -252,8 +263,10 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4)
-                                .addGap(32, 32, 32)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(BtAgregarComida1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(20, 20, 20)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(TxPorcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2)
@@ -309,9 +322,14 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_BtEliminarActionPerformed
 
+    private void BtAgregarComida1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtAgregarComida1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtAgregarComida1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton BtAgregarComida;
+    public javax.swing.JButton BtAgregarComida1;
     public javax.swing.JButton BtEliminar;
     public javax.swing.JButton BtGuardar;
     public javax.swing.JButton BtNuevaDieta;

@@ -10,7 +10,7 @@ public class EntidadDieta_Comida {
     private int idComida;           // Declaración de atributo para el ID de la comida relacionada
     private HorarioComida horario;  // Declaración de atributo para el horario en que se asigna la comida
     private int porcion;         // Añadido para representar la cantidad en gramos
-
+    private String nombreComida;
 
     public EntidadDieta_Comida() {
     }
@@ -24,6 +24,7 @@ public class EntidadDieta_Comida {
         this.idDieta_Comida = idDieta_Comida;
         this.idDieta = idDieta;
         this.idComida = idComida;
+        this.nombreComida = nombreComida;
         this.porcion = porcion;
         this.horario = horario;
     }
@@ -58,22 +59,30 @@ public class EntidadDieta_Comida {
         this.idComida = idComida;
     }
 
-    public double getPorcion() {
-       return porcion;
+    public HorarioComida getHorario() {
+        return horario;
+    }
+
+    public void setHorario(HorarioComida horario) {
+        this.horario = horario;
+    }
+
+    public int getPorcion() {
+        return porcion;
     }
 
     public void setPorcion(int porcion) {
         this.porcion = porcion;
     }
+    
+    public String getNombreComida() {
+        return nombreComida;
+    }
 
-    public HorarioComida getHorario() {
-	return horario;
- }
-
-    public void setHorario(HorarioComida horario) {
-        this.horario = horario;
- }
-
+    public void setNombreComida(String nombreComida) {
+        this.nombreComida = nombreComida;
+    }
+    
     @Override
     public String toString() {
         return "EntidadDieta_Comida{"

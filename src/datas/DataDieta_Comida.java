@@ -19,12 +19,14 @@ public class DataDieta_Comida {
 
     public void GuardarDietaComida(EntidadDieta_Comida dietaComida) throws SQLException {
         con = Conexion.getConexion();
-        String sql = "INSERT INTO dietacomidas (iddieta, idcomida, porcion, horario) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO dietacomidas (iddieta, idcomida, nombreComida, porcion, horario) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, dietaComida.getIdDieta());
             ps.setInt(2, dietaComida.getIdComida());
-            ps.setInt(3, (int) dietaComida.getPorcion());
-            ps.setString(4, dietaComida.getHorario().toString());
+            ps.setString(3, dietaComida.getNombreComida());
+            ps.setInt(4, (int) dietaComida.getPorcion());
+            ps.setString(5, dietaComida.getHorario().toString());
+            
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -36,13 +38,25 @@ public class DataDieta_Comida {
         
         boolean vResp = false;
         con = Conexion.getConexion();
-        String sql = "DELETE FROM dieta_comida WHERE id_dieta_comida = ?";
+        String sql = "DELETE FROM dietacomidas WHERE iddietacomida = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, idDietaComida);
         ps.executeUpdate();
         ps.close();
         vResp = true;
+        return vResp;
+    }
+    
+    public boolean eliminarDieta(int idDietaComida) throws SQLException {
+        
+        boolean vResp = false;
+        con = Conexion.getConexion();
+        String sql = "DELETE FROM dietas WHERE iddieta = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, idDietaComida);
+        ps.executeUpdate();
         ps.close();
+        vResp = true;
         return vResp;
     }
 
