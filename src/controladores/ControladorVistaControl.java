@@ -87,6 +87,8 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         vista.txIMC.setTransferHandler(null);
         vista.txObs.setTransferHandler(null);
         vista.txPeso.setTransferHandler(null);
+        
+        vista.dcFecha.addKeyListener(this);
 
     }
 
@@ -101,6 +103,8 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         llenarCombo();
         modelarTabla();
         llenarTabla(extraerIdPaciente());
+        vista.txObs.setLineWrap(true);
+        vista.txObs.setWrapStyleWord(true);
     }
 
     @Override
@@ -122,6 +126,8 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
             vista.dcCita.setDate(cal.getTime());
             vista.btEliminar.setEnabled(false);
             vista.btGuardar.setEnabled(true);
+            vista.dcFecha.getDateEditor().getUiComponent().requestFocusInWindow(); // entregar el foco al jDateChooser
+            
         }
         if (e.getSource() == vista.btGuardar) {
             EntidadControl co = new EntidadControl();
@@ -134,7 +140,6 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
             co.setCintura(Double.parseDouble(vista.txCintura.getText().replace(",", ".")));
             co.setGasenergetico(Double.parseDouble(vista.txGasto.getText().replace(",", ".")));
             co.setIMC(Double.parseDouble(vista.txIMC.getText().replace(",", ".")));
-            //co.setProximacita(vista.dcCita.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             co.setProximacita(fechasALocalDate("cita"));
             co.setEstado(true);
             co.setObs(vista.txObs.getText());
@@ -218,6 +223,7 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         if (e.getSource() == vista.txCintura){
             vista.txCintura.selectAll();
         }
+        
             
     }
 
@@ -358,7 +364,7 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
     public void keyReleased(KeyEvent e) {
 
     }
-
+    
     private class MyModelo extends DefaultTableModel {
 
         //para evitar las edicion de los campos de la tabla pero que se puedan seleccionar
