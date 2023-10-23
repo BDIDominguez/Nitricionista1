@@ -115,7 +115,7 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         jDesktopPane1.add(cboxListaDietas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 270, -1));
 
         btBuscar.setText("Buscar DNI");
-        jDesktopPane1.add(btBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, -1, -1));
+        jDesktopPane1.add(btBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, -1, -1));
 
         btNuevo.setText("Nueva");
         jDesktopPane1.add(btNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, -1));
@@ -190,6 +190,7 @@ private void colocarIconos() {
         btGuardar.setIcon(prepararIcono("salvado.png", alto, ancho));
         btEliminar.setIcon(prepararIcono("inactivo.png", alto, ancho));
         btSalir.setIcon(prepararIcono("salida3.png", alto, ancho));
+        btBuscar.setIcon(prepararIcono("Lupa-buscar.png",alto, ancho));
         ImageIcon icono = new ImageIcon();
         //icono = prepararIcono();
         this.setFrameIcon(icono);
