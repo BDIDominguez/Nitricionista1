@@ -19,13 +19,12 @@ public class DataDieta_Comida {
 
     public void GuardarDietaComida(EntidadDieta_Comida dietaComida) throws SQLException {
         con = Conexion.getConexion();
-        String sql = "INSERT INTO dietacomidas (iddieta, idcomida, nombreComida, porcion, horario) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO dietacomidas (iddieta, idcomida, porcion, horario) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, dietaComida.getIdDieta());
             ps.setInt(2, dietaComida.getIdComida());
-            ps.setString(3, dietaComida.getNombreComida());
-            ps.setInt(4, (int) dietaComida.getPorcion());
-            ps.setString(5, dietaComida.getHorario().toString());
+            ps.setInt(3, (int) dietaComida.getPorcion());
+            ps.setString(4, dietaComida.getHorario().toString());
             
             ps.executeUpdate();
             ps.close();

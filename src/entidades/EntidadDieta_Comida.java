@@ -24,7 +24,6 @@ public class EntidadDieta_Comida {
         this.idDieta_Comida = idDieta_Comida;
         this.idDieta = idDieta;
         this.idComida = idComida;
-        this.nombreComida = nombreComida;
         this.porcion = porcion;
         this.horario = horario;
     }
@@ -75,14 +74,7 @@ public class EntidadDieta_Comida {
         this.porcion = porcion;
     }
     
-    public String getNombreComida() {
-        return nombreComida;
-    }
-
-    public void setNombreComida(String nombreComida) {
-        this.nombreComida = nombreComida;
-    }
-    
+   
     @Override
     public String toString() {
         return "EntidadDieta_Comida{"

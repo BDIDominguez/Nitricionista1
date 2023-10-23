@@ -86,13 +86,15 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     }
 
     private void modelarTabla() {
+        modelo.addColumn("id");
         modelo.addColumn("Comida");
         modelo.addColumn("Porción");
         modelo.addColumn("Horarios");
         vista.JTComidas.setModel(modelo);
-        vista.JTComidas.getColumnModel().getColumn(0).setPreferredWidth(50);
-        vista.JTComidas.getColumnModel().getColumn(1).setPreferredWidth(30);
-        vista.JTComidas.getColumnModel().getColumn(2).setPreferredWidth(20);
+        vista.JTComidas.getColumnModel().getColumn(0).setPreferredWidth(10);
+        vista.JTComidas.getColumnModel().getColumn(1).setPreferredWidth(50);
+        vista.JTComidas.getColumnModel().getColumn(2).setPreferredWidth(30);
+        vista.JTComidas.getColumnModel().getColumn(3).setPreferredWidth(20);
     }
 
     private class MyModelo extends DefaultTableModel {
@@ -114,7 +116,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             DataComida a= new DataComida();
             for (EntidadDieta_Comida comida : comidas) {
                 
-                modelo.addRow(new Object[]{a.obtenerNombrexidComida(comida.getIdComida()), comida.getPorcion(), comida.getHorario()});
+                modelo.addRow(new Object[]{comida.getIdDieta_Comida(),comida.getIdComida()+"-"+a.obtenerNombrexidComida(comida.getIdComida()), comida.getPorcion(), comida.getHorario()});
                 System.out.println("linea 112" + comida.toString());
             }
             vista.JTComidas.setModel(modelo);
@@ -245,14 +247,13 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                 JOptionPane.showMessageDialog(null, "El campo porción no puede estar en blanco. Por favor indique una cantidad. (recuerde seleccionar la comida y el horario también antes de agregar)", "Error: ", JOptionPane.ERROR_MESSAGE);
             } else {
                 vista.BtGuardar.setEnabled(true);
+                int id = 0;
                 String comida = vista.CBComidasActivas.getSelectedItem().toString(); 	// Obtiene comida seleccionada del Combo
-                String[] partes = comida.split("-");                                    // Divide la selección por el guión.
-                String nombreComida = partes[1].trim();                                 // toma el nombre de la comida
                 String porcion = vista.TxPorcion.getText(); 				// Obtiene texto del JTextField porción
                 String horario = vista.CbHorario.getSelectedItem().toString();		// Obtiene horario seleccionado del Combo
 
                 if(!comidasAgregadas.contains(comida)){
-                modelo.addRow(new Object[]{nombreComida, porcion, horario});                 // Agregar valores a una nueva fila
+                modelo.addRow(new Object[]{id, comida, porcion, horario});                 // Agregar valores a una nueva fila
                 
                 comidasAgregadas.add(comida);
                 }else{
@@ -278,24 +279,24 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             int rowCount = modelo.getRowCount();
 
             for (int i = 0; i < rowCount; i++) {
-                String nombreComida = modelo.getValueAt(i, 0).toString();
-                int porcion = Integer.parseInt(modelo.getValueAt(i, 1).toString());
-                String horario = modelo.getValueAt(i, 2).toString();
-
-                String comidaSeleccionada = vista.CBComidasActivas.getSelectedItem().toString();
-                String[] partesComida = comidaSeleccionada.split("-");
-                int idComida = Integer.parseInt(partesComida[0].trim());
-
+                String nombreComida = modelo.getValueAt(i, 1).toString();
+                String[]partes2 = nombreComida.split("-");
+                int idComida = Integer.parseInt(partes2[0].trim());
+                int porcion = Integer.parseInt(modelo.getValueAt(i, 2).toString());
+                String horario = modelo.getValueAt(i, 3).toString();
+                int idcolumn1 = Integer.parseInt (modelo.getValueAt(i, 0).toString());
+                        
                 EntidadDieta_Comida dietaComida = new EntidadDieta_Comida(idDieta, idComida, porcion, HorarioComida.valueOf(horario));
 
                 try {
+                    if (idcolumn1==0){
                     dataDietaComida.GuardarDietaComida(dietaComida);
+                    }
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(vista, "Error al guardar los datos en la base de datos:\n" + ex.getMessage());
                 }
-                llenarJTComidas();
             }
-
+            llenarJTComidas();
 //            modelaT.setRowCount(0);
 //            vista.CBComidasActivas.setSelectedIndex(0);
             vista.TxPorcion.setText("");
