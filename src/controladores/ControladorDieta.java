@@ -95,7 +95,7 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
         }
         if (d.getSource() == vista.btBuscar) {
             if (vista.txDNI.getText().equals("") || vista.txDNI.getText().equals("0")) {
-                JOptionPane.showMessageDialog(null, "El Dni no puede estar en blanco");
+                JOptionPane.showMessageDialog(null, "El Dni no puede estar en blanco.");
             } else {
                 int b = Integer.parseInt(vista.txDNI.getText());
                 EntidadPaciente pac = new EntidadPaciente();
@@ -111,7 +111,7 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
 
                         //llamar el metodo para rellenar el combo de dietas
                     } else {
-                        JOptionPane.showMessageDialog(vista, "No se encontró el DNI");
+                        JOptionPane.showMessageDialog(vista, "No se encontró el DNI.");
                         idPaciente = -1;
                         vista.txDNI.requestFocus();
                     }
@@ -324,16 +324,6 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
 
     @Override
     public void focusLost(FocusEvent e) {
-        if (e.getSource() == vista.txDNI) {
-            String dniText = vista.txDNI.getText();
-            if (dniText.equals("0")) {
-                JOptionPane.showMessageDialog(vista, "El DNI no puede ser 0");
-                vista.txDNI.setText(""); // Limpia el campo DNI
-                vista.txDNI.requestFocus(); // Vuelve a enfocar el campo DNI
-            } else if (dniText.length() < 7) {
-                JOptionPane.showMessageDialog(vista, "El DNI debe tener al menos 7 caracteres.");
-                vista.txDNI.requestFocus(); // Vuelve a enfocar el campo DNI
-            }
-        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
