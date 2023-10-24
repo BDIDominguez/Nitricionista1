@@ -62,6 +62,7 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
         vista.cbEstado.addActionListener(this);
         //Cuadros de Texto
         vista.txDNI.addFocusListener(this);
+        vista.txDNI.addKeyListener(this);
 
     }
 
@@ -73,6 +74,7 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
         vista.txDNI.setText("");
         vista.btEliminar.setEnabled(false);
         vista.btGuardar.setEnabled(false);
+        vista.btBuscar.setEnabled(false);
         llenarComboDieta();
 
     }
@@ -90,7 +92,9 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
             vista.cbEstado.setSelected(true);
             vista.btNuevo.setEnabled(false);
             vista.btGuardar.setEnabled(true);
+            vista.btBuscar.setEnabled(true);
             vista.txNombreD.requestFocus();
+            vista.btEliminar.setEnabled(false);
             idDieta = -1;
         }
         if (d.getSource() == vista.btBuscar) {
@@ -122,12 +126,21 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
             }
         }
         if (d.getSource() == vista.btGuardar) {
-            vista.btNuevo.setEnabled(true);
-            vista.btEliminar.setEnabled(true);
-            vista.txNombreD.setEnabled(true);
-            vista.txPesoIni.setEnabled(true);
-            vista.txPesoFin.setEnabled(true);
-            vista.cboxListaDietas.setEnabled(true);
+            vista.btNuevo.setEnabled(false);
+            vista.btEliminar.setEnabled(false);
+            vista.txNombreD.setEnabled(false);
+            vista.txPesoIni.setEnabled(false);
+            vista.txPesoFin.setEnabled(false);
+            vista.cboxListaDietas.setEnabled(false);
+
+            if (vista.txDNI.getText().equals("")) {
+                vista.btNuevo.setEnabled(true);
+                vista.btEliminar.setEnabled(true);
+                vista.txNombreD.setEnabled(true);
+                vista.txPesoIni.setEnabled(true);
+                vista.txPesoFin.setEnabled(true);
+                vista.cboxListaDietas.setEnabled(true);
+            }
 
             if (idDieta == 0 && vista.txNombreD.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "El campo de texto no puede estar en blanco.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -260,18 +273,25 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
                 e.consume();
             }
         }
+        if (e.getSource() == vista.txDNI) {
+            if (vista.txDNI.getText().length() > 6) {
+                vista.btBuscar.setEnabled(true);
+            } else {
+                vista.btBuscar.setEnabled(false);
+            }
+        }
     }
 
     @Override
     public void keyPressed(KeyEvent ke
     ) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void keyReleased(KeyEvent ke
     ) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void llenarComboDieta() {
@@ -291,7 +311,6 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
             vista.txPesoIni.setText("");
             vista.txPesoFin.setText("");
             vista.cbEstado.setSelected(false);
-   
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de dietas \n" + ex.getMessage());
