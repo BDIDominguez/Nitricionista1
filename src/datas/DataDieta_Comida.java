@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import entidades.EntidadDieta_Comida;
 
-/** * @author DIEGO G. */
-
+/**
+ * * @author DIEGO G.
+ */
 public class DataDieta_Comida {
 
     private Connection con;
@@ -23,9 +24,9 @@ public class DataDieta_Comida {
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, dietaComida.getIdDieta());
             ps.setInt(2, dietaComida.getIdComida());
-            ps.setInt(3, (int) dietaComida.getPorcion());
+            ps.setInt(3, dietaComida.getPorcion());
             ps.setString(4, dietaComida.getHorario().toString());
-            
+
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -33,66 +34,35 @@ public class DataDieta_Comida {
         }
     }
 
-    public boolean eliminarDietaComida(int idDietaComida) throws SQLException {
-        
-        boolean vResp = false;
+    public boolean eliminarDietaDeTabla(int idDietaComida) throws SQLException {
+
+        boolean eliminacionOK = false;
         con = Conexion.getConexion();
         String sql = "DELETE FROM dietacomidas WHERE iddietacomida = ?";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, idDietaComida);
-        ps.executeUpdate();
-        ps.close();
-        vResp = true;
-        return vResp;
-    }
-    
-    public boolean eliminarDieta(int idDietaComida) throws SQLException {
-        
-        boolean vResp = false;
-        con = Conexion.getConexion();
-        String sql = "DELETE FROM dietas WHERE iddieta = ?";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, idDietaComida);
-        ps.executeUpdate();
-        ps.close();
-        vResp = true;
-        return vResp;
-    }
 
-//    //Obtener todas las comidas de una dieta
-//    public EntidadDieta_Comida obtenerDietaComidaPorId(int idDietaComida) throws SQLException {
-//        
-//        String sql = "SELECT * FROM dieta_comida WHERE id_dieta_comida = ?";
-//        PreparedStatement ps = con.prepareStatement(sql);
-//        ps.setInt(1, idDietaComida);
-//        ResultSet rs = ps.executeQuery();
-//
-//        EntidadDieta_Comida dietaComida = null;
-//
-//        if (rs.next()) {
-//            int idDieta = rs.getInt("id_dieta");
-//            int idComida = rs.getInt("id_comida");
-//            int porcion = rs.getInt("porcion");
-//            String horarioStr = rs.getString("horario");
-//            EntidadDieta_Comida.HorarioComida horario = EntidadDieta_Comida.HorarioComida.valueOf(horarioStr);
-//
-//            dietaComida = new EntidadDieta_Comida(idDietaComida, idDieta, idComida, porcion, horario);
-//        }
-//
-//        rs.close();
-//        ps.close();
-//
-//        return dietaComida;
-//    }
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idDietaComida);
+            ps.executeUpdate();
+            ps.close();
+
+//            if (filasAfectadas > 0 =) {
+//                boolean eliminacionOK = true;
+//            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return eliminacionOK;
+    }
 
     public List<EntidadDieta_Comida> obtenerDietasComidaPorDieta(int idDieta) throws SQLException {
-       con = Conexion.getConexion();
+        con = Conexion.getConexion();
         List<EntidadDieta_Comida> dietasComida = new ArrayList<>();
         String sql = "SELECT * FROM dietacomidas WHERE iddieta = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, idDieta);
         ResultSet rs = ps.executeQuery();
-      
+
         while (rs.next()) {
             int idDietaComida = rs.getInt("iddietacomida");
             int idComida = rs.getInt("idcomida");
