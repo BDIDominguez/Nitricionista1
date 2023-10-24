@@ -141,6 +141,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de pacientes para llenar Combo pacientes \n" + ex.getMessage());
         }
+//        llenarComboBDietasActivas();
     }
 
     private void llenarComboBDietasActivas() {
@@ -152,7 +153,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             List<entidades.EntidadDieta> dietas = dataDieta.listarDietas();
 
             for (entidades.EntidadDieta dieta : dietas) {
-                if (dieta.isEstado()) { // Verifica si la dieta está activa
+                if (dieta.isEstado() && dieta.getPaciente()==paciente) { // Verifica si la dieta está activa
                     vista.CBDietasActivas.addItem(dieta.getIdDieta() + "-" + dieta.getNombre());
                 }
             }
@@ -168,7 +169,6 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         if (e.getSource() == vista.CBPaciente) { //muestra para seleccionar un paciente activo
 
             paciente = extraerIdPaciente();
-            llenarJTComidas();
             llenarComboBDietasActivas();
             vista.BtGuardar.setEnabled(false);
         }

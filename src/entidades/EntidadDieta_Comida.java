@@ -31,6 +31,7 @@ public class EntidadDieta_Comida {
     public EntidadDieta_Comida(int idDieta, int idComida, int porcion, HorarioComida horario) {
         this.idDieta = idDieta;
         this.idComida = idComida;
+        this.porcion = porcion;
         this.horario = horario;
     }
 
