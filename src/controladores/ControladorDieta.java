@@ -24,7 +24,7 @@ import entidades.EntidadDieta_Comida;
 import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -228,8 +228,8 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
                         EntidadDieta dt = new EntidadDieta();
                         dt = data.obtenerDietaPorId(id);
                         vista.txNombreD.setText(dt.getNombre());
-                        vista.dcFechInicio.setDate(Date.valueOf(dt.getFechaInicial()));
-                        vista.dcFechFinal.setDate(Date.valueOf(dt.getFechaFinal()));
+                        vista.dcFechInicio.setDate(new java.util.Date());
+                        vista.dcFechFinal.setDate(new java.util.Date());
                         vista.txPesoIni.setText(dt.getPesoInicial() + "");
                         vista.txPesoFin.setText(dt.getPesoFinal() + "");
                         vista.cbEstado.setSelected(dt.isEstado());
@@ -285,6 +285,7 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
                     vista.cboxListaDietas.addItem(cadena);
                 }
             }
+            vista.txNombreD.setText(null);
             vista.dcFechInicio.setDate(null);
             vista.dcFechFinal.setDate(null);
             vista.txPesoIni.setText("");
@@ -303,8 +304,8 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
             dt = data.obtenerDietaPorId(id);
             vista.txDNI.setText(dt.getIdDieta() + "");
             vista.txNombreD.setText(dt.getNombre() + "");
-            vista.dcFechInicio.setDate(Date.valueOf(dt.getFechaInicial()));
-            vista.dcFechFinal.setDate(Date.valueOf(dt.getFechaFinal()));
+            vista.dcFechInicio.setDate(new java.util.Date());
+            vista.dcFechFinal.setDate(new java.util.Date());
             vista.txPesoIni.setText(dt.getPesoInicial() + "");
             vista.txPesoFin.setText(dt.getPesoFinal() + "");
             vista.cbEstado.setSelected(dt.isEstado());
