@@ -285,20 +285,12 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
                     vista.cboxListaDietas.addItem(cadena);
                 }
             }
-            vista.dcFechInicio.setDate(new Date());
-            vista.dcFechFinal.setDate(new Date());
-            vista.txPesoIni.setText(dt.getPesoInicial() + "");
-            vista.txPesoFin.setText(dt.getPesoFinal() + "");
-            vista.cbEstado.setSelected(dt.isEstado());
-            if (dt.isEstado()) {
-                vista.cbEstado.setText("ACTIVO");
-                vista.btEliminar.setEnabled(true);
-                vista.cbEstado.setBackground(Color.BLUE);
-            } else {
-                vista.cbEstado.setText("DE BAJA");
-                vista.btEliminar.setEnabled(true);
-                vista.cbEstado.setBackground(Color.RED);
-            }
+            vista.dcFechInicio.setDate(null);
+            vista.dcFechFinal.setDate(null);
+            vista.txPesoIni.setText("");
+            vista.txPesoFin.setText("");
+            vista.cbEstado.setSelected(false);
+   
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de dietas \n" + ex.getMessage());
