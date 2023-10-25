@@ -22,19 +22,6 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
     public VistaDieta_Comida() {
         initComponents();
         colocarIconos();
-        
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int screenWidth = screenSize.width;
-        int screenHeight = screenSize.height;
-
-        int frameWidth = getWidth();
-        int frameHeight = getHeight();
-
-        int x = (screenWidth - frameWidth) / 2;
-        int y = (screenHeight - frameHeight) / 2;
-
-        setLocation(x, y);
     }
 
     /**
