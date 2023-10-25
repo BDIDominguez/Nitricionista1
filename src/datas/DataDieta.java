@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import entidades.EntidadDieta;
 import entidades.EntidadPaciente;
+import java.sql.Statement;
 
 /**
  *
@@ -28,7 +29,7 @@ public class DataDieta {
     public EntidadDieta crearDieta(EntidadDieta entidadDieta) throws SQLException {
         con = Conexion.getConexion();
         String sql = "INSERT INTO dietas (nombre, idpaciente, fecinicio, pesoinicial, pesofinal, fecfinal, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = con.prepareStatement(sql);
+        PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, entidadDieta.getNombre());
         ps.setInt(2, entidadDieta.getPaciente());
         ps.setDate(3, java.sql.Date.valueOf(entidadDieta.getFechaInicial()));
@@ -37,6 +38,10 @@ public class DataDieta {
         ps.setDate(6, java.sql.Date.valueOf(entidadDieta.getFechaFinal()));
         ps.setBoolean(7, entidadDieta.isEstado());
         ps.executeUpdate();
+        ResultSet rs = ps.getGeneratedKeys();  // Regresa los ID generados por la insercion anterior
+        if (rs.next()) { // 
+            entidadDieta.setIdDieta(rs.getInt(1));
+        }
         ps.close();
         return entidadDieta;
     }
