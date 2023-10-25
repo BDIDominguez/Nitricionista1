@@ -120,6 +120,7 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
             vista.txCintura.setText("0,00");
             vista.txIMC.setText("0,00");
             vista.txGasto.setText("0,00");
+            vista.txObs.setText("");
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
             cal.add(Calendar.DAY_OF_MONTH, 7);
@@ -510,7 +511,7 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         }else{
             da = vista.dcCita.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         }
-        if (da.isBefore(LocalDate.now())){
+        if (da.isBefore(LocalDate.now()) && idcontrol == -1 ){
             JOptionPane.showMessageDialog(vista,"La fecha no esta cargada correctamente!");
             da = LocalDate.now();
             if (cual.equals("fecha")){
