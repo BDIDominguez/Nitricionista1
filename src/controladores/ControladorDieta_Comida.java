@@ -69,7 +69,6 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     public void iniciar() {
         menu.dpFondo.add(vista);
         vista.setVisible(true);
-        vista.setLocation(40, 70);
         menu.dpFondo.moveToFront(vista);
         vista.requestFocus();
         modelarTabla();
@@ -187,7 +186,6 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             DataDieta data = new DataDieta();
             ControladorDieta ctrl = new ControladorDieta(menu, vista, data);
             ctrl.iniciar();
-            vista.setLocation(300, 80);
             JOptionPane.showMessageDialog(vista, "Por favor cargue aquí su nueva dieta, luego cierre la ventana Dietas y continúe usando el plan Nutricional");
         }
 
