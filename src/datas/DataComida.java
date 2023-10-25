@@ -329,6 +329,30 @@ public class DataComida {
         }
     }
 
+    
+    public void modificarComidas2(EntidadComida comida) {
+        con = Conexion.getConexion();
+        String sql = "UPDATE comidas SET nombre = ?, receta = ?, calorias = ?, estado = ?, peso = ? WHERE idcomida = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+        ps.setString(1, comida.getNombreComida());
+        ps.setString(2, comida.getReceta());
+        ps.setInt(3, comida.getCalorias());
+        ps.setBoolean(4, comida.isEstado());
+        ps.setDouble(5, comida.getPeso());
+        ps.setInt(6, comida.getIdComida());
+            int fila = ps.executeUpdate();
+            if (fila == 1) {
+                JOptionPane.showMessageDialog(null, "Se ha actualizado correctamente la comida");
+            } else if (fila == 0) {
+                JOptionPane.showMessageDialog(null, "La comida no existe en la base de datos");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la comida " + ex.getMessage());
+        }
+    }
+    
 //➢➢	Consultar la búsqueda de comidas que tengan una cantidad menor de un determinado número de calorías
     //SELECT idcomida, nombre, receta, calorias, estado, peso FROM comidas WHERE calorias < 400;
     public List<EntidadComida> obtenerComidasxCalorias(int calorias) {
@@ -385,7 +409,6 @@ public class DataComida {
             JOptionPane.showMessageDialog(null, "Fallo al recuperar el listado de comidas con la receta deseada" + ex.getMessage());
         }   
         return comidasxreceta;
-       
     }
     
     
