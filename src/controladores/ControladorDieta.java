@@ -122,6 +122,8 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Error de Consultar Paciente");
                 }
+                llenarComboDieta();
+                seleccionarPrimerElementoCombo();
 
             }
         }
@@ -312,6 +314,15 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
             JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de dietas \n" + ex.getMessage());
         }
     }
+
+    private void seleccionarPrimerElementoCombo() {
+        if (vista.cboxListaDietas.getItemCount() > 0) {
+            vista.cboxListaDietas.setSelectedIndex(0);
+        } else {
+            JOptionPane.showMessageDialog(vista, "No hay dietas para mostrar sobre este paciente \n");
+        }
+    }
+    
 
     private void mostrarDieta(int id) {
         try {
