@@ -200,5 +200,5 @@ private void colocarIconos() {
         Image imagenRedimensionada = icono.getImage().getScaledInstance(alto, ancho, Image.SCALE_SMOOTH);
         icono = new ImageIcon(imagenRedimensionada);
         return icono;
-    }
+    } 
 }
