@@ -36,7 +36,7 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         BtSalir = new javax.swing.JButton();
         CBPaciente = new javax.swing.JComboBox<>();
-        BtEliminar = new javax.swing.JButton();
+        BtEliminarDieta = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         CbHorario = new javax.swing.JComboBox<>();
@@ -44,7 +44,7 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         CBComidasActivas = new javax.swing.JComboBox<>();
         TxPorcion = new javax.swing.JTextField();
-        CBDietas1 = new javax.swing.JComboBox<>();
+        CBDietasActivas = new javax.swing.JComboBox<>();
         BtNuevaDieta = new javax.swing.JButton();
         BtAgregarComida = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -55,6 +55,7 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        BtQuitarComida = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Plan Nutricional");
@@ -75,11 +76,11 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
 
         CBPaciente.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
-        BtEliminar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        BtEliminar.setText("Eliminar Dieta");
-        BtEliminar.addActionListener(new java.awt.event.ActionListener() {
+        BtEliminarDieta.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        BtEliminarDieta.setText("Eliminar Dieta");
+        BtEliminarDieta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtEliminarActionPerformed(evt);
+                BtEliminarDietaActionPerformed(evt);
             }
         });
 
@@ -108,7 +109,7 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
 
         TxPorcion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
-        CBDietas1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        CBDietasActivas.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
         BtNuevaDieta.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         BtNuevaDieta.setText("Nueva Dieta");
@@ -134,13 +135,13 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
 
         JTComidas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Comida", "Porción", "Horario"
+                "Id", "Comida", "Porción", "Horario"
             }
         ));
         jScrollPane1.setViewportView(JTComidas);
@@ -157,6 +158,15 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setText("(Unidades)");
+
+        BtQuitarComida.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        BtQuitarComida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/inactivo.png"))); // NOI18N
+        BtQuitarComida.setText("<< Quitar comida");
+        BtQuitarComida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtQuitarComidaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -188,10 +198,11 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel4))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(BtAgregarComida, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                                    .addComponent(BtAgregarComida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(BtGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                        .addGap(6, 6, 6))))))
+                                        .addGap(6, 6, 6))
+                                    .addComponent(BtQuitarComida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(jLabel3))
@@ -205,9 +216,9 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BtNuevaDieta)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(CBDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(CBDietasActivas, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(BtEliminar))))
+                                .addComponent(BtEliminarDieta))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(104, 104, 104)
                         .addComponent(CBPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -237,8 +248,8 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(CBDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BtEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(CBDietasActivas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtEliminarDieta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(BtNuevaDieta, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -252,8 +263,10 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4)
-                                .addGap(32, 32, 32)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(BtQuitarComida, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(20, 20, 20)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(TxPorcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2)
@@ -283,7 +296,7 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 554, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
         );
 
         pack();
@@ -305,19 +318,24 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_BtAgregarComidaActionPerformed
 
-    private void BtEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtEliminarActionPerformed
+    private void BtEliminarDietaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtEliminarDietaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BtEliminarActionPerformed
+    }//GEN-LAST:event_BtEliminarDietaActionPerformed
+
+    private void BtQuitarComidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtQuitarComidaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtQuitarComidaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton BtAgregarComida;
-    public javax.swing.JButton BtEliminar;
+    public javax.swing.JButton BtEliminarDieta;
     public javax.swing.JButton BtGuardar;
     public javax.swing.JButton BtNuevaDieta;
+    public javax.swing.JButton BtQuitarComida;
     public javax.swing.JButton BtSalir;
     public javax.swing.JComboBox<String> CBComidasActivas;
-    public javax.swing.JComboBox<String> CBDietas1;
+    public javax.swing.JComboBox<String> CBDietasActivas;
     public javax.swing.JComboBox<String> CBPaciente;
     public javax.swing.JComboBox<String> CbHorario;
     public javax.swing.JTable JTComidas;
@@ -342,7 +360,7 @@ private void colocarIconos(){
         
         BtNuevaDieta.setIcon(prepararIcono("nuevo.png",alto,ancho));
         BtGuardar.setIcon(prepararIcono("floppy.png",alto,ancho));
-        BtEliminar.setIcon(prepararIcono("inactivo.png",alto,ancho));
+        BtEliminarDieta.setIcon(prepararIcono("inactivo.png",alto,ancho));
         BtAgregarComida.setIcon(prepararIcono("nuevo.png",alto,ancho));
         BtSalir.setIcon(prepararIcono("salida3.png",alto,ancho));
         ImageIcon icono = new ImageIcon();

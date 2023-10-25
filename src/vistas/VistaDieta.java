@@ -59,7 +59,7 @@ public class VistaDieta extends javax.swing.JInternalFrame {
 
         setClosable(true);
 
-        jDesktopPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jDesktopPane1.setBackground(new java.awt.Color(102, 255, 255));
         jDesktopPane1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txDNI.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
@@ -115,7 +115,7 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         jDesktopPane1.add(cboxListaDietas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 270, -1));
 
         btBuscar.setText("Buscar DNI");
-        jDesktopPane1.add(btBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, -1, -1));
+        jDesktopPane1.add(btBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, -1, -1));
 
         btNuevo.setText("Nueva");
         jDesktopPane1.add(btNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, -1));
@@ -147,10 +147,7 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
         );
 
         pack();
@@ -190,6 +187,7 @@ private void colocarIconos() {
         btGuardar.setIcon(prepararIcono("salvado.png", alto, ancho));
         btEliminar.setIcon(prepararIcono("inactivo.png", alto, ancho));
         btSalir.setIcon(prepararIcono("salida3.png", alto, ancho));
+        btBuscar.setIcon(prepararIcono("Lupa-buscar.png",alto, ancho));
         ImageIcon icono = new ImageIcon();
         //icono = prepararIcono();
         this.setFrameIcon(icono);

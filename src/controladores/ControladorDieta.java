@@ -22,7 +22,9 @@ import entidades.EntidadPaciente;
 import entidades.EntidadComida;
 import entidades.EntidadDieta_Comida;
 import java.awt.Color;
-import java.sql.Date;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.util.Date;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -36,7 +38,7 @@ import java.util.logging.Logger;
  *
  * @author Matias
  */
-public class ControladorDieta implements ActionListener, KeyListener {
+public class ControladorDieta implements ActionListener, KeyListener, FocusListener {
 
     private Connection con;
     private final VistaDieta vista;
@@ -58,6 +60,9 @@ public class ControladorDieta implements ActionListener, KeyListener {
         vista.cboxListaDietas.addActionListener(this);
         //Check
         vista.cbEstado.addActionListener(this);
+        //Cuadros de Texto
+        vista.txDNI.addFocusListener(this);
+        vista.txDNI.addKeyListener(this);
 
     }
 
@@ -69,6 +74,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
         vista.txDNI.setText("");
         vista.btEliminar.setEnabled(false);
         vista.btGuardar.setEnabled(false);
+        vista.btBuscar.setEnabled(false);
         llenarComboDieta();
 
     }
@@ -86,12 +92,14 @@ public class ControladorDieta implements ActionListener, KeyListener {
             vista.cbEstado.setSelected(true);
             vista.btNuevo.setEnabled(false);
             vista.btGuardar.setEnabled(true);
+            vista.btBuscar.setEnabled(true);
             vista.txNombreD.requestFocus();
+            vista.btEliminar.setEnabled(false);
             idDieta = -1;
         }
         if (d.getSource() == vista.btBuscar) {
             if (vista.txDNI.getText().equals("") || vista.txDNI.getText().equals("0")) {
-                JOptionPane.showMessageDialog(null, "El Dni no puede estar en blanco");
+                JOptionPane.showMessageDialog(null, "El Dni no puede estar en blanco.");
             } else {
                 int b = Integer.parseInt(vista.txDNI.getText());
                 EntidadPaciente pac = new EntidadPaciente();
@@ -107,75 +115,81 @@ public class ControladorDieta implements ActionListener, KeyListener {
 
                         //llamar el metodo para rellenar el combo de dietas
                     } else {
-                        JOptionPane.showMessageDialog(vista, "No se encontrado el DNI");
+                        JOptionPane.showMessageDialog(vista, "No se encontró el DNI.");
                         idPaciente = -1;
                         vista.txDNI.requestFocus();
                     }
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Error de Consultar Paciente");
                 }
+                llenarComboDieta();
+                seleccionarPrimerElementoCombo();
 
             }
         }
         if (d.getSource() == vista.btGuardar) {
             vista.btNuevo.setEnabled(true);
-            vista.btEliminar.setEnabled(true);
-            vista.txNombreD.setEnabled(true);
-            vista.txPesoIni.setEnabled(true);
-            vista.txPesoFin.setEnabled(true);
-            vista.cboxListaDietas.setEnabled(true);
+            if (camposEstanCompletos()) {
+                vista.btEliminar.setEnabled(true);
+                vista.txNombreD.setEnabled(true);
+                vista.txPesoIni.setEnabled(true);
+                vista.txPesoFin.setEnabled(true);
+                vista.cboxListaDietas.setEnabled(true);
 
-            if (idDieta == 0 && vista.txNombreD.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "El campo de texto no puede estar en blanco.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if (idPaciente > 0) {
-                // Crear o modificar una dieta
-                EntidadDieta di = new EntidadDieta();
-                di.setNombre(vista.txNombreD.getText());
-                di.setPesoInicial(Double.parseDouble(vista.txPesoIni.getText()));
-                di.setPesoFinal(Double.parseDouble(vista.txPesoFin.getText()));
+                if (idDieta == 0 && vista.txNombreD.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "El campo de texto no puede estar en blanco.", "Error", JOptionPane.ERROR_MESSAGE);
+                } else if (idPaciente > 0) {
+                    // Crear o modificar una dieta
+                    EntidadDieta di = new EntidadDieta();
+                    di.setNombre(vista.txNombreD.getText());
+                    di.setPesoInicial(Double.parseDouble(vista.txPesoIni.getText()));
+                    di.setPesoFinal(Double.parseDouble(vista.txPesoFin.getText()));
 
-                // Configurar fechas
-                java.util.Date fechaInicio = vista.dcFechInicio.getDate();
-                Instant instantInicio = fechaInicio.toInstant();
-                LocalDate fechaInicial = instantInicio.atZone(ZoneId.systemDefault()).toLocalDate();
-                di.setFechaInicial(fechaInicial);
+                    // Configurar fechas
+                    java.util.Date fechaInicio = vista.dcFechInicio.getDate();
+                    Instant instantInicio = fechaInicio.toInstant();
+                    LocalDate fechaInicial = instantInicio.atZone(ZoneId.systemDefault()).toLocalDate();
+                    di.setFechaInicial(fechaInicial);
 
-                java.util.Date fechaFinal = vista.dcFechFinal.getDate();
-                Instant instantFinal = fechaFinal.toInstant();
-                LocalDate fechaFin = instantFinal.atZone(ZoneId.systemDefault()).toLocalDate();
-                di.setFechaFinal(fechaFin);
+                    java.util.Date fechaFinal = vista.dcFechFinal.getDate();
+                    Instant instantFinal = fechaFinal.toInstant();
+                    LocalDate fechaFin = instantFinal.atZone(ZoneId.systemDefault()).toLocalDate();
+                    di.setFechaFinal(fechaFin);
 
-                // Configurar el estado de la dieta (activo o inactivo)
-                di.setEstado(vista.cbEstado.isSelected());
+                    // Configurar el estado de la dieta (activo o inactivo)
+                    di.setEstado(vista.cbEstado.isSelected());
 
-                DataDieta diet = new DataDieta();
-                try {
-                    if (idDieta < 0) {
-                        // Guardar una nueva dieta
-                        di.setPaciente(idPaciente);
-                        EntidadDieta dietaGuardada = diet.crearDieta(di);
-                        JOptionPane.showMessageDialog(null, "Dieta guardada exitosamente con ID: " + dietaGuardada.getIdDieta());
-                        data.definirDietaUnica(idPaciente, dietaGuardada.getIdDieta());
-                    } else {
-                        // Modificar una dieta existente
-                        di.setIdDieta(idDieta);
-                        boolean dietaModificada = diet.modificarDieta(di);
-                        if (dietaModificada) {
-                            JOptionPane.showMessageDialog(null, "Dieta modificada exitosamente.");
-                            if (vista.cbEstado.isSelected()) {
-                                data.definirDietaUnica(idPaciente, idDieta);
-                            }
+                    DataDieta diet = new DataDieta();
+                    try {
+                        if (idDieta < 0) {
+                            // Guardar una nueva dieta
+                            di.setPaciente(idPaciente);
+                            EntidadDieta dietaGuardada = diet.crearDieta(di);
+                            JOptionPane.showMessageDialog(null, "Dieta guardada exitosamente con ID: " + dietaGuardada.getIdDieta());
+                            data.definirDietaUnica(idPaciente, dietaGuardada.getIdDieta());
                         } else {
-                            JOptionPane.showMessageDialog(null, "Error al modificar la dieta en la base de datos.");
+                            // Modificar una dieta existente
+                            di.setIdDieta(idDieta);
+                            boolean dietaModificada = diet.modificarDieta(di);
+                            if (dietaModificada) {
+                                JOptionPane.showMessageDialog(null, "Dieta modificada exitosamente.");
+                                if (vista.cbEstado.isSelected()) {
+                                    data.definirDietaUnica(idPaciente, idDieta);
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Error al modificar la dieta en la base de datos.");
+                            }
                         }
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Error al guardar o modificar la dieta en la base de datos: " + ex.getMessage());
                     }
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Error al guardar o modificar la dieta en la base de datos: " + ex.getMessage());
+                } else {
+                    JOptionPane.showMessageDialog(null, "El ID del paciente no es válido.");
                 }
+                llenarComboDieta();
             } else {
-                JOptionPane.showMessageDialog(null, "El ID del paciente no es válido.");
+                JOptionPane.showMessageDialog(vista, "Por favor, complete todos los campos antes de guardar la dieta.");
             }
-            llenarComboDieta();
 
         }
         if (d.getSource() == vista.btSalir) {
@@ -183,7 +197,6 @@ public class ControladorDieta implements ActionListener, KeyListener {
         }
         if (d.getSource() == vista.btEliminar) {
             String nombreDieta = vista.txNombreD.getText();
-
             int confirmacion = JOptionPane.showConfirmDialog(vista, "¿Seguro desea dar de baja la Dieta: " + nombreDieta + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
 
             if (confirmacion == JOptionPane.YES_OPTION) {
@@ -206,7 +219,7 @@ public class ControladorDieta implements ActionListener, KeyListener {
                 vista.cbEstado.setText("ACTIVO");
                 vista.cbEstado.setBackground(Color.BLUE);
             } else {
-                vista.cbEstado.setText("DEBAJA");
+                vista.cbEstado.setText("DE BAJA");
                 vista.cbEstado.setEnabled(true);
                 vista.cbEstado.setBackground(Color.RED);
             }
@@ -224,13 +237,24 @@ public class ControladorDieta implements ActionListener, KeyListener {
                         EntidadDieta dt = new EntidadDieta();
                         dt = data.obtenerDietaPorId(id);
                         vista.txNombreD.setText(dt.getNombre());
-                        vista.dcFechInicio.setDate(Date.valueOf(dt.getFechaInicial()));
-                        vista.dcFechFinal.setDate(Date.valueOf(dt.getFechaFinal()));
+                        vista.dcFechInicio.setDate(new java.util.Date());
+                        vista.dcFechFinal.setDate(new java.util.Date());
                         vista.txPesoIni.setText(dt.getPesoInicial() + "");
                         vista.txPesoFin.setText(dt.getPesoFinal() + "");
                         vista.cbEstado.setSelected(dt.isEstado());
+                        if (dt.isEstado()) {
+                            vista.cbEstado.setText("ACTIVO");
+                            vista.btEliminar.setEnabled(true);
+                            vista.cbEstado.setBackground(Color.BLUE);
+                        } else {
+                            vista.cbEstado.setText("DE BAJA");
+                            vista.btEliminar.setEnabled(true);
+                            vista.cbEstado.setBackground(Color.RED);
+
+                        }
                     } catch (SQLException ex) {
-                        Logger.getLogger(ControladorDieta.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ControladorDieta.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -247,18 +271,25 @@ public class ControladorDieta implements ActionListener, KeyListener {
                 e.consume();
             }
         }
+        if (e.getSource() == vista.txDNI) {
+            if (vista.txDNI.getText().length() > 6) {
+                vista.btBuscar.setEnabled(true);
+            } else {
+                vista.btBuscar.setEnabled(false);
+            }
+        }
     }
 
     @Override
     public void keyPressed(KeyEvent ke
     ) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void keyReleased(KeyEvent ke
     ) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void llenarComboDieta() {
@@ -272,25 +303,71 @@ public class ControladorDieta implements ActionListener, KeyListener {
                     vista.cboxListaDietas.addItem(cadena);
                 }
             }
+            vista.txNombreD.setText(null);
+            vista.dcFechInicio.setDate(null);
+            vista.dcFechFinal.setDate(null);
+            vista.txPesoIni.setText("");
+            vista.txPesoFin.setText("");
+            vista.cbEstado.setSelected(false);
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de dietas \n" + ex.getMessage());
         }
     }
 
+    private void seleccionarPrimerElementoCombo() {
+        if (vista.cboxListaDietas.getItemCount() > 0) {
+            vista.cboxListaDietas.setSelectedIndex(0);
+        } else {
+            JOptionPane.showMessageDialog(vista, "No hay dietas para mostrar sobre este paciente \n");
+        }
+    }
+    
+
     private void mostrarDieta(int id) {
         try {
             EntidadDieta dt = new EntidadDieta();
             dt = data.obtenerDietaPorId(id);
             vista.txDNI.setText(dt.getIdDieta() + "");
-            vista.txNombreP.setText(dt.getPaciente() + "");
             vista.txNombreD.setText(dt.getNombre() + "");
-            vista.dcFechInicio.setDateFormatString(dt.getFechaInicial() + "");
-            vista.dcFechFinal.setDateFormatString(dt.getFechaFinal() + "");
+            vista.dcFechInicio.setDate(new java.util.Date());
+            vista.dcFechFinal.setDate(new java.util.Date());
             vista.txPesoIni.setText(dt.getPesoInicial() + "");
             vista.txPesoFin.setText(dt.getPesoFinal() + "");
+            vista.cbEstado.setSelected(dt.isEstado());
+            if (dt.isEstado()) {
+                vista.cbEstado.setText("ACTIVO");
+                vista.btEliminar.setEnabled(true);
+                vista.cbEstado.setBackground(Color.BLUE);
+            } else {
+                vista.cbEstado.setText("DE BAJA");
+                vista.btEliminar.setEnabled(true);
+                vista.cbEstado.setBackground(Color.RED);
+            }
+            vista.btGuardar.setEnabled(true);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "Error no se puede consultar el ID " + id + " \n" + ex.getMessage());
         }
+    }
+
+    @Override
+    public void focusGained(FocusEvent fe) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private boolean camposEstanCompletos() {
+        if (vista.txNombreD.getText().isEmpty()
+                || vista.txPesoIni.getText().isEmpty()
+                || vista.txPesoFin.getText().isEmpty()
+                || vista.dcFechInicio.getDate() == null
+                || vista.dcFechFinal.getDate() == null) {
+            return false;
+        }
+        return true;
     }
 }

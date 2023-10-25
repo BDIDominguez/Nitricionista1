@@ -1,7 +1,7 @@
 package controladores;
 
 /**
- * * @author DIEGO G.
+ * * @author DIEGO G
  */
 import datas.DataDieta_Comida;
 import datas.DataComida;
@@ -11,6 +11,7 @@ import datas.DataPaciente;
 import entidades.EntidadDieta_Comida;
 import entidades.EntidadPaciente;
 import entidades.EntidadComida;
+import entidades.EntidadDieta_Comida.HorarioComida;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -20,7 +21,10 @@ import java.awt.event.KeyEvent;
 import vistas.VistaDieta_Comida;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -28,43 +32,36 @@ import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import vistas.VistaDieta;
 import vistas.VistaPantallaPrincipal;
-//public class ControladorDieta_Comida {
 
 public class ControladorDieta_Comida implements ActionListener, FocusListener, ListSelectionListener {
 
     private VistaPantallaPrincipal menu;
     private final VistaDieta_Comida vista;
     private final DataDieta_Comida dataDietaComida;
-    private DefaultTableModel tablaModelo;
     private int paciente = 0;
     private int dietaSeleccionada = -1;
-    private boolean edicionActiva = false;
-    //    private DataPaciente  = data;
     MyModelo modelo = new MyModelo();
     private List<EntidadPaciente> pacientes = new ArrayList<>();
+    private Set<String> comidasAgregadas = new HashSet<>();
 
     public ControladorDieta_Comida(VistaPantallaPrincipal menu, VistaDieta_Comida vista, DataDieta_Comida dataDietaComida) {
         this.vista = vista;
         this.menu = menu;
         this.dataDietaComida = dataDietaComida;
-        //        this.tablaModelo = (DefaultTableModel) VistaDieta_Comida.getJTComidas().getModel();
-        //        vista.CBPaciente.setModel(pacientesModel);
-        //        vista.CBDietas1.setModel(dietasModel);
-
         //Escucha de botones 
         vista.BtNuevaDieta.addActionListener(this);
-        vista.BtEliminar.addActionListener(this);
+        vista.BtEliminarDieta.addActionListener(this);
         vista.BtAgregarComida.addActionListener(this);
         vista.BtGuardar.addActionListener(this);
         vista.BtSalir.addActionListener(this);
+        vista.BtQuitarComida.addActionListener(this);
         //Combos
         vista.CBPaciente.addActionListener(this);
-        vista.CBDietas1.addActionListener(this);
+        vista.CBDietasActivas.addActionListener(this);
         vista.CBComidasActivas.addActionListener(this);
         vista.CbHorario.addActionListener(this);
         //Cuadro de texto
         vista.TxPorcion.addFocusListener(this);
-
         //Tabla
         vista.JTComidas.getSelectionModel().addListSelectionListener(this);
     }
@@ -77,18 +74,22 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         vista.requestFocus();
         modelarTabla();
         llenarComboBPaciente();
-        llenarComboBDietas();
+        llenarComboBDietasActivas();
         llenarComboComidasActivas();
+        vista.BtGuardar.setEnabled(false);
     }
 
     private void modelarTabla() {
+        modelo.addColumn("id");
         modelo.addColumn("Comida");
         modelo.addColumn("Porción");
         modelo.addColumn("Horarios");
+
         vista.JTComidas.setModel(modelo);
-        vista.JTComidas.getColumnModel().getColumn(0).setPreferredWidth(50);
-        vista.JTComidas.getColumnModel().getColumn(1).setPreferredWidth(30);
-        vista.JTComidas.getColumnModel().getColumn(2).setPreferredWidth(20);
+        vista.JTComidas.getColumnModel().getColumn(0).setPreferredWidth(10);
+        vista.JTComidas.getColumnModel().getColumn(1).setPreferredWidth(50);
+        vista.JTComidas.getColumnModel().getColumn(2).setPreferredWidth(30);
+        vista.JTComidas.getColumnModel().getColumn(3).setPreferredWidth(20);
     }
 
     private class MyModelo extends DefaultTableModel {
@@ -103,11 +104,13 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         try {
             List<EntidadDieta_Comida> comidas = new ArrayList<>();
 
-            comidas = dataDietaComida.obtenerDietasComidaPorDieta(paciente);
+            comidas = dataDietaComida.obtenerDietasComidaPorDieta(extraerIdDieta());
             modelo.setRowCount(0);
 
+            DataComida a = new DataComida();
             for (EntidadDieta_Comida comida : comidas) {
-                modelo.addRow(new Object[]{comida.getIdComida(), comida.getPorcion(), comida.getHorario()});
+                comidasAgregadas.add(comida.getIdComida() + "-" + a.obtenerNombrexidComida(comida.getIdComida())); //rellena el set para que no vuelva a agregar una comida repetida
+                modelo.addRow(new Object[]{comida.getIdDieta_Comida(), comida.getIdComida() + "-" + a.obtenerNombrexidComida(comida.getIdComida()), comida.getPorcion(), comida.getHorario()});
             }
             vista.JTComidas.setModel(modelo);
             pacientes.clear();
@@ -117,6 +120,8 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             //Logger.getLogger(ControladorVistaDieta_Comida.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(vista, "error al llenar JTComidas al tratar de obtener una lista de comidas \n" + ex.getMessage());
         }
+        vista.BtGuardar.setEnabled(false);
+        vista.BtAgregarComida.setEnabled(true);
     }
 
     private void llenarComboBPaciente() {
@@ -136,26 +141,26 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de pacientes para llenar Combo pacientes \n" + ex.getMessage());
         }
+//        llenarComboBDietasActivas();
     }
 
-    private void llenarComboBDietas() {
+    private void llenarComboBDietasActivas() {
         List<entidades.EntidadDieta> diet = new ArrayList<>();
 
         try {
-            DataDieta e = new DataDieta();
-            diet = e.listarDietas();
-            vista.CBDietas1.removeAllItems();
+            vista.CBDietasActivas.removeAllItems();
+            DataDieta dataDieta = new DataDieta();
+            List<entidades.EntidadDieta> dietas = dataDieta.listarDietas();
 
-            for (entidades.EntidadDieta dieta : diet) {
-                if (dieta.getPaciente() == paciente) {
-                    String cadena = dieta.getNombre();
-                    vista.CBDietas1.addItem(cadena);
+            for (entidades.EntidadDieta dieta : dietas) {
+                if (dieta.isEstado() && dieta.getPaciente()==paciente) { // Verifica si la dieta está activa
+                    vista.CBDietasActivas.addItem(dieta.getIdDieta() + "-" + dieta.getNombre());
                 }
             }
-            AutoCompleteDecorator.decorate(vista.CBDietas1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de dietas para llenar el combo Dietas\n" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al obtener la lista de dietas activas: " + ex.getMessage());
         }
+        llenarJTComidas();
     }
 
     @Override
@@ -164,18 +169,20 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         if (e.getSource() == vista.CBPaciente) { //muestra para seleccionar un paciente activo
 
             paciente = extraerIdPaciente();
-            llenarJTComidas();
-            llenarComboBDietas();
-
+            llenarComboBDietasActivas();
+            vista.BtGuardar.setEnabled(false);
         }
 
-        if (e.getSource() == vista.CBDietas1) {// muestra las dietas disponibles activas para elegir
+        if (e.getSource() == vista.CBDietasActivas) {// muestra las dietas disponibles activas para elegir
             //        rellenarTabla(); // rellena la tabla con los datos del paciente
+            dietaSeleccionada = extraerIdDieta();
             llenarJTComidas();
+            vista.BtGuardar.setEnabled(false);
         }
 
         if (e.getSource() == vista.BtNuevaDieta) { //llama a la vista Dieta para cargar nueva dieta y actualiza el JTable JTComidas
 
+            vista.dispose();
             VistaDieta vista = new VistaDieta();
             DataDieta data = new DataDieta();
             ControladorDieta ctrl = new ControladorDieta(menu, vista, data);
@@ -184,24 +191,27 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             JOptionPane.showMessageDialog(vista, "Por favor cargue aquí su nueva dieta, luego cierre la ventana Dietas y continúe usando el plan Nutricional");
         }
 
-        if (e.getSource() == vista.BtEliminar) {// elimina la dieta seleccionada del CBComidasActivas del paciente actual
+        if (e.getSource() == vista.BtEliminarDieta) {// elimina la dieta seleccionada del CBComidasActivas del paciente actual
             DataDieta dataDieta = new DataDieta();
-            if (JOptionPane.showConfirmDialog(vista, "Seguro de eliminar la dieta " + vista.CBDietas1.getSelectedItem(), "Confirme", JOptionPane.YES_NO_OPTION) == 0) {
+            if (JOptionPane.showConfirmDialog(vista, "Seguro de eliminar la dieta " + vista.CBDietasActivas.getSelectedItem(), "Confirme", JOptionPane.YES_NO_OPTION) == 0) {
                 try {
-                    String dietaSeleccionada = (String) vista.CBDietas1.getSelectedItem();
+                    String dietaSeleccionada = (String) vista.CBDietasActivas.getSelectedItem();
                     String[] partes = dietaSeleccionada.split("-");
                     int idDieta = Integer.parseInt(partes[0].trim());
-                    boolean eliminacionOK = dataDietaComida.eliminarDietaComida(idDieta);
+                    int idDieta2 = extraerIdDieta();
 
-                    //  boolean vResp = dataDietaComida.eliminarDietaComida(dietaSeleccionada);
-                    //  dataDieta.eliminarDieta(dietaSeleccionada);
+                    boolean eliminacionOK = dataDieta.eliminarDieta(idDieta);
+
+                    boolean vResp = dataDieta.eliminarDieta(this.dietaSeleccionada);
+                    dataDieta.eliminarDieta(this.dietaSeleccionada);
+
                     if (eliminacionOK) {
                         JOptionPane.showMessageDialog(vista, "Dieta eliminada con éxito.");
                     } else {
                         JOptionPane.showMessageDialog(vista, "Error al eliminar la dieta.");
                     }
 
-                    llenarComboBDietas();
+                    llenarComboBDietasActivas();
                     modelo.setRowCount(0);
 
                 } catch (Exception ex) {
@@ -222,40 +232,119 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                 }
             }
         });
-        
+
         if (e.getSource() == vista.BtAgregarComida) { //agrega la comida seleccionada del combo box CBComidasActivas a la dieta del paciente
             vista.CBPaciente.setEnabled(false);
-            vista.CBDietas1.setEnabled(false);
+            vista.CBDietasActivas.setEnabled(false);
             vista.BtGuardar.setEnabled(false);
             vista.BtNuevaDieta.setEnabled(false);
-            vista.BtEliminar.setEnabled(false);
+            vista.BtEliminarDieta.setEnabled(false);
+            vista.BtQuitarComida.setEnabled(false);
+
+            String porcionText = vista.TxPorcion.getText();
 
             if (vista.TxPorcion.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "El campo porción no puede estar en blanco. Por favor indique una cantidad. (recuerde seleccionar la comida y el horario también antes de agregar)", "Error: ", JOptionPane.ERROR_MESSAGE);
+
+                vista.CBPaciente.setEnabled(true);
+                vista.CBDietasActivas.setEnabled(true);
+                vista.BtEliminarDieta.setEnabled(true);
+                vista.BtNuevaDieta.setEnabled(true);
+                vista.BtQuitarComida.setEnabled(true);
+
             } else {
+                int porcion = Integer.parseInt(porcionText);
+
+                if (porcion <= 0) {
+                    JOptionPane.showMessageDialog(null, "El campo porción debe ser un número mayor que 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 vista.BtGuardar.setEnabled(true);
+                int id = 0;
                 String comida = vista.CBComidasActivas.getSelectedItem().toString(); 	// Obtiene comida seleccionada del Combo
-                String porcion = vista.TxPorcion.getText(); 					// Obtiene texto del JTextField porción
                 String horario = vista.CbHorario.getSelectedItem().toString();		// Obtiene horario seleccionado del Combo
 
-                DefaultTableModel modelaT = (DefaultTableModel) vista.JTComidas.getModel(); // modelo de la tabla
+                if (!comidasAgregadas.contains(comida)) {                               // Si la comida no estaba en la lista...
+                    modelo.addRow(new Object[]{id, comida, porcion, horario});          // Agrega la nueva comida a nueva fila
+                    comidasAgregadas.add(comida);
+                } else {
+                    JOptionPane.showMessageDialog(null, "La comida ya se ha sido agregada anteriormente a la lista.", "Advertencia:", JOptionPane.WARNING_MESSAGE);
+                }
 
-                modelaT.addRow(new Object[]{comida, porcion, horario}); // Agregar valores a una nueva fila
-
-                // Limpia los componentes después de agregar la fila
-                vista.CBComidasActivas.setSelectedIndex(0); 	//  reiniciar el ComboBox con 1er elemento selecc
                 vista.TxPorcion.setText(""); 			// vacia contenido del JTextField
-                vista.CbHorario.setSelectedIndex(0); 		// reiniciar el ComboBox con primer element selecc
+                vista.CbHorario.setSelectedIndex(0); 		// reiniciar el ComboBox horario con primer element selecc
             }
         }
 
         if (e.getSource() == vista.BtGuardar) {
-//            data
+
+            String dietaSeleccionada = (String) vista.CBDietasActivas.getSelectedItem();
+            String[] partes = dietaSeleccionada.split("-");
+            int idDieta = Integer.parseInt(partes[0].trim());
+            int rowCount = modelo.getRowCount();
+
+            for (int i = 0; i < rowCount; i++) {
+                String nombreComida = modelo.getValueAt(i, 1).toString();
+                String[] partes2 = nombreComida.split("-");
+                int idComida = Integer.parseInt(partes2[0].trim());
+                int porcion = Integer.parseInt(modelo.getValueAt(i, 2).toString());
+                String horario = modelo.getValueAt(i, 3).toString();
+                int idcolumn1 = Integer.parseInt(modelo.getValueAt(i, 0).toString());
+
+                vista.BtAgregarComida.setEnabled(true);
+                EntidadDieta_Comida dietaComida = new EntidadDieta_Comida(idDieta, idComida, porcion, HorarioComida.valueOf(horario));
+
+                try {
+                    if (idcolumn1 == 0) {
+                        dataDietaComida.GuardarDietaComida(dietaComida);
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(vista, "Error al guardar los datos en la base de datos:\n" + ex.getMessage());
+                }
+            }
+            llenarJTComidas();
 
             vista.BtNuevaDieta.setEnabled(true);
-            vista.BtEliminar.setEnabled(true);
+            vista.BtEliminarDieta.setEnabled(true);
             vista.CBPaciente.setEnabled(true);
-            vista.CBDietas1.setEnabled(true);
+            vista.CBDietasActivas.setEnabled(true);
+            vista.BtQuitarComida.setEnabled(true);
+//            modelaT.setRowCount(0);
+//            vista.CBComidasActivas.setSelectedIndex(0);
+            vista.TxPorcion.setText("");
+            vista.CbHorario.setSelectedIndex(0);
+            llenarComboComidasActivas();
+            vista.CBComidasActivas.setSelectedIndex(0);
+            JOptionPane.showMessageDialog(vista, "Datos guardados con éxito.");
+        }
+
+        if (e.getSource() == vista.BtQuitarComida) {
+
+            int selectedRow = vista.JTComidas.getSelectedRow();
+            if (selectedRow != -1) {
+                int idDietaComida = (int) vista.JTComidas.getValueAt(selectedRow, 0);
+
+                try {
+                    boolean eliminacionOK = dataDietaComida.eliminarDietaDeTabla(idDietaComida);
+
+                    if (eliminacionOK) {
+                        JOptionPane.showMessageDialog(vista, "Comida eliminada con éxito.");
+                    } else {
+                        JOptionPane.showMessageDialog(vista, "Comida eliminada de la dieta.");
+                    }
+
+                    // Quitar la fila seleccionada de la tabla
+                    modelo.removeRow(selectedRow);
+                    vista.BtGuardar.setEnabled(true);
+
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(vista, "Error al eliminar la comida:\n" + ex.getMessage());
+                }
+            } else {
+                JOptionPane.showMessageDialog(vista, "Por favor, seleccione una comida de la tabla antes de quitarla.");
+
+            }
         }
 
         if (e.getSource() == vista.BtSalir) {
@@ -295,6 +384,26 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         AutoCompleteDecorator.decorate(vista.CBComidasActivas);
     }
 
+    private void eliminarComidasSeleccionadas() {
+        DefaultTableModel tableModel = (DefaultTableModel) vista.JTComidas.getModel();
+        int rowCount = tableModel.getRowCount();
+        List<Integer> filasAEliminar = new ArrayList<>();
+
+        for (int i = 0; i < rowCount; i++) {
+            boolean seleccionado = (boolean) tableModel.getValueAt(i, 0);
+            if (seleccionado) {
+                filasAEliminar.add(i);
+            }
+        }
+
+        // Elimina las filas seleccionadas en orden inverso para evitar problemas de índices
+        Collections.reverse(filasAEliminar);
+
+        for (int fila : filasAEliminar) {
+            tableModel.removeRow(fila);
+        }
+    }
+
     private int extraerIdPaciente() {
         int id = -1;
         try {
@@ -303,6 +412,23 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             id = Integer.parseInt(partes[0].trim());
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "A ocurrido un error al cargar los indices en el combobox, revices la posicion del idPaciente");
+        }
+        return id;
+    }
+
+    private int extraerIdDieta() {
+        int id = -1;
+        try {
+            String dietaSeleccionada = (String) vista.CBDietasActivas.getSelectedItem();
+            if (dietaSeleccionada != null && dietaSeleccionada.contains("-")) {
+
+                String[] partes = dietaSeleccionada.split("-");
+                if (partes.length > 0) {
+                    id = Integer.parseInt(partes[0].trim());
+                }
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "A ocurrido un error al cargar los indices en el combobox, revices la posicion del idDieta");
         }
         return id;
     }
