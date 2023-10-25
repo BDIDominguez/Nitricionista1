@@ -337,7 +337,23 @@ public class ControladorComida implements ActionListener {
         int idComida = comidaModificada.getIdComida();
         EntidadComida comidaActual = obtenerComidasxidComida(idComida);
 
+       
         if (comidaActual != null) {
+            // Combinar los valores modificados con los no modificados
+            // Aquí se asume que comidaActual representa el estado actual de la comida
+            if (comidaModificada.getNombreComida() == null) {
+                comidaModificada.setNombreComida(comidaActual.getNombreComida());
+            }
+            if (comidaModificada.getReceta() == null) {
+                comidaModificada.setReceta(comidaActual.getReceta());
+            }
+            if (comidaModificada.getCalorias() == 0) {
+                comidaModificada.setCalorias(comidaActual.getCalorias());
+            }
+            if (comidaModificada.getPeso() == 0.0) {
+                comidaModificada.setPeso(comidaActual.getPeso());
+            }
+            
             // Actualiza la base de datos con los cambios realizados
             data.modificarComidas2(comidaModificada);
 
@@ -359,15 +375,7 @@ public class ControladorComida implements ActionListener {
     cambiosPendientes.clear();
 }
 
-     // Método para obtener la EntidadComida correspondiente desde cambiosPendientes
-    private EntidadComida obtenerComidaEnCambiosPendientes(int idComida) {
-        for (EntidadComida comida : cambiosPendientes) {
-            if (comida.getIdComida() == idComida) {
-                return comida;
-            }
-        }
-        return null;
-    }
+
     
 private EntidadComida obtenerComidasxidComida(int idComida) {
     List<EntidadComida> comidasxid = data.obtenerComidasxidComida(idComida);

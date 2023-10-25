@@ -8,13 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import entidades.EntidadComida;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author louis
+ * @author louisinette
  */
 public class DataComida {
 
@@ -169,7 +167,7 @@ public class DataComida {
         }
         return comidasnohab;
     }
-//    
+    
      //➢➢	Consultar la búsqueda de comidas por nombre
 //SELECT idcomida, nombre, receta, calorias, estado, peso FROM comidas WHERE nombre LIKE '%ensalada%';
     public List<EntidadComida> obtenerComidasxNombre(String nombre) {
@@ -201,7 +199,7 @@ public class DataComida {
        
     }
         
-    //➢➢	Consultar la búsqueda de comidas por id 
+  //➢➢	Consultar la búsqueda de comidas por id 
  //SELECT nombre, receta, calorias, estado, peso FROM comidas WHERE idcomida = 2;
     public List<EntidadComida> obtenerComidasxidComida(int idComida) {
         con = Conexion.getConexion();
@@ -248,7 +246,7 @@ public class DataComida {
         return nombreComida;
     }
     
-     //➢➢	Consultar la búsqueda de comidas por peso 
+ //➢➢	Consultar la búsqueda de comidas por peso 
  //SELECT nombre, receta, calorias, estado, peso FROM comidas WHERE peso = 280;
     public List<EntidadComida> obtenerComidasxpeso(double peso) {
         con = Conexion.getConexion();
@@ -305,7 +303,7 @@ public class DataComida {
         return comidasestado;
     }
     
-    //modificar comidas
+    //➢➢modificar comidas
     public void modificarComidas(EntidadComida comida) {
         con = Conexion.getConexion();
         String sql = "UPDATE comidas SET nombre = ?, receta = ?, calorias = ?, estado = ?, peso = ? WHERE idcomida = ?";
@@ -329,19 +327,18 @@ public class DataComida {
         }
     }
 
-    
+      //➢➢modificar comidas tabla comidas
     public void modificarComidas2(EntidadComida comida) {
         con = Conexion.getConexion();
-        String sql = "UPDATE comidas SET nombre = ?, receta = ?, calorias = ?, estado = ?, peso = ? WHERE idcomida = ?";
+        String sql = "UPDATE comidas SET nombre = ?, receta = ?, calorias = ?, peso = ? WHERE idcomida = ?";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
         ps.setString(1, comida.getNombreComida());
         ps.setString(2, comida.getReceta());
         ps.setInt(3, comida.getCalorias());
-        ps.setBoolean(4, comida.isEstado());
-        ps.setDouble(5, comida.getPeso());
-        ps.setInt(6, comida.getIdComida());
+        ps.setDouble(4, comida.getPeso());
+        ps.setInt(5, comida.getIdComida());
             int fila = ps.executeUpdate();
             if (fila == 1) {
                 JOptionPane.showMessageDialog(null, "Se ha actualizado correctamente la comida");
@@ -353,7 +350,7 @@ public class DataComida {
         }
     }
     
-//➢➢	Consultar la búsqueda de comidas que tengan una cantidad menor de un determinado número de calorías
+//➢➢ Consultar la búsqueda de comidas que tengan una cantidad menor de un determinado número de calorías
     //SELECT idcomida, nombre, receta, calorias, estado, peso FROM comidas WHERE calorias < 400;
     public List<EntidadComida> obtenerComidasxCalorias(int calorias) {
         con = Conexion.getConexion();
@@ -381,6 +378,7 @@ public class DataComida {
         } 
         return comidas;
     }
+    
  //➢➢	Consultar la búsqueda de comidas por receta
 //SELECT idcomida, receta, calorias, estado, peso FROM comidas WHERE receta LIKE '%aguacate%';
     public List<EntidadComida> obtenerComidasxReceta(String receta) {
@@ -410,8 +408,6 @@ public class DataComida {
         }   
         return comidasxreceta;
     }
-    
-    
     
     // metodo auxiliar para cerrar tanto resultSet como prepare statement
     private void cerrarRecursos(PreparedStatement ps, ResultSet resultSet) throws SQLException {
