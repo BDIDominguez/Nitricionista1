@@ -189,7 +189,7 @@ private void colocarIconos() {
         btSalir.setIcon(prepararIcono("salida3.png", alto, ancho));
         btBuscar.setIcon(prepararIcono("Lupa-buscar.png",alto, ancho));
         ImageIcon icono = new ImageIcon();
-        //icono = prepararIcono();
+        icono = prepararIcono("IconoFormulario.jpg",20,20);
         this.setFrameIcon(icono);
     }
 
