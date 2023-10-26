@@ -17,8 +17,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.ButtonGroup;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -80,6 +78,8 @@ public class ControladorComida implements ActionListener {
 
         ImageIcon imageIcon = new ImageIcon("/nutricionista/imagenes/food2.jpg");
         comidaimg = imageIcon.getImage();
+        
+        vista.tbComidas.setDefaultEditor(Object.class, new DefaultCellEditor(new miText()));
     }
 
     public ControladorComida() {
@@ -152,6 +152,23 @@ public class ControladorComida implements ActionListener {
             modificarComidas2();
         } else if (e.getSource() == vista.jbSalir) {
             vista.dispose();
+        }
+    }
+    
+    static class miText extends JTextField {
+        @Override
+        public TransferHandler getTransferHandler() {
+            return new TransferHandler(null) {
+                @Override
+                public boolean canImport(TransferSupport support) {
+                    return false;
+                }
+
+                @Override
+                public boolean importData(TransferSupport support) {
+                    return false;
+                }
+            };
         }
     }
 
@@ -603,21 +620,13 @@ private EntidadComida obtenerComidasxidComida(int idComida) {
         vista.tbComidas.getColumnModel().getColumn(2).setCellRenderer(new MultilineCellRenderer());
         vista.tbComidas.getColumnModel().getColumn(2).setPreferredWidth(500);
         vista.tbComidas.getColumnModel().getColumn(3).setPreferredWidth(95);
-        vista.tbComidas.getColumnModel().getColumn(4).setPreferredWidth(90);
+        vista.tbComidas.getColumnModel().getColumn(4).setPreferredWidth(130);
         TableColumnModel columnModel = vista.tbComidas.getColumnModel();
         columnModel.getColumn(0).setResizable(false);
         columnModel.getColumn(1).setResizable(false);
         columnModel.getColumn(2).setResizable(false);
         columnModel.getColumn(3).setResizable(false);
         columnModel.getColumn(4).setResizable(false);
-        // Deshabilitar la transferencia de datos en la tabla
-        vista.tbComidas.setTransferHandler(new TransferHandler() {
-            @Override
-            public boolean canImport(TransferSupport support) {
-                return false;
-            }
-        });
-
     }
 
     private void cargarFondo() {

@@ -44,7 +44,7 @@ public class DataComida {
         }
         return comida;
     }
-  
+ 
     //Deshabilitar una comida:
     // UPDATE comidas SET estado = 0 WHERE idComida = 8;
     public void deshabilitarComida(int idComida) {
@@ -188,7 +188,6 @@ public class DataComida {
                 comida.setPeso(resultSet.getDouble("peso"));
 
                 comidasxnombre.add(comida);
-                 System.out.println(comidasxnombre);
             }
             cerrarRecursos(ps, resultSet);
 
@@ -399,7 +398,6 @@ public class DataComida {
                 comida.setPeso(resultSet.getDouble("peso"));
 
                 comidasxreceta.add(comida);
-                 System.out.println(comidasxreceta);
             }
             cerrarRecursos(ps, resultSet);
 
