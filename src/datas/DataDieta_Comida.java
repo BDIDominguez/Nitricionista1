@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import entidades.EntidadDieta_Comida;
 
-/**
- * * @author DIEGO G.
- */
+/** * @author DIEGO G. */
 public class DataDieta_Comida {
 
     private Connection con;
@@ -21,12 +19,12 @@ public class DataDieta_Comida {
     public void GuardarDietaComida(EntidadDieta_Comida dietaComida) throws SQLException {
         con = Conexion.getConexion();
         String sql = "INSERT INTO dietacomidas (iddieta, idcomida, porcion, horario) VALUES (?, ?, ?, ?)";
+        
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, dietaComida.getIdDieta());
             ps.setInt(2, dietaComida.getIdComida());
             ps.setInt(3, dietaComida.getPorcion());
             ps.setString(4, dietaComida.getHorario().toString());
-
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -45,10 +43,6 @@ public class DataDieta_Comida {
             ps.setInt(1, idDietaComida);
             ps.executeUpdate();
             ps.close();
-
-//            if (filasAfectadas > 0 =) {
-//                boolean eliminacionOK = true;
-//            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -67,16 +61,15 @@ public class DataDieta_Comida {
             int idDietaComida = rs.getInt("iddietacomida");
             int idComida = rs.getInt("idcomida");
             int porcion = rs.getInt("porcion");
+            
             String horarioStr = rs.getString("horario");
             EntidadDieta_Comida.HorarioComida horario = EntidadDieta_Comida.HorarioComida.valueOf(horarioStr);
 
             EntidadDieta_Comida dietaComida = new EntidadDieta_Comida(idDietaComida, idDieta, idComida, porcion, horario);
             dietasComida.add(dietaComida);
         }
-
         rs.close();
         ps.close();
-
         return dietasComida;
     }
 }
