@@ -38,8 +38,7 @@ public class ControladorComida implements ActionListener {
     private ArrayList<EntidadComida> comidas = new ArrayList<>();
     private DefaultTableModel modeloTabla;
     private ButtonGroup radioGroup;
-    // estructura para almacenar cambios pendientes
-    //private Map<Integer, EntidadComida> cambiosPendientes = new HashMap<>();
+    // estructura para almacenar cambios pendientes de la tabla
    private List<EntidadComida> cambiosPendientes = new ArrayList<>();
  
 
@@ -81,10 +80,6 @@ public class ControladorComida implements ActionListener {
 
         ImageIcon imageIcon = new ImageIcon("/nutricionista/imagenes/food2.jpg");
         comidaimg = imageIcon.getImage();
-
-
-        
-       
     }
 
     public ControladorComida() {
@@ -237,7 +232,7 @@ public class ControladorComida implements ActionListener {
     public void deshabilitarComidaSeleccionada() {
         int filaSeleccionada = vista.tbComidas.getSelectedRow();
         if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecciona una comida en la tabla para deshabilitarla.");
+            JOptionPane.showMessageDialog(null, "Selecciona una comida en la tabla para deshabilitarla");
             return;
         }
         // Obtener el idcomida en la fila seleccionada (columna 0)
@@ -271,7 +266,17 @@ public class ControladorComida implements ActionListener {
 // Método para capturar los cambios en la tabla cuando el usuario modifica una celda
    public void capturarCambios(int fila, int columna, Object nuevoValor) {
     // Obtener el ID de la comida que se está modificando desde la primera columna
-    int idComida = (int) vista.tbComidas.getValueAt(fila, 0);
+Object idComidaObj = vista.tbComidas.getValueAt(fila, 0);
+int idComida = 0; // Valor predeterminado en caso de error de conversión
+if (idComidaObj != null) {
+    try {
+        idComida = Integer.parseInt(idComidaObj.toString());
+    } catch (NumberFormatException ex) {
+        // Manejo de error si la conversión falla
+        System.out.println("Error al convertir el ID de comida a entero: " + ex.getMessage());
+    }
+}
+
 
  // Buscar si ya existe un registro de cambios pendientes para esta comida
         EntidadComida comidaActual = null;
