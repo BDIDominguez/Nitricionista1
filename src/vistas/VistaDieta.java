@@ -102,9 +102,10 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         txPesoIni.setText("Peso Inicial");
         jDesktopPane1.add(txPesoIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 190, -1));
 
+        cbEstado.setBackground(new java.awt.Color(51, 51, 255));
         cbEstado.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        cbEstado.setText("Estado Desactivado");
-        jDesktopPane1.add(cbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 340, -1, -1));
+        cbEstado.setText("ACTIVO");
+        jDesktopPane1.add(cbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         jLabel8.setText("Nombre de la Dieta");
