@@ -82,8 +82,6 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
     @Override
     public void actionPerformed(ActionEvent d) {
         if (d.getSource() == vista.btNuevo) {
-            //vista.txDNI.setText("-1");
-            //vista.txNombreP.setText("");
             vista.txNombreD.setText("");
             vista.txPesoIni.setText("");
             vista.txPesoFin.setText("");
@@ -113,7 +111,7 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
                         vista.btEliminar.setEnabled(true);
                         vista.btGuardar.setEnabled(true);
 
-                        //llamar el metodo para rellenar el combo de dietas
+                     //llamar el metodo para rellenar el combo de dietas
                     } else {
                         JOptionPane.showMessageDialog(vista, "No se encontró el DNI.");
                         idPaciente = -1;
@@ -214,7 +212,7 @@ public class ControladorDieta implements ActionListener, KeyListener, FocusListe
 
                     if (vRespuesta) {
                         JOptionPane.showMessageDialog(vista, "Dieta dada de baja con éxito.");
-                        // Realiza cualquier otra acción necesaria después de eliminar
+                        
                     } else {
                         JOptionPane.showMessageDialog(vista, "No se pudo dar de baja la dieta.", "Error", JOptionPane.ERROR_MESSAGE);
                     }

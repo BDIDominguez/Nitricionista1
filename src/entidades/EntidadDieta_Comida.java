@@ -9,7 +9,7 @@ public class EntidadDieta_Comida {
     private int idDieta;            // Declaración de atributo para el ID de la dieta relacionada
     private int idComida;           // Declaración de atributo para el ID de la comida relacionada
     private HorarioComida horario;  // Declaración de atributo para el horario en que se asigna la comida
-    private int porcion;         // Añadido para representar la cantidad en gramos
+    private int porcion;            // Añadido para representar la cantidad en gramos
     private String nombreComida;
 
     public EntidadDieta_Comida() {

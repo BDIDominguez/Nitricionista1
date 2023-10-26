@@ -29,7 +29,7 @@ public class MiCampoTexto extends JTextField {
                         }
                         break;
                     case 2: // es un campo texto acepta tanto letras como numeros
-                        if (!(Character.isDigit(c) || c == ',' || c == KeyEvent.VK_SPACE || (Character.isLetter(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
+                        if (!( c == ',' || c == KeyEvent.VK_SPACE || (Character.isLetter(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
                             e.consume();
                         }
                         break;
