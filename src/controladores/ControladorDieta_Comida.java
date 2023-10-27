@@ -37,8 +37,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
-
 public class ControladorDieta_Comida implements ActionListener, FocusListener, ListSelectionListener {
 
     private final VistaPantallaPrincipal menu;
@@ -140,8 +138,6 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                 String cadena = paciente.getIdpaciente() + "-" + paciente.getDni() + "-" + paciente.getNombre();
                 vista.CBPaciente.addItem(cadena);
             }
-
-            AutoCompleteDecorator.decorate(vista.CBPaciente);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(vista, "Error al tratar de obtener una lista de pacientes para llenar Combo pacientes \n" + ex.getMessage());
         }
@@ -347,7 +343,6 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             String cadena = comida1.getIdComida() + "-" + comida1.getNombreComida();
             vista.CBComidasActivas.addItem(cadena);
         }
-        AutoCompleteDecorator.decorate(vista.CBComidasActivas);
     }
 
     private void eliminarComidasSeleccionadas() {
