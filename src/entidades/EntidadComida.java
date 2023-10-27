@@ -1,8 +1,9 @@
 package entidades;
 
 /**
-  * @author louis
+@author louisinette zaoral de entesano
  */
+
 public class EntidadComida {
 private int idComida;
 private String nombre;

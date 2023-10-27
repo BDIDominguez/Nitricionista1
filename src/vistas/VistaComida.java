@@ -6,8 +6,7 @@
 package vistas;
 
 /**
- *
- * @author louis
+@author louisinette zaoral de entesano
  */
 public class VistaComida extends javax.swing.JInternalFrame {
 

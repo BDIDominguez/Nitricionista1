@@ -23,9 +23,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.TransferHandler;
 
 /**
- * EN CONSTRUCCION LA VALIDACION
- *
- * @author louis
+ * @author louisinette zaoral de entesano
  */
 public class ControladorComida implements ActionListener {
 
@@ -37,8 +35,7 @@ public class ControladorComida implements ActionListener {
     private DefaultTableModel modeloTabla;
     private ButtonGroup radioGroup;
     // estructura para almacenar cambios pendientes de la tabla
-   private List<EntidadComida> cambiosPendientes = new ArrayList<>();
- 
+    private List<EntidadComida> cambiosPendientes = new ArrayList<>();
 
     public ControladorComida(VistaPantallaPrincipal menu, DataComida data, VistaComida vista) {
         this.menu = menu;
@@ -78,7 +75,7 @@ public class ControladorComida implements ActionListener {
 
         ImageIcon imageIcon = new ImageIcon("/nutricionista/imagenes/food2.jpg");
         comidaimg = imageIcon.getImage();
-        
+
         vista.tbComidas.setDefaultEditor(Object.class, new DefaultCellEditor(new miText()));
     }
 
@@ -94,7 +91,7 @@ public class ControladorComida implements ActionListener {
         menu.dpFondo.moveToFront(vista);// Coloca la vista actual en la parte delantera del contenedor jLabel1 u otro componentes
         vista.requestFocus(); //le da el foco al formulario la vista estará lista para recibir eventos de entrada
         cargarFondo();
-         vista.tbComidas.getModel().addTableModelListener(new TableModelListener() {
+        vista.tbComidas.getModel().addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
                 int fila = e.getFirstRow();
@@ -104,7 +101,7 @@ public class ControladorComida implements ActionListener {
                     Object nuevoValor = modelo.getValueAt(fila, columna);
 
                     if (nuevoValor != null) {
-                        // Aquí puedes capturar los cambios y almacenarlos en la estructura de cambios pendientes
+// capturar los cambios y almacenarlos en la estructura de cambios pendientes
                         capturarCambios(fila, columna, nuevoValor);
                     }
                 }
@@ -131,7 +128,7 @@ public class ControladorComida implements ActionListener {
             vista.btHabilitarLista.setEnabled(true);
             vista.btAgregar.setEnabled(false);
             vista.jbModificar.setEnabled(true);
-            
+
         } else if (e.getSource() == vista.btLimpiar) {
             limpiarOpciones();
         } else if (e.getSource() == vista.btAgregar) {
@@ -154,7 +151,7 @@ public class ControladorComida implements ActionListener {
             vista.dispose();
         }
     }
-    
+
     static class miText extends JTextField {
         @Override
         public TransferHandler getTransferHandler() {
@@ -163,7 +160,6 @@ public class ControladorComida implements ActionListener {
                 public boolean canImport(TransferSupport support) {
                     return false;
                 }
-
                 @Override
                 public boolean importData(TransferSupport support) {
                     return false;
@@ -278,24 +274,29 @@ public class ControladorComida implements ActionListener {
         limpiarOpciones();
     }
 
-    
-//Map<String, Object> modificacionesPendientes = new HashMap<>();
 // Método para capturar los cambios en la tabla cuando el usuario modifica una celda
-   public void capturarCambios(int fila, int columna, Object nuevoValor) {
-    // Obtener el ID de la comida que se está modificando desde la primera columna
+    public void capturarCambios(int fila, int columna, Object nuevoValor) {
+        // Obtener el ID de la comida que se está modificando desde la primera columna
 Object idComidaObj = vista.tbComidas.getValueAt(fila, 0);
 int idComida = 0; // Valor predeterminado en caso de error de conversión
+
 if (idComidaObj != null) {
-    try {
-        idComida = Integer.parseInt(idComidaObj.toString());
-    } catch (NumberFormatException ex) {
-        // Manejo de error si la conversión falla
-        System.out.println("Error al convertir el ID de comida a entero: " + ex.getMessage());
+    if (idComidaObj instanceof Integer) {
+        // El valor es un entero, se puede obtenerlo directamente
+        idComida = (int) idComidaObj;
+    } else if (idComidaObj instanceof String) {
+        try {
+            // Intenta convertir el valor a entero
+            idComida = Integer.parseInt((String) idComidaObj);
+        } catch (NumberFormatException ex) {
+          
+        }
+    } else {
+        // Manejo de error si el tipo de valor no es compatible
+        System.out.println("Error: Valor de tipo no compatible para el ID de comida");
     }
 }
-
-
- // Buscar si ya existe un registro de cambios pendientes para esta comida
+        // Buscar si ya existe un registro de cambios pendientes para esta comida
         EntidadComida comidaActual = null;
         for (EntidadComida comida : cambiosPendientes) {
             if (comida.getIdComida() == idComida) {
@@ -303,27 +304,25 @@ if (idComidaObj != null) {
                 break;
             }
         }
-    
-    // Si no se encuentra en los cambios pendientes, crear un nuevo objeto EntidadComida
-    if (comidaActual == null) {
-        comidaActual = new EntidadComida();
-        comidaActual.setIdComida(idComida);
-        cambiosPendientes.add(comidaActual);
-    }
-    
+        // Si no se encuentra en los cambios pendientes, crear un nuevo objeto EntidadComida
+        if (comidaActual == null) {
+            comidaActual = new EntidadComida();
+            comidaActual.setIdComida(idComida);
+            cambiosPendientes.add(comidaActual);
+        }
         // Actualizar el objeto EntidadComida con el nuevo valor según la columna modificada
         switch (columna) {
             case 1: // Nombre
-    String nombre = (String) nuevoValor;
-            if (!nombre.equals(comidaActual.getNombreComida())) {
-                comidaActual.setNombreComida(nombre);
-            }
+                String nombre = (String) nuevoValor;
+                if (!nombre.equals(comidaActual.getNombreComida())) {
+                    comidaActual.setNombreComida(nombre);
+                }
                 break;
             case 2: // Receta
-                 String receta = (String) nuevoValor;
-            if (!receta.equals(comidaActual.getReceta())) {
-                comidaActual.setReceta(receta);
-            }
+                String receta = (String) nuevoValor;
+                if (!receta.equals(comidaActual.getReceta())) {
+                    comidaActual.setReceta(receta);
+                }
                 break;
             case 3: // Calorías
                 try {
@@ -338,103 +337,73 @@ if (idComidaObj != null) {
             case 4: // Peso
                 try {
                     double peso = Double.parseDouble(nuevoValor.toString());
-                     if (peso != comidaActual.getPeso()) {
-                         comidaActual.setPeso(peso);
-                     }
+                    if (peso != comidaActual.getPeso()) {
+                        comidaActual.setPeso(peso);
+                    }
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "El peso debe ser un número.");
+                    JOptionPane.showMessageDialog(null, "El peso debe ser un número");
                 }
                 break;
             default:
                 break;
-         }
-    //  actualizar la lista de cambios pendientes
-    cambiosPendientes.set(cambiosPendientes.indexOf(comidaActual), comidaActual);
-}
+        }
+        //  actualizar la lista de cambios pendientes
+        cambiosPendientes.set(cambiosPendientes.indexOf(comidaActual), comidaActual);
+    }
 
     public void modificarComidas2() {
-    DefaultTableModel modelo = (DefaultTableModel) vista.tbComidas.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) vista.tbComidas.getModel();
 
-    for (EntidadComida comidaModificada : cambiosPendientes) {
-        int idComida = comidaModificada.getIdComida();
-        EntidadComida comidaActual = obtenerComidasxidComida(idComida);
+        for (EntidadComida comidaModificada : cambiosPendientes) {
+            int idComida = comidaModificada.getIdComida();
+            EntidadComida comidaActual = obtenerComidasxidComida(idComida);
 
-       
-        if (comidaActual != null) {
-            // Combinar los valores modificados con los no modificados
-            // Aquí se asume que comidaActual representa el estado actual de la comida
-            if (comidaModificada.getNombreComida() == null) {
-                comidaModificada.setNombreComida(comidaActual.getNombreComida());
-            }
-            if (comidaModificada.getReceta() == null) {
-                comidaModificada.setReceta(comidaActual.getReceta());
-            }
-            if (comidaModificada.getCalorias() == 0) {
-                comidaModificada.setCalorias(comidaActual.getCalorias());
-            }
-            if (comidaModificada.getPeso() == 0.0) {
-                comidaModificada.setPeso(comidaActual.getPeso());
-            }
-            
-            // Actualiza la base de datos con los cambios realizados
-            data.modificarComidas2(comidaModificada);
+            if (comidaActual != null) {
+                // Combinar los valores modificados con los no modificados
+                // Aquí se asume que comidaActual representa el estado actual de la comida
+                if (comidaModificada.getNombreComida() == null) {
+                    comidaModificada.setNombreComida(comidaActual.getNombreComida());
+                }
+                if (comidaModificada.getReceta() == null) {
+                    comidaModificada.setReceta(comidaActual.getReceta());
+                }
+                if (comidaModificada.getCalorias() == 0) {
+                    comidaModificada.setCalorias(comidaActual.getCalorias());
+                }
+                if (comidaModificada.getPeso() == 0.0) {
+                    comidaModificada.setPeso(comidaActual.getPeso());
+                }
 
-            // Actualiza la tabla con los nuevos valores
-            for (int fila = 0; fila < modelo.getRowCount(); fila++) {
-                if ((int) modelo.getValueAt(fila, 0) == idComida) {
-                    modelo.setValueAt(comidaModificada.getIdComida(), fila, 0);
-                    modelo.setValueAt(comidaModificada.getNombreComida(), fila, 1);
-                    modelo.setValueAt(comidaModificada.getReceta(), fila, 2);
-                    modelo.setValueAt(comidaModificada.getCalorias(), fila, 3);
-                    modelo.setValueAt(comidaModificada.getPeso(), fila, 4);
-                    break;
+                // Actualiza la base de datos con los cambios realizados
+                data.modificarComidas2(comidaModificada);
+
+                // Actualiza la tabla con los nuevos valores
+                for (int fila = 0; fila < modelo.getRowCount(); fila++) {
+                    if ((int) modelo.getValueAt(fila, 0) == idComida) {
+                        modelo.setValueAt(comidaModificada.getIdComida(), fila, 0);
+                        modelo.setValueAt(comidaModificada.getNombreComida(), fila, 1);
+                        modelo.setValueAt(comidaModificada.getReceta(), fila, 2);
+                        modelo.setValueAt(comidaModificada.getCalorias(), fila, 3);
+                        modelo.setValueAt(comidaModificada.getPeso(), fila, 4);
+                        break;
+                    }
                 }
             }
         }
+
+        // Limpiar la lista de cambios pendientes después de aplicarlos
+        cambiosPendientes.clear();
     }
 
-    // Limpia la lista de cambios pendientes después de aplicarlos
-    cambiosPendientes.clear();
-}
-
-
-    
-private EntidadComida obtenerComidasxidComida(int idComida) {
-    List<EntidadComida> comidasxid = data.obtenerComidasxidComida(idComida);
-    if (!comidasxid.isEmpty()) {
-        // Suponemos que solo debería haber una EntidadComida para el ID único
-        return comidasxid.get(0);
+    private EntidadComida obtenerComidasxidComida(int idComida) {
+        List<EntidadComida> comidasxid = data.obtenerComidasxidComida(idComida);
+        if (!comidasxid.isEmpty()) {
+            // Suponemos que solo debería haber una EntidadComida para el ID único
+            return comidasxid.get(0);
+        }
+        return null;
     }
-    return null;
-}
 
-
-//
-////Peso y calorias conversion desde String
-// double peso = 0.0; // Inicializa la variable
-//Object parpeso = modelo.getValueAt(filaSeleccionada, 4); // Obtén el valor de la celda
-//if (parpeso instanceof Number) {
-//    peso = ((Number) parpeso).doubleValue(); // Si es un Number, conviértelo a double
-//} else if (parpeso instanceof String) {
-//    try {
-//        peso = Double.parseDouble((String) parpeso); // Si es una cadena, intenta convertirla a double
-//    } catch (NumberFormatException ex) {
-//        JOptionPane.showMessageDialog(null, "No debe ingresar texto, solo se aceptan pesos en gramos.");
-//        return;
-//    }
-//}
-//int calorias=0; // Inicializa la variable
-//Object parscal = modelo.getValueAt(filaSeleccionada, 3); // Obtén el valor de la celda
-//if (parscal instanceof Number) {
-//    calorias = ((Number) parscal).intValue(); // Si es un Number, conviértelo a int
-//} else if (parscal instanceof String) {
-//    try {
-//        calorias = Integer.parseInt((String) parscal); // Si es una cadena, intenta convertirla a double
-//    } catch (NumberFormatException ex) {
-//        JOptionPane.showMessageDialog(null, "No debe ingresar texto, solo se aceptan pesos en gramos.");
-//        return;
-//    }
-//}
     public class MultilineCellRenderer extends DefaultTableCellRenderer {
 
         @Override
@@ -529,7 +498,7 @@ private EntidadComida obtenerComidasxidComida(int idComida) {
             try {
                 int calorias = Integer.parseInt(vista.txKcal.getText());
                 if (calorias <= 0) {
-                    JOptionPane.showMessageDialog(null, "Las calorías deben ser un número entero mayor que cero.");
+                    JOptionPane.showMessageDialog(null, "Las calorías deben ser un número entero mayor que cero");
                 } else {
                     resultado.addAll(data.obtenerComidasxCalorias(calorias));
                 }
