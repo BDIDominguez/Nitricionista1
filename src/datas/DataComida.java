@@ -11,8 +11,7 @@ import entidades.EntidadComida;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author louisinette
+ * @author louisinette zaoral de entesano
  */
 public class DataComida {
 
@@ -326,7 +325,7 @@ public class DataComida {
         }
     }
 
-      //➢➢modificar comidas tabla comidas
+      //➢➢modificar comidas tabla vistacomidas
     public void modificarComidas2(EntidadComida comida) {
         con = Conexion.getConexion();
         String sql = "UPDATE comidas SET nombre = ?, receta = ?, calorias = ?, peso = ? WHERE idcomida = ?";
