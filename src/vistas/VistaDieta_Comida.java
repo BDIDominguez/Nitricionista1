@@ -61,7 +61,7 @@ public class VistaDieta_Comida extends javax.swing.JInternalFrame {
         setClosable(true);
         setTitle("Plan Nutricional");
 
-        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 255));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
