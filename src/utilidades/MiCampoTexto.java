@@ -44,7 +44,7 @@ public class MiCampoTexto extends JTextField {
                         }
                         break;
                     case 5: // es un campo texto acepta tanto letras como numeros
-                        if (!(c == KeyEvent.VK_SPACE || (Character.isLetter(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
+                        if (!(Character.isDigit(c) || c == KeyEvent.VK_SPACE || (Character.isLetter(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
                             e.consume();
                         }
                         break;
