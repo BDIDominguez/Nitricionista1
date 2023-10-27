@@ -65,8 +65,8 @@ public class VistaControl extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        lbFondo = new javax.swing.JLabel();
 
+        jPanel1.setBackground(new java.awt.Color(51, 51, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
@@ -210,10 +210,6 @@ public class VistaControl extends javax.swing.JInternalFrame {
         jLabel10.setText("IMC");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 35, -1));
 
-        lbFondo.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        lbFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bkg4.jpeg"))); // NOI18N
-        jPanel1.add(lbFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-5, 0, 980, 650));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -257,7 +253,6 @@ public class VistaControl extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lbFondo;
     public javax.swing.JTable tbControl;
     public javax.swing.JTextField txAltura;
     public javax.swing.JTextField txCintura;

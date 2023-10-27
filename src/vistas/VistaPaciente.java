@@ -53,8 +53,8 @@ public class VistaPaciente extends javax.swing.JInternalFrame {
         chEstado = new javax.swing.JCheckBox();
         txDNI = new utilidades.MiCampoTextoFormateado(1);
         ;
-        lbFondo = new javax.swing.JLabel();
 
+        jPanel1.setBackground(new java.awt.Color(51, 51, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
@@ -137,9 +137,6 @@ public class VistaPaciente extends javax.swing.JInternalFrame {
         txDNI.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         jPanel1.add(txDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(93, 48, 154, -1));
 
-        lbFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bkg4.jpeg"))); // NOI18N
-        jPanel1.add(lbFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, 400, 460));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -170,7 +167,6 @@ public class VistaPaciente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbFondo;
     public javax.swing.JTable tbPacientes;
     public javax.swing.JFormattedTextField txDNI;
     public javax.swing.JTextField txDomicilio;

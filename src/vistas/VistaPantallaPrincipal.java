@@ -44,7 +44,7 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
 
         pnFondo.setBackground(new java.awt.Color(0, 255, 255));
 
-        dpFondo.setBackground(new java.awt.Color(255, 102, 0));
+        dpFondo.setBackground(new java.awt.Color(238, 90, 0));
 
         javax.swing.GroupLayout dpFondoLayout = new javax.swing.GroupLayout(dpFondo);
         dpFondo.setLayout(dpFondoLayout);
@@ -57,7 +57,7 @@ public class VistaPantallaPrincipal extends javax.swing.JFrame {
             .addGap(0, 560, Short.MAX_VALUE)
         );
 
-        pnBotones.setBackground(new java.awt.Color(0, 0, 255));
+        pnBotones.setBackground(new java.awt.Color(51, 51, 255));
 
         btSalir.setText("Salir");
 
