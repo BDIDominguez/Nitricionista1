@@ -41,7 +41,7 @@ public class VistaPaciente extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         txNombre = new utilidades.MiCampoTexto(2);
         jLabel4 = new javax.swing.JLabel();
-        txDomicilio = new utilidades.MiCampoTexto(2);
+        txDomicilio = new utilidades.MiCampoTexto(5);
         txTelefono = new utilidades.MiCampoTexto(4);
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();

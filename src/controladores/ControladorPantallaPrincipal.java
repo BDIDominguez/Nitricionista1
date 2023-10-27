@@ -70,7 +70,6 @@ public class ControladorPantallaPrincipal implements ActionListener {
             VistaComida vista = new VistaComida();
             DataComida data = new DataComida();
             ControladorComida ctrl = new ControladorComida(menu, data, vista);
-            System.out.println("LLamando al metodo inicia");
             ctrl.inicia();
 
         }

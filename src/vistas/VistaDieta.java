@@ -139,11 +139,11 @@ public class VistaDieta extends javax.swing.JInternalFrame {
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Peso Actual/Final");
-        jDesktopPane1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 140, -1));
+        jLabel9.setText("Peso Deseado");
+        jDesktopPane1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 140, -1));
 
         txPesoFin.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        txPesoFin.setText("Paso Actual/Final");
+        txPesoFin.setText("Peso Deseado");
         jDesktopPane1.add(txPesoFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 190, -1));
         jDesktopPane1.add(dcFechFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 190, -1));
         jDesktopPane1.add(dcFechInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 190, -1));
