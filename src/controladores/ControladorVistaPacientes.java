@@ -145,7 +145,7 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
     public void focusLost(FocusEvent e) {
         if (e.getSource() == vista.txDNI) {
             if (vista.txID.getText().equals("-1")) {
-                if (vista.txDNI.getText().length() >= 7) {
+                if (vista.txDNI.getText().length() >= 7 && vista.txDNI.getText().length() <= 8) {
                     try {
                         EntidadPaciente pa = new EntidadPaciente();
                         pa = data.pacienteDNI(Integer.parseInt(vista.txDNI.getText().replace(".", "")));
@@ -161,7 +161,7 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
                     vista.txDNI.requestFocus();
                 }
             } else { //buscar por dni
-                if (!vista.txDNI.getText().isEmpty()) {
+                if (vista.txDNI.getText().length() >= 7 && vista.txDNI.getText().length() <= 8) {
                     try {
                         EntidadPaciente pa = new EntidadPaciente();
                         pa = data.pacienteDNI(Integer.parseInt(vista.txDNI.getText().replace(".", "")));
@@ -184,6 +184,9 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
                         //Logger.getLogger(ControladorVistaPacientes.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(vista, "Error al tratar buscar al Paciente por DNI \n" + ex.getMessage());
                     }
+                }else {
+                    JOptionPane.showMessageDialog(vista, "Ese Nro de DNI no es Valido!");
+                    vista.txDNI.requestFocus();
                 }
             }
         }

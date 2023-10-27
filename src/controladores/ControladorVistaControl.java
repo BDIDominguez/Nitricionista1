@@ -105,6 +105,21 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         llenarTabla(extraerIdPaciente());
         vista.txObs.setLineWrap(true);
         vista.txObs.setWrapStyleWord(true);
+        
+        //Inicia todo los campos Bloqueados para que fuerze a usar el boton nuevo
+        activarText(false);
+        
+    }
+    
+    private void activarText(Boolean dato){
+        vista.dcCita.setEnabled(dato);
+        vista.dcFecha.setEnabled(dato);
+        vista.txAltura.setEditable(dato);
+        vista.txCintura.setEditable(dato);
+        vista.txGasto.setEditable(dato);
+        vista.txIMC.setEditable(dato);
+        vista.txObs.setEditable(dato);
+        vista.txPeso.setEditable(dato);
     }
 
     @Override
@@ -128,6 +143,7 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
             vista.btEliminar.setEnabled(false);
             vista.btGuardar.setEnabled(true);
             vista.dcFecha.getDateEditor().getUiComponent().requestFocusInWindow(); // entregar el foco al jDateChooser
+            activarText(true);
             
         }
         if (e.getSource() == vista.btGuardar) {
