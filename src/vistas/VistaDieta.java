@@ -59,7 +59,7 @@ public class VistaDieta extends javax.swing.JInternalFrame {
 
         setClosable(true);
 
-        jDesktopPane1.setBackground(new java.awt.Color(102, 255, 255));
+        jDesktopPane1.setBackground(new java.awt.Color(51, 51, 255));
         jDesktopPane1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txDNI.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
