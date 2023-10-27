@@ -67,6 +67,7 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         jDesktopPane1.add(txDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 190, -1));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre del Paciente");
         jDesktopPane1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 170, -1));
 
@@ -75,10 +76,12 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         jDesktopPane1.add(txNombreP, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 190, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("DNI del Paciente");
         jDesktopPane1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 140, -1));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Listas de Dietas");
         jDesktopPane1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 130, -1));
 
@@ -87,16 +90,19 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         jDesktopPane1.add(txNombreD, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 190, -1));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Fecha de Inicio");
-        jDesktopPane1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 170, -1));
+        jDesktopPane1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Fecha de Finalizacion");
         jDesktopPane1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 170, -1));
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Peso Inicial");
-        jDesktopPane1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 170, -1));
+        jDesktopPane1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, 100, -1));
 
         txPesoIni.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         txPesoIni.setText("Peso Inicial");
@@ -108,8 +114,9 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         jDesktopPane1.add(cbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Nombre de la Dieta");
-        jDesktopPane1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 170, -1));
+        jDesktopPane1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 150, -1));
 
         cboxListaDietas.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         cboxListaDietas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dietas del Pacientes Seleccionado" }));
@@ -131,8 +138,9 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         jDesktopPane1.add(btSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 390, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Peso Actual/Final");
-        jDesktopPane1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 170, -1));
+        jDesktopPane1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 140, -1));
 
         txPesoFin.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         txPesoFin.setText("Paso Actual/Final");
