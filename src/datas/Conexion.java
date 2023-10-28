@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
  * @author PC1
  */
 public class Conexion {
