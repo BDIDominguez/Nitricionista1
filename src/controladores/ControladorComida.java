@@ -13,10 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.ImageIcon;
 import javax.swing.UIManager;
-import java.net.URL;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.ButtonGroup;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -30,12 +28,12 @@ public class ControladorComida implements ActionListener {
     private VistaPantallaPrincipal menu;
     public DataComida data;
     private VistaComida vista;
-    private Image comidaimg;
     private ArrayList<EntidadComida> comidas = new ArrayList<>();
     private DefaultTableModel modeloTabla;
     private ButtonGroup radioGroup;
     // estructura para almacenar cambios pendientes de la tabla
     private List<EntidadComida> cambiosPendientes = new ArrayList<>();
+    private Font customFont;
 
     public ControladorComida(VistaPantallaPrincipal menu, DataComida data, VistaComida vista) {
         this.menu = menu;
@@ -73,10 +71,9 @@ public class ControladorComida implements ActionListener {
 
         UIManager.put("OptionPane.messageFont", UIManager.getFont("Label.font").deriveFont(20.0f));
 
-        ImageIcon imageIcon = new ImageIcon("/nutricionista/imagenes/food2.jpg");
-        comidaimg = imageIcon.getImage();
-
         vista.tbComidas.setDefaultEditor(Object.class, new DefaultCellEditor(new miText()));
+        
+        customFont = new Font("Arial", Font.PLAIN, 16);
     }
 
     public ControladorComida() {
@@ -90,7 +87,6 @@ public class ControladorComida implements ActionListener {
         vista.setVisible(true); //hace visible se mostrará en la pantalla.
         menu.dpFondo.moveToFront(vista);// Coloca la vista actual en la parte delantera del contenedor jLabel1 u otro componentes
         vista.requestFocus(); //le da el foco al formulario la vista estará lista para recibir eventos de entrada
-        cargarFondo();
         vista.tbComidas.getModel().addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
@@ -146,7 +142,14 @@ public class ControladorComida implements ActionListener {
             vista.txIdComida.setEditable(false);
             vista.btAgregar.setEnabled(true);
         } else if (e.getSource() == vista.jbModificar) {
-            modificarComidas2();
+           // Verificar si hay cambios pendientes
+    if (cambiosPendientes.isEmpty()) {
+        // No hay cambios pendientes, mostrar un JOptionPane
+        JOptionPane.showMessageDialog(null, "No se han realizado modificaciones.");
+    } else {
+        // Realizar la lógica de modificación
+        modificarComidas2();
+    }
         } else if (e.getSource() == vista.jbSalir) {
             vista.dispose();
         }
@@ -245,7 +248,7 @@ public class ControladorComida implements ActionListener {
     public void deshabilitarComidaSeleccionada() {
         int filaSeleccionada = vista.tbComidas.getSelectedRow();
         if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecciona una comida en la tabla para deshabilitarla");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila para deshabilitarla");
             return;
         }
         // Obtener el idcomida en la fila seleccionada (columna 0)
@@ -261,7 +264,7 @@ public class ControladorComida implements ActionListener {
     public void habilitarComidaSeleccionada() {
         int filaSeleccionada = vista.tbComidas.getSelectedRow();
         if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecciona una comida en la tabla para habilitarla");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila para habilitarla");
             return;
         }
         // Obtener el idcomida en la fila seleccionada (columna 0)
@@ -404,21 +407,23 @@ if (idComidaObj != null) {
         return null;
     }
 
-    public class MultilineCellRenderer extends DefaultTableCellRenderer {
+        public class MultilineCellRenderer extends DefaultTableCellRenderer {
 
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            // Verificar si el valor es demasiado largo y mostrar un tooltip
-            if (c instanceof JComponent) {
-                JComponent jc = (JComponent) c;
-                String text = (value != null) ? value.toString() : "";
-                if (text.length() > 20) {
-                    jc.setToolTipText(text);
-                } else {
-                    jc.setToolTipText(null);
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                // Verificar si el valor es demasiado largo y mostrar un tooltip
+                if (c instanceof JComponent) {
+                    JComponent jc = (JComponent) c;
+                    String text = (value != null) ? value.toString() : "";
+                    if (text.length() > 20) {
+                        jc.setToolTipText(text);
+                    } else {
+                       jc.setToolTipText(null);
                 }
             }
+            // Aplicar la fuente personalizada
+            c.setFont(customFont);
             return c;
         }
     }
@@ -585,35 +590,17 @@ if (idComidaObj != null) {
         modeloTabla.addColumn("Peso");
         vista.tbComidas.setModel(modeloTabla); //Establecer el modelo de tabla creado en modeloTabla
         vista.tbComidas.getColumnModel().getColumn(0).setPreferredWidth(120);
-        vista.tbComidas.getColumnModel().getColumn(1).setPreferredWidth(490);
+        vista.tbComidas.getColumnModel().getColumn(1).setPreferredWidth(520);
         vista.tbComidas.getColumnModel().getColumn(2).setCellRenderer(new MultilineCellRenderer());
         vista.tbComidas.getColumnModel().getColumn(2).setPreferredWidth(500);
         vista.tbComidas.getColumnModel().getColumn(3).setPreferredWidth(95);
-        vista.tbComidas.getColumnModel().getColumn(4).setPreferredWidth(130);
+        vista.tbComidas.getColumnModel().getColumn(4).setPreferredWidth(120);
         TableColumnModel columnModel = vista.tbComidas.getColumnModel();
         columnModel.getColumn(0).setResizable(false);
         columnModel.getColumn(1).setResizable(false);
         columnModel.getColumn(2).setResizable(false);
         columnModel.getColumn(3).setResizable(false);
         columnModel.getColumn(4).setResizable(false);
-    }
-
-    private void cargarFondo() {
-        ClassLoader directorio = getClass().getClassLoader();
-        URL rutaImagenFondo = directorio.getResource("imagenes/food2.jpg");
-        //Se carga una imagen de fondo desde un recurso ubicado en un directorio
-        ImageIcon imagenFondoIcon = new ImageIcon(rutaImagenFondo);
-        // La ruta de la imagen se utiliza para crear un objeto ImageIcon que representa la imagen de fondo
-        Image imagenFondo = imagenFondoIcon.getImage();
-        //Se obtiene la imagen desde el objeto ImageIcon
-        imagenFondo = imagenFondo.getScaledInstance(vista.jPanel1.getWidth(), vista.jPanel1.getHeight(), Image.SCALE_SMOOTH);
-        // Redimensiona la imagen de fondo al tamaño del menu.jFondo JPanel
-        ImageIcon imagenFondoRedimensionadaIcon = new ImageIcon(imagenFondo);
-        // La imagen redimensionada se utiliza para crear un nuevo objeto ImageIcon
-        vista.jLabel1.setIcon(imagenFondoRedimensionadaIcon);
-        vista.jLabel1.setBounds(0, 0, vista.jPanel1.getWidth(), vista.jPanel1.getHeight());
-        vista.jPanel1.revalidate();
-        vista.jPanel1.repaint();
     }
 
     public void mostrarMensajePersonalizado() {

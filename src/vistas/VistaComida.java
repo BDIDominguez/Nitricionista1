@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vistas;
+
+import java.awt.Image;
+import java.net.URL;
+import javax.swing.ImageIcon;
 
 /**
 @author louisinette zaoral de entesano
@@ -15,6 +14,7 @@ public class VistaComida extends javax.swing.JInternalFrame {
      */
     public VistaComida() {
         initComponents();
+       colocarIconos();
     }
 
     /**
@@ -28,7 +28,6 @@ public class VistaComida extends javax.swing.JInternalFrame {
 
         buttonGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        lbTitulo = new javax.swing.JLabel();
         btAgregar = new javax.swing.JButton();
         jbModificar = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
@@ -60,85 +59,99 @@ public class VistaComida extends javax.swing.JInternalFrame {
         txPeso = new javax.swing.JTextField();
         lbGramos = new javax.swing.JLabel();
         lbAgregar = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        lbAgregar1 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
         lbBuscar1 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lbBuscar2 = new javax.swing.JLabel();
+        lbBuscar3 = new javax.swing.JLabel();
+        lbAgregar2 = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        lbBuscar4 = new javax.swing.JLabel();
+        lbAgregar3 = new javax.swing.JLabel();
 
         setClosable(true);
         setMaximizable(true);
         setTitle("Gestion de Comidas");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Comidas.png"))); // NOI18N
-        setPreferredSize(new java.awt.Dimension(930, 720));
+        setPreferredSize(new java.awt.Dimension(1350, 680));
         setVerifyInputWhenFocusTarget(false);
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(930, 720));
+        jPanel1.setBackground(new java.awt.Color(55, 55, 255));
+        jPanel1.setForeground(java.awt.Color.white);
+        jPanel1.setToolTipText("");
+        jPanel1.setMinimumSize(new java.awt.Dimension(1600, 683));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1600, 683));
+        jPanel1.setRequestFocusEnabled(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbTitulo.setFont(new java.awt.Font("Tahoma", 1, 50)); // NOI18N
-        lbTitulo.setForeground(java.awt.Color.orange);
-        lbTitulo.setText("Gestion de Comidas");
-        jPanel1.add(lbTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
-
-        btAgregar.setBackground(java.awt.Color.green);
         btAgregar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btAgregar.setForeground(java.awt.Color.white);
         btAgregar.setText("Guardar");
-        jPanel1.add(btAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 460, -1, -1));
+        jPanel1.add(btAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 570, 150, 40));
 
-        jbModificar.setBackground(java.awt.Color.green);
         jbModificar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jbModificar.setForeground(java.awt.Color.white);
         jbModificar.setText("Modificar");
-        jPanel1.add(jbModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 560, -1, -1));
+        jPanel1.add(jbModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 440, -1, 40));
 
-        jbSalir.setBackground(java.awt.Color.blue);
         jbSalir.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jbSalir.setForeground(java.awt.Color.white);
         jbSalir.setText("Salir");
-        jPanel1.add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 600, -1, -1));
+        jPanel1.add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 570, 130, 40));
 
-        btHabilitarLista.setBackground(java.awt.Color.green);
         btHabilitarLista.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btHabilitarLista.setForeground(java.awt.Color.white);
         btHabilitarLista.setText("Habilitar");
-        jPanel1.add(btHabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, -1, -1));
+        jPanel1.add(btHabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 440, 150, 40));
 
-        lbSelectTabla.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbSelectTabla.setForeground(java.awt.Color.blue);
-        lbSelectTabla.setText("Seleccione una fila a continuación y presione una opción del menu a su izquierda");
-        jPanel1.add(lbSelectTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, -1, -1));
+        lbSelectTabla.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbSelectTabla.setForeground(new java.awt.Color(62, 242, 146));
+        lbSelectTabla.setText("Seleccione info de la tabla y presione una opción del menu:");
+        jPanel1.add(lbSelectTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 400, -1, -1));
 
-        lbHabilitada.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
+        lbHabilitada.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbHabilitada.setForeground(java.awt.Color.white);
         lbHabilitada.setText("Habilitada");
-        jPanel1.add(lbHabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, -1, -1));
-        jPanel1.add(txNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 324, -1));
-        jPanel1.add(txIdComida, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 57, -1));
-        jPanel1.add(txReceta, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 230, 20));
+        jPanel1.add(lbHabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, -1, -1));
 
-        lbIdComida.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
+        txNombre.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jPanel1.add(txNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 324, 30));
+
+        txIdComida.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jPanel1.add(txIdComida, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, 57, 30));
+
+        txReceta.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jPanel1.add(txReceta, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 230, 30));
+
+        lbIdComida.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbIdComida.setForeground(java.awt.Color.white);
         lbIdComida.setText("Id de Comida:");
-        jPanel1.add(lbIdComida, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
+        jPanel1.add(lbIdComida, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, -1));
 
-        lbkcal.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
+        lbkcal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbkcal.setForeground(java.awt.Color.white);
         lbkcal.setText("Kilocalorias");
-        jPanel1.add(lbkcal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, -1, -1));
+        jPanel1.add(lbkcal, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, -1, -1));
 
-        lbCantidadCaloriasMenor.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
+        lbCantidadCaloriasMenor.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbCantidadCaloriasMenor.setForeground(java.awt.Color.white);
         lbCantidadCaloriasMenor.setText("Cantidad menor a: ");
-        jPanel1.add(lbCantidadCaloriasMenor, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, -1, -1));
+        jPanel1.add(lbCantidadCaloriasMenor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
 
+        rbHabilitada.setBackground(new java.awt.Color(51, 51, 255));
+        rbHabilitada.setForeground(new java.awt.Color(51, 51, 255));
         rbHabilitada.setBorder(null);
         rbHabilitada.setMaximumSize(new java.awt.Dimension(25, 25));
-        jPanel1.add(rbHabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 370, -1, -1));
+        jPanel1.add(rbHabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 30, -1));
 
+        rbDeshabilitada.setBackground(new java.awt.Color(51, 51, 255));
         rbDeshabilitada.setBorder(null);
         rbDeshabilitada.setMaximumSize(new java.awt.Dimension(25, 25));
-        jPanel1.add(rbDeshabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 370, -1, -1));
+        jPanel1.add(rbDeshabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 70, -1, -1));
 
-        lbDeshabilitada.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
+        lbDeshabilitada.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbDeshabilitada.setForeground(java.awt.Color.white);
         lbDeshabilitada.setText("Deshabilitada");
-        jPanel1.add(lbDeshabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 370, -1, -1));
+        jPanel1.add(lbDeshabilitada, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, -1, -1));
 
-        tbComidas.setBackground(new java.awt.Color(245, 248, 106));
         tbComidas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tbComidas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -155,104 +168,138 @@ public class VistaComida extends javax.swing.JInternalFrame {
         tbComidas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbComidas);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 550, 630, 120));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 30, 710, 350));
 
-        btBuscar.setBackground(java.awt.Color.green);
         btBuscar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btBuscar.setForeground(java.awt.Color.white);
         btBuscar.setText("Buscar");
         btBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btBuscarActionPerformed(evt);
             }
         });
-        jPanel1.add(btBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 410, -1, -1));
+        jPanel1.add(btBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 340, 130, 40));
 
-        lbingrediente.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
+        lbingrediente.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbingrediente.setForeground(java.awt.Color.white);
         lbingrediente.setText("Ingrediente de la receta:");
-        jPanel1.add(lbingrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, -1, -1));
+        jPanel1.add(lbingrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, -1, -1));
 
-        LbNombre.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
+        LbNombre.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        LbNombre.setForeground(java.awt.Color.white);
         LbNombre.setText("Nombre:");
-        jPanel1.add(LbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, -1));
+        jPanel1.add(LbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
-        btNueva.setBackground(java.awt.Color.green);
         btNueva.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btNueva.setForeground(java.awt.Color.white);
         btNueva.setText("Nueva");
         btNueva.setMaximumSize(new java.awt.Dimension(83, 31));
         btNueva.setMinimumSize(new java.awt.Dimension(83, 31));
         btNueva.setName(""); // NOI18N
         btNueva.setPreferredSize(new java.awt.Dimension(83, 31));
-        jPanel1.add(btNueva, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 460, 100, -1));
-        jPanel1.add(txKcal, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 58, -1));
+        jPanel1.add(btNueva, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 460, 130, 40));
 
-        lbBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbBuscar.setForeground(java.awt.Color.blue);
-        lbBuscar.setText("Para realizar la busqueda de una comida por favor ingrese");
-        jPanel1.add(lbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
+        txKcal.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jPanel1.add(txKcal, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 220, 70, 30));
 
-        btDeshabilitarLista.setBackground(java.awt.Color.green);
+        lbBuscar.setBackground(java.awt.Color.white);
+        lbBuscar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbBuscar.setForeground(new java.awt.Color(64, 242, 146));
+        lbBuscar.setText("ó ingrese una opción de busqueda a la vez:");
+        jPanel1.add(lbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
+
         btDeshabilitarLista.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btDeshabilitarLista.setForeground(java.awt.Color.white);
         btDeshabilitarLista.setText("Deshabilitar");
-        jPanel1.add(btDeshabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 640, -1, -1));
+        jPanel1.add(btDeshabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 440, 180, 40));
 
-        lbLimpiar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbLimpiar.setForeground(java.awt.Color.blue);
-        lbLimpiar.setText("y para borrar las opciones presione");
-        jPanel1.add(lbLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 410, -1, -1));
+        lbLimpiar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbLimpiar.setForeground(new java.awt.Color(62, 242, 146));
+        lbLimpiar.setText("todas las opciones");
+        jPanel1.add(lbLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 570, -1, -1));
 
-        lbAhora.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbAhora.setForeground(java.awt.Color.blue);
-        lbAhora.setText(" Ahora presione aqui");
-        jPanel1.add(lbAhora, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, -1, -1));
+        lbAhora.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbAhora.setForeground(new java.awt.Color(64, 242, 146));
+        lbAhora.setText(" 2. Presione aqui");
+        jPanel1.add(lbAhora, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, -1, -1));
 
-        btLimpiar.setBackground(java.awt.Color.green);
         btLimpiar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btLimpiar.setForeground(java.awt.Color.white);
         btLimpiar.setText("Reset");
-        jPanel1.add(btLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 410, -1, -1));
+        jPanel1.add(btLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 550, 130, 40));
 
-        lbPeso.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
+        lbPeso.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbPeso.setForeground(java.awt.Color.white);
         lbPeso.setText("Peso: ");
-        jPanel1.add(lbPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
+        jPanel1.add(lbPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, -1, -1));
 
+        txPeso.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         txPeso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txPesoActionPerformed(evt);
             }
         });
-        jPanel1.add(txPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, 70, -1));
+        jPanel1.add(txPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 70, 30));
 
-        lbGramos.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
+        lbGramos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbGramos.setForeground(java.awt.Color.white);
         lbGramos.setText("gramos");
-        jPanel1.add(lbGramos, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, -1, -1));
+        jPanel1.add(lbGramos, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, -1, -1));
 
-        lbAgregar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbAgregar.setForeground(java.awt.Color.blue);
-        lbAgregar.setText("Para agregar una comida presione                    complete todos los campos de arriba y presione");
-        jPanel1.add(lbAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, -1, -1));
+        lbAgregar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbAgregar.setForeground(new java.awt.Color(62, 242, 146));
+        lbAgregar.setText("también selecciona un estado");
+        jPanel1.add(lbAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 540, -1, -1));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 520, 10));
 
-        lbBuscar1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbBuscar1.setForeground(java.awt.Color.blue);
-        lbBuscar1.setText("en el formulario una opción a la vez o seleccione un estado:");
-        jPanel1.add(lbBuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
+        lbAgregar1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbAgregar1.setForeground(new java.awt.Color(62, 242, 146));
+        lbAgregar1.setText("1. Para agregar una comida presione");
+        jPanel1.add(lbAgregar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/food2.jpg"))); // NOI18N
-        jLabel1.setText("lbFondo");
-        jLabel1.setMaximumSize(new java.awt.Dimension(930, 720));
-        jLabel1.setMinimumSize(new java.awt.Dimension(930, 720));
-        jLabel1.setPreferredSize(new java.awt.Dimension(930, 720));
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 680));
+        jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 430, 10, 190));
+
+        lbBuscar1.setBackground(java.awt.Color.white);
+        lbBuscar1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbBuscar1.setForeground(new java.awt.Color(64, 242, 146));
+        lbBuscar1.setText("1. Seleccione un estado:");
+        jPanel1.add(lbBuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
+
+        lbBuscar2.setBackground(java.awt.Color.white);
+        lbBuscar2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbBuscar2.setForeground(java.awt.Color.white);
+        lbBuscar2.setText("BORRAR");
+        jPanel1.add(lbBuscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 540, -1, -1));
+
+        lbBuscar3.setBackground(java.awt.Color.white);
+        lbBuscar3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbBuscar3.setForeground(java.awt.Color.white);
+        lbBuscar3.setText("BUSCAR");
+        jPanel1.add(lbBuscar3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
+
+        lbAgregar2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbAgregar2.setForeground(new java.awt.Color(62, 242, 146));
+        lbAgregar2.setText("2. Complete todas las opciones de busqueda arriba y ");
+        jPanel1.add(lbAgregar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, -1, -1));
+        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 510, 720, 30));
+
+        jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, 10, 370));
+
+        lbBuscar4.setBackground(java.awt.Color.white);
+        lbBuscar4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbBuscar4.setForeground(java.awt.Color.white);
+        lbBuscar4.setText("AGREGAR");
+        jPanel1.add(lbBuscar4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 430, -1, -1));
+
+        lbAgregar3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbAgregar3.setForeground(new java.awt.Color(62, 242, 146));
+        lbAgregar3.setText("3. Presione aqui");
+        jPanel1.add(lbAgregar3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 580, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 918, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1600, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -283,15 +330,24 @@ public class VistaComida extends javax.swing.JInternalFrame {
     public javax.swing.JButton btLimpiar;
     public javax.swing.JButton btNueva;
     public javax.swing.ButtonGroup buttonGroup;
-    public javax.swing.JLabel jLabel1;
     public javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     public javax.swing.JButton jbModificar;
     public javax.swing.JButton jbSalir;
     private javax.swing.JLabel lbAgregar;
+    private javax.swing.JLabel lbAgregar1;
+    private javax.swing.JLabel lbAgregar2;
+    private javax.swing.JLabel lbAgregar3;
     private javax.swing.JLabel lbAhora;
     private javax.swing.JLabel lbBuscar;
     private javax.swing.JLabel lbBuscar1;
+    private javax.swing.JLabel lbBuscar2;
+    private javax.swing.JLabel lbBuscar3;
+    private javax.swing.JLabel lbBuscar4;
     private javax.swing.JLabel lbCantidadCaloriasMenor;
     private javax.swing.JLabel lbDeshabilitada;
     private javax.swing.JLabel lbGramos;
@@ -300,7 +356,6 @@ public class VistaComida extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lbLimpiar;
     private javax.swing.JLabel lbPeso;
     private javax.swing.JLabel lbSelectTabla;
-    private javax.swing.JLabel lbTitulo;
     private javax.swing.JLabel lbingrediente;
     private javax.swing.JLabel lbkcal;
     public javax.swing.JRadioButton rbDeshabilitada;
@@ -312,4 +367,35 @@ public class VistaComida extends javax.swing.JInternalFrame {
     public javax.swing.JTextField txPeso;
     public javax.swing.JTextField txReceta;
     // End of variables declaration//GEN-END:variables
+
+private void colocarIconos(){
+        int alto = 30;
+        int ancho = 30; 
+        
+        btNueva.setIcon(prepararIcono("nuevo.png",alto,ancho));
+        btAgregar.setIcon(prepararIcono("salvado.png",alto,ancho));
+        btBuscar.setIcon(prepararIcono("Lupa-buscar.png",alto,ancho));
+        jbSalir.setIcon(prepararIcono("salida3.png",alto,ancho));
+        btHabilitarLista.setIcon(prepararIcono("activo.png",alto,ancho));
+        btDeshabilitarLista.setIcon(prepararIcono("inactivo.png",alto,ancho));
+        jbModificar.setIcon(prepararIcono("pencil-png-653.png",alto,ancho));
+        btLimpiar.setIcon(prepararIcono("eraser.png",alto,ancho));
+        ImageIcon icono = new ImageIcon();
+        icono = prepararIcono("IconoFormulario.jpg",20,20);
+        this.setFrameIcon(icono);
+    }
+    
+    private ImageIcon prepararIcono(String nombre, int alto, int ancho) { // Aplicacion que prepara los Iconos para ser puestos 
+        //donde se quiera se pasa el nombre y el tamaño que quieres que tenga
+        // Obtener la ruta relativa a la ubicación de la clase Controlador eso es la carpeta SRC del proyecto ese seria la carpeta 
+        // de inicio
+        ClassLoader directorio = getClass().getClassLoader();
+        URL imagen = directorio.getResource("iconos/" + nombre); // Creamos la ruta al recurso en este caso el icono de lupa
+        // Crea un ImageIcon utilizando la URL de la imagen
+        ImageIcon icono = new ImageIcon(imagen); // creamos la Imagen Icono para asignarsela al contenerdor
+        // Redimensionar el icono pasandolo a imagen con el nuevo tamaño y luego convirtiendolo en icono XD
+        Image imagenRedimensionada = icono.getImage().getScaledInstance(alto, ancho, Image.SCALE_SMOOTH);
+        icono = new ImageIcon(imagenRedimensionada);
+        return icono;
+    }
 }
