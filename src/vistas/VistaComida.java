@@ -92,20 +92,20 @@ public class VistaComida extends javax.swing.JInternalFrame {
 
         jbModificar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jbModificar.setText("Modificar");
-        jPanel1.add(jbModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 440, -1, 40));
+        jPanel1.add(jbModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 480, -1, 40));
 
         jbSalir.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jbSalir.setText("Salir");
-        jPanel1.add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 570, 130, 40));
+        jPanel1.add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 570, 130, 40));
 
         btHabilitarLista.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btHabilitarLista.setText("Habilitar");
-        jPanel1.add(btHabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 440, 150, 40));
+        jPanel1.add(btHabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 480, 150, 40));
 
         lbSelectTabla.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbSelectTabla.setForeground(new java.awt.Color(62, 242, 146));
-        lbSelectTabla.setText("Seleccione info de la tabla y presione una opción del menu:");
-        jPanel1.add(lbSelectTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 400, -1, -1));
+        lbSelectTabla.setText("Seleccione datos de la tabla y presione una de las siguientes opciones:");
+        jPanel1.add(lbSelectTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 440, -1, 20));
 
         lbHabilitada.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbHabilitada.setForeground(java.awt.Color.white);
@@ -168,7 +168,7 @@ public class VistaComida extends javax.swing.JInternalFrame {
         tbComidas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbComidas);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 30, 710, 350));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 30, 710, 390));
 
         btBuscar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btBuscar.setText("Buscar");
@@ -208,12 +208,12 @@ public class VistaComida extends javax.swing.JInternalFrame {
 
         btDeshabilitarLista.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btDeshabilitarLista.setText("Deshabilitar");
-        jPanel1.add(btDeshabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 440, 180, 40));
+        jPanel1.add(btDeshabilitarLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 480, 180, 40));
 
         lbLimpiar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbLimpiar.setForeground(new java.awt.Color(62, 242, 146));
         lbLimpiar.setText("todas las opciones");
-        jPanel1.add(lbLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 570, -1, -1));
+        jPanel1.add(lbLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 590, -1, -1));
 
         lbAhora.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbAhora.setForeground(new java.awt.Color(64, 242, 146));
@@ -222,7 +222,8 @@ public class VistaComida extends javax.swing.JInternalFrame {
 
         btLimpiar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btLimpiar.setText("Reset");
-        jPanel1.add(btLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 550, 130, 40));
+        btLimpiar.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jPanel1.add(btLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 570, 130, 40));
 
         lbPeso.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbPeso.setForeground(java.awt.Color.white);
@@ -244,7 +245,7 @@ public class VistaComida extends javax.swing.JInternalFrame {
 
         lbAgregar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbAgregar.setForeground(new java.awt.Color(62, 242, 146));
-        lbAgregar.setText("también selecciona un estado");
+        lbAgregar.setText("también seleccione un estado");
         jPanel1.add(lbAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 540, -1, -1));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 520, 10));
 
@@ -266,7 +267,7 @@ public class VistaComida extends javax.swing.JInternalFrame {
         lbBuscar2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbBuscar2.setForeground(java.awt.Color.white);
         lbBuscar2.setText("BORRAR");
-        jPanel1.add(lbBuscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 540, -1, -1));
+        jPanel1.add(lbBuscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 560, -1, -1));
 
         lbBuscar3.setBackground(java.awt.Color.white);
         lbBuscar3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -278,7 +279,7 @@ public class VistaComida extends javax.swing.JInternalFrame {
         lbAgregar2.setForeground(new java.awt.Color(62, 242, 146));
         lbAgregar2.setText("2. Complete todas las opciones de busqueda arriba y ");
         jPanel1.add(lbAgregar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, -1, -1));
-        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 510, 720, 30));
+        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 540, 720, 10));
 
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, 10, 370));
@@ -299,14 +300,12 @@ public class VistaComida extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1600, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

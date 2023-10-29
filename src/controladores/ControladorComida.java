@@ -103,32 +103,17 @@ public class ControladorComida implements ActionListener {
                 }
             }
         });
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vista.btBuscar) {
             buscarComidas();
-            vista.txNombre.setEditable(false);
-            vista.txIdComida.setEditable(false);
-            vista.txKcal.setEditable(false);
-            vista.txPeso.setEditable(false);
-            vista.txReceta.setEditable(false);
-            vista.btAgregar.setEnabled(false);
-            vista.btNueva.setEnabled(false);
-            vista.btBuscar.setEnabled(false);
-            vista.rbHabilitada.setEnabled(false);
-            vista.rbDeshabilitada.setEnabled(false);
-            vista.btDeshabilitarLista.setEnabled(true);
-            vista.btHabilitarLista.setEnabled(true);
-            vista.btAgregar.setEnabled(false);
-            vista.jbModificar.setEnabled(true);
-
         } else if (e.getSource() == vista.btLimpiar) {
             limpiarOpciones();
         } else if (e.getSource() == vista.btAgregar) {
             modeloTabla.setRowCount(0);
+                vista.txIdComida.setEditable(true);
             agregarComidas();
         } else if (e.getSource() == vista.btDeshabilitarLista) {
             deshabilitarComidaSeleccionada();
@@ -139,8 +124,21 @@ public class ControladorComida implements ActionListener {
             vista.btHabilitarLista.setEnabled(false);
             vista.btDeshabilitarLista.setEnabled(false);
             vista.jbModificar.setEnabled(false);
-            vista.txIdComida.setEditable(false);
             vista.btAgregar.setEnabled(true);
+             vista.txNombre.setEditable(true);
+             vista.txKcal.setEditable(true);
+             vista.txIdComida.setEditable(false);
+             vista.txPeso.setEditable(true);
+             vista.txReceta.setEditable(true);
+             vista.rbDeshabilitada.setEnabled(true);
+             vista.rbHabilitada.setEnabled(true);
+             vista.rbHabilitada.setSelected(false);
+             vista.rbDeshabilitada.setSelected(false);
+            vista.txIdComida.setText("");
+            vista.txPeso.setText("");
+            vista.txNombre.setText("");
+            vista.txReceta.setText("");
+            vista.txKcal.setText("");
         } else if (e.getSource() == vista.jbModificar) {
            // Verificar si hay cambios pendientes
     if (cambiosPendientes.isEmpty()) {
@@ -180,7 +178,7 @@ public class ControladorComida implements ActionListener {
 
         if (nombre.isEmpty() || vista.txKcal.getText().isEmpty() || vista.txPeso.getText().isEmpty() || receta.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debes completar todos los datos del formulario para agregar una comida");
-            limpiarOpciones();
+          
             return;
         }
         if (!vista.rbHabilitada.isSelected() && !vista.rbDeshabilitada.isSelected() || vista.rbHabilitada.isSelected() && vista.rbDeshabilitada.isSelected()) {
@@ -190,28 +188,28 @@ public class ControladorComida implements ActionListener {
         }
         if (!nombre.matches("^[a-zA-Z\\s]+$")) {
             JOptionPane.showMessageDialog(null, "El nombre de comida solo puede contener texto");
-            limpiarOpciones();
+        
             return;
         }
         if (!receta.matches("^[a-zA-Z\\s]+$")) {
             JOptionPane.showMessageDialog(null, "La receta solo puede contener texto");
-            limpiarOpciones();
+     
             return;
         }
         try {
             calorias = Integer.parseInt(vista.txKcal.getText());
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Las calorías deben ser un número entero");
-            limpiarOpciones();
+          
             return;
         }
-        try {
-            peso = Double.parseDouble(vista.txPeso.getText());
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "El peso debe ser un número en gramos");
-            limpiarOpciones();
-            return;
-        }
+       try {
+    peso = Double.parseDouble(vista.txPeso.getText());
+} catch (NumberFormatException ex) {
+    JOptionPane.showMessageDialog(null, "El peso debe ser un número en gramos");
+    return;
+}
+       
         if (vista.rbHabilitada.isSelected()) {
             estado = true; // Habilitada
         } else if (vista.rbDeshabilitada.isSelected()) {
@@ -234,12 +232,20 @@ public class ControladorComida implements ActionListener {
             };
             modelo.addRow(fila);
             JOptionPane.showMessageDialog(null, "Comida agregada exitosamente");
+            vista.txIdComida.setEnabled(true);
+            vista.btBuscar.setEnabled(true); // Deshabilitar el botón de búsqueda
+            vista.btHabilitarLista.setEnabled(true);
+            vista.btDeshabilitarLista.setEnabled(true);
+            vista.jbModificar.setEnabled(true);
+            vista.btAgregar.setEnabled(false);
+            vista.rbHabilitada.setSelected(false);
+            vista.rbDeshabilitada.setSelected(false);
+            vista.txIdComida.setText("");
+            vista.txPeso.setText("");
             vista.txNombre.setText("");
             vista.txReceta.setText("");
             vista.txKcal.setText("");
-            vista.txPeso.setText("");
-            vista.txIdComida.setText("");
-            vista.btBuscar.setEnabled(false); // Deshabilitar el botón de búsqueda
+            
         } else {
             JOptionPane.showMessageDialog(null, "Error al agregar la comida");
         }
@@ -476,14 +482,18 @@ if (idComidaObj != null) {
                 return;
             }
         }
-        if (vista.rbHabilitada.isSelected()) {
+          if (vista.rbHabilitada.isSelected() && vista.rbDeshabilitada.isSelected()) {
+          JOptionPane.showMessageDialog(null, "Debes ingresar seleccionar solo 1 estado a la vez, Habilitada o Deshabilitada");
+        } else if (vista.rbHabilitada.isSelected()) {
             resultado.addAll(data.obtenerComidasxEstado(true));
         } else if (vista.rbDeshabilitada.isSelected()) {
             resultado.addAll(data.obtenerComidasxEstado(false));
+         
         } else if (!vista.txNombre.getText().isEmpty()) {
             String nombre = vista.txNombre.getText();
             if (!nombre.matches("^[a-zA-Z\\s]+$")) {
                 JOptionPane.showMessageDialog(null, "El nombre de comida solo puede contener texto");
+               vista.txNombre.setText("");
             } else {
                 resultado.addAll(data.obtenerComidasxNombre(nombre));
             }
@@ -495,41 +505,51 @@ if (idComidaObj != null) {
                 // Verificar si no se encontraron resultados
                 if (resultado.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "No se encontraron comidas con el ID de comida especificado");
+                   vista.txIdComida.setText("");
                 }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Se aceptan números únicamente");
+                vista.txIdComida.setText("");
             }
         } else if (!vista.txKcal.getText().isEmpty()) {
             try {
                 int calorias = Integer.parseInt(vista.txKcal.getText());
                 if (calorias <= 0) {
                     JOptionPane.showMessageDialog(null, "Las calorías deben ser un número entero mayor que cero");
+                   vista.txKcal.setText("");
                 } else {
                     resultado.addAll(data.obtenerComidasxCalorias(calorias));
                 }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Debe ingresar un número entero para las calorías");
+                  vista.txKcal.setText(""); 
             }
         } else if (!vista.txPeso.getText().isEmpty()) {
             try {
                 double peso = Double.parseDouble(vista.txPeso.getText());
                 if (peso <= 0) {
                     JOptionPane.showMessageDialog(null, "El peso debe ser un número mayor que cero");
+                   vista.txPeso.setText("");  
                 } else {
                     resultado.addAll(data.obtenerComidasxpeso(peso));
                 }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Debe ingresar un número de gramos para el peso");
+                 vista.txPeso.setText("");  
             }
         } else if (!vista.txReceta.getText().isEmpty()) {
             String receta = vista.txReceta.getText();
             if (!receta.matches("^[a-zA-Z\\s]+$")) {
                 JOptionPane.showMessageDialog(null, "El nombre de la receta solo puede contener texto");
+               vista.txReceta.setText("");
             } else {
                 resultado.addAll(data.obtenerComidasxReceta(receta));
             }
         }
         mostrarResultadoBusqueda(resultado);
+        vista.jbModificar.setEnabled(true);
+        vista.btDeshabilitarLista.setEnabled(true);
+        vista.btHabilitarLista.setEnabled(true);
     }
 
     private void mostrarResultadoBusqueda(List<EntidadComida> resultado) {
