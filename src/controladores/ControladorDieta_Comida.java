@@ -59,6 +59,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         vista.BtGuardar.addActionListener(this);
         vista.BtSalir.addActionListener(this);
         vista.BtQuitarComida.addActionListener(this);
+        vista.BtCancel.addActionListener(this);
         //Combos
         vista.CBPaciente.addActionListener(this);
         vista.CBDietasActivas.addActionListener(this);
@@ -80,6 +81,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         llenarComboBDietasActivas();
         llenarComboComidasActivas();
         vista.BtGuardar.setEnabled(false);
+        vista.BtCancel.setEnabled(false);
     }
 
     private void modelarTabla() {
@@ -108,7 +110,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
 
             comidas = dataDietaComida.obtenerDietasComidaPorDieta(extraerIdDieta());
             modelo.setRowCount(0);
-
+            comidasAgregadas.clear();
             DataComida a = new DataComida();
 
             for (EntidadDieta_Comida comida : comidas) {
@@ -233,6 +235,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             vista.BtNuevaDieta.setEnabled(false);
             vista.BtEliminarDieta.setEnabled(false);
             vista.BtQuitarComida.setEnabled(false);
+            vista.BtCancel.setEnabled(true);
 
             String porcionText = vista.TxPorcion.getText();
 
@@ -291,14 +294,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             }
             llenarJTComidas();
 
-            vista.BtNuevaDieta.setEnabled(true);
-            vista.BtEliminarDieta.setEnabled(true);
-            vista.CBPaciente.setEnabled(true);
-            vista.CBDietasActivas.setEnabled(true);
-            vista.BtQuitarComida.setEnabled(true);
-            vista.TxPorcion.setText("");
-            vista.CbHorario.setSelectedIndex(0);
-            llenarComboComidasActivas();
+            reset();
             vista.CBComidasActivas.setSelectedIndex(0);
             JOptionPane.showMessageDialog(vista, "Datos guardados con éxito.");
         }
@@ -316,6 +312,9 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                         JOptionPane.showMessageDialog(vista, "Comida eliminada con éxito.");
                     } else {
                         JOptionPane.showMessageDialog(vista, "Comida eliminada de la dieta.");
+                        int fila = vista.JTComidas.getSelectedRow(); //obtienen el índice de la fila seleccionada
+                        String temp = modelo.getValueAt( fila, 1).toString();   //recupera un valor de la tabla modelo (el valor en la segunda columna con índice 1) esto evita que salga cartel de comida ya ha sido agregada al eliminarla.
+                        comidasAgregadas.remove(temp); //elimina un elemento de una colección comidasAgregadas utilizando el valor almacenado en la variable temp.
                     }
                     modelo.removeRow(selectedRow);  // Quitar la fila seleccionada de la tabla
                     vista.BtGuardar.setEnabled(true);
@@ -327,6 +326,12 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                 JOptionPane.showMessageDialog(vista, "Por favor, seleccione una comida de la tabla antes de quitarla.");
             }
         }
+        
+        if(e.getSource()== vista.BtCancel){
+        reset();
+        llenarJTComidas();
+        }
+        
         if (e.getSource() == vista.BtSalir) {
             vista.dispose();
         }
@@ -343,6 +348,22 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             String cadena = comida1.getIdComida() + "-" + comida1.getNombreComida();
             vista.CBComidasActivas.addItem(cadena);
         }
+    }
+    
+    public void reset(){
+    vista.CBPaciente.setEnabled(true);
+    vista.CBDietasActivas.setEnabled(true);
+    vista.CBComidasActivas.setEnabled(true);
+    vista.CbHorario.setEnabled(true);
+    vista.BtAgregarComida.setEnabled(true);
+    vista.BtEliminarDieta.setEnabled(true);
+    vista.BtGuardar.setEnabled(false);
+    vista.BtNuevaDieta.setEnabled(true);
+    vista.BtQuitarComida.setEnabled(true);
+    vista.CBComidasActivas.setEnabled(true);
+    vista.CBComidasActivas.setEnabled(true);
+    vista.TxPorcion.setText("");
+    vista.BtCancel.setEnabled(false);
     }
 
     private void eliminarComidasSeleccionadas() {
