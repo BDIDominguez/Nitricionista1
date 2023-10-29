@@ -317,7 +317,6 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                         comidasAgregadas.remove(temp); //elimina un elemento de una colección comidasAgregadas utilizando el valor almacenado en la variable temp.
                     }
                     modelo.removeRow(selectedRow);  // Quitar la fila seleccionada de la tabla
-                    vista.BtGuardar.setEnabled(true);
 
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(vista, "Error al eliminar la comida:\n" + ex.getMessage());
