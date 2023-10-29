@@ -143,7 +143,7 @@ public class ControladorComida implements ActionListener {
            // Verificar si hay cambios pendientes
     if (cambiosPendientes.isEmpty()) {
         // No hay cambios pendientes, mostrar un JOptionPane
-        JOptionPane.showMessageDialog(null, "No se han realizado modificaciones.");
+        JOptionPane.showMessageDialog(null, "No se han realizado modificaciones");
     } else {
         // Realizar la lógica de modificación
         modificarComidas2();
@@ -191,7 +191,7 @@ public class ControladorComida implements ActionListener {
         
             return;
         }
-        if (!receta.matches("^[a-zA-Z\\s]+$")) {
+        if (!receta.matches("^[a-zA-Z,\\s]+$")) {
             JOptionPane.showMessageDialog(null, "La receta solo puede contener texto");
      
             return;
@@ -285,6 +285,10 @@ public class ControladorComida implements ActionListener {
 
 // Método para capturar los cambios en la tabla cuando el usuario modifica una celda
     public void capturarCambios(int fila, int columna, Object nuevoValor) {
+        Object valorOriginal = null; // Declarar la variable fuera del bloque try-catch
+      try {  // Antes de permitir la edición de la celda, guarda el valor original en una variable temporal
+      valorOriginal = vista.tbComidas.getValueAt(fila, columna);
+
         // Obtener el ID de la comida que se está modificando desde la primera columna
 Object idComidaObj = vista.tbComidas.getValueAt(fila, 0);
 int idComida = 0; // Valor predeterminado en caso de error de conversión
@@ -321,18 +325,31 @@ if (idComidaObj != null) {
         }
         // Actualizar el objeto EntidadComida con el nuevo valor según la columna modificada
         switch (columna) {
-            case 1: // Nombre
-                String nombre = (String) nuevoValor;
-                if (!nombre.equals(comidaActual.getNombreComida())) {
-                    comidaActual.setNombreComida(nombre);
-                }
-                break;
-            case 2: // Receta
-                String receta = (String) nuevoValor;
-                if (!receta.equals(comidaActual.getReceta())) {
-                    comidaActual.setReceta(receta);
-                }
-                break;
+             case 1: // Nombre
+    String nombre = (String) nuevoValor;
+    if (nombre!= null) {
+       if (nombre.matches("^[a-zA-Z\\s]+$")) {
+            if (!nombre.equals(comidaActual.getNombreComida())) {
+                comidaActual.setNombreComida(nombre);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "El nombre de la comida solo puede contener texto");
+        }
+    }
+    break;
+           case 2: // Receta
+    String receta = (String) nuevoValor;
+    if (receta != null) {
+       if (receta.matches("^[a-zA-Z,\\s]+$")) {
+            if (!receta.equals(comidaActual.getReceta())) {
+                comidaActual.setReceta(receta);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "La receta de la comida solo puede contener texto");
+        }
+    }
+    break;
+
             case 3: // Calorías
                 try {
                     int calorias = Integer.parseInt(nuevoValor.toString());
@@ -358,7 +375,13 @@ if (idComidaObj != null) {
         }
         //  actualizar la lista de cambios pendientes
         cambiosPendientes.set(cambiosPendientes.indexOf(comidaActual), comidaActual);
+         } catch (NumberFormatException ex) {
+        // Mostrar el mensaje de error
+        JOptionPane.showMessageDialog(null, "Las calorías deben ser un número entero");
+        // Restaurar el valor original en la tabla
+        vista.tbComidas.setValueAt(valorOriginal, fila, columna);
     }
+}
 
     public void modificarComidas2() {
         DefaultTableModel modelo = (DefaultTableModel) vista.tbComidas.getModel();
@@ -385,6 +408,7 @@ if (idComidaObj != null) {
 
                 // Actualiza la base de datos con los cambios realizados
                 data.modificarComidas2(comidaModificada);
+                     JOptionPane.showMessageDialog(null, "Se ha actualizado JIJI correctamente la comida");
 
                 // Actualiza la tabla con los nuevos valores
                 for (int fila = 0; fila < modelo.getRowCount(); fila++) {
@@ -488,15 +512,20 @@ if (idComidaObj != null) {
             resultado.addAll(data.obtenerComidasxEstado(true));
         } else if (vista.rbDeshabilitada.isSelected()) {
             resultado.addAll(data.obtenerComidasxEstado(false));
-         
         } else if (!vista.txNombre.getText().isEmpty()) {
             String nombre = vista.txNombre.getText();
             if (!nombre.matches("^[a-zA-Z\\s]+$")) {
                 JOptionPane.showMessageDialog(null, "El nombre de comida solo puede contener texto");
                vista.txNombre.setText("");
-            } else {
-                resultado.addAll(data.obtenerComidasxNombre(nombre));
-            }
+          } else {
+        List<EntidadComida> comidasEncontradas = data.obtenerComidasxNombre(nombre);
+        if (comidasEncontradas.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se encontraron comidas con el nombre especificado, puede seleccionar un estado y presionar buscar para listar las comidas");
+       vista.txNombre.setText("");
+        } else {
+            resultado.addAll(comidasEncontradas);
+        }
+    }
         } else if (!vista.txIdComida.getText().isEmpty()) {
             String input = vista.txIdComida.getText().trim();
             try {
@@ -504,7 +533,7 @@ if (idComidaObj != null) {
                 resultado.addAll(data.obtenerComidasxidComida(idComida));
                 // Verificar si no se encontraron resultados
                 if (resultado.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "No se encontraron comidas con el ID de comida especificado");
+                    JOptionPane.showMessageDialog(null, "No se encontraron comidas con el ID de comida especificado, puede seleccionar un estado y presionar buscar para listar las comidas");
                    vista.txIdComida.setText("");
                 }
             } catch (NumberFormatException ex) {
@@ -517,13 +546,20 @@ if (idComidaObj != null) {
                 if (calorias <= 0) {
                     JOptionPane.showMessageDialog(null, "Las calorías deben ser un número entero mayor que cero");
                    vista.txKcal.setText("");
-                } else {
-                    resultado.addAll(data.obtenerComidasxCalorias(calorias));
+                 } else  {
+        List<EntidadComida> comidasEncontradas = data.obtenerComidasxCalorias(calorias);
+        if (comidasEncontradas.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se encontraron comidas con la cantidad de calorias especificadas, puede seleccionar un estado y presionar buscar para listar las comidas");
+      vista.txKcal.setText(""); 
+        } else {
+            resultado.addAll(comidasEncontradas);
+        }
                 }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Debe ingresar un número entero para las calorías");
                   vista.txKcal.setText(""); 
             }
+//           
         } else if (!vista.txPeso.getText().isEmpty()) {
             try {
                 double peso = Double.parseDouble(vista.txPeso.getText());
@@ -531,21 +567,33 @@ if (idComidaObj != null) {
                     JOptionPane.showMessageDialog(null, "El peso debe ser un número mayor que cero");
                    vista.txPeso.setText("");  
                 } else {
-                    resultado.addAll(data.obtenerComidasxpeso(peso));
+         List<EntidadComida> comidasEncontradas = data.obtenerComidasxpeso(peso);
+        if (comidasEncontradas.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se encontraron comidas con el peso indicado, puede seleccionar un estado y presionar buscar para listar las comidas");
+      vista.txPeso.setText(""); 
+        } else {
+            resultado.addAll(comidasEncontradas);
+        }
                 }
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Debe ingresar un número de gramos para el peso");
+                JOptionPane.showMessageDialog(null, "Debe ingresar un numero en gramos para el peso");
                  vista.txPeso.setText("");  
             }
         } else if (!vista.txReceta.getText().isEmpty()) {
-            String receta = vista.txReceta.getText();
-            if (!receta.matches("^[a-zA-Z\\s]+$")) {
-                JOptionPane.showMessageDialog(null, "El nombre de la receta solo puede contener texto");
-               vista.txReceta.setText("");
-            } else {
-                resultado.addAll(data.obtenerComidasxReceta(receta));
-            }
+    String receta = vista.txReceta.getText();
+    if (!receta.matches("^[a-zA-Z,\\s]+$")) {
+        JOptionPane.showMessageDialog(null, "El nombre de la receta solo puede contener texto");
+        vista.txReceta.setText("");
+    } else {
+        List<EntidadComida> comidasEncontradas = data.obtenerComidasxReceta(receta);
+        if (comidasEncontradas.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se encontraron comidas con el nombre especificado, puede seleccionar un estado y presionar buscar para listar las comidas");
+            vista.txReceta.setText("");
+        } else {
+            resultado.addAll(comidasEncontradas);
         }
+    }
+}
         mostrarResultadoBusqueda(resultado);
         vista.jbModificar.setEnabled(true);
         vista.btDeshabilitarLista.setEnabled(true);

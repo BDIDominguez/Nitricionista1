@@ -326,7 +326,7 @@ public class DataComida {
     }
 
       //➢➢modificar comidas tabla vistacomidas
-    public void modificarComidas2(EntidadComida comida) {
+    public boolean modificarComidas2(EntidadComida comida) {
         con = Conexion.getConexion();
         String sql = "UPDATE comidas SET nombre = ?, receta = ?, calorias = ?, peso = ? WHERE idcomida = ?";
         PreparedStatement ps = null;
@@ -338,13 +338,10 @@ public class DataComida {
         ps.setDouble(4, comida.getPeso());
         ps.setInt(5, comida.getIdComida());
             int fila = ps.executeUpdate();
-            if (fila == 1) {
-                JOptionPane.showMessageDialog(null, "Se ha actualizado correctamente la comida");
-            } else if (fila == 0) {
-                JOptionPane.showMessageDialog(null, "La comida no existe en la base de datos");
-            }
+          return fila == 1;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la comida " + ex.getMessage());
+           return false;
         }
     }
     
