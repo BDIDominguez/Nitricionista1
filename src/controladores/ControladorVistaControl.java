@@ -6,8 +6,10 @@
 package controladores;
 
 import datas.DataControl;
+import datas.DataDieta;
 import datas.DataPaciente;
 import entidades.EntidadControl;
+import entidades.EntidadDieta;
 import entidades.EntidadPaciente;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +28,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -144,8 +147,8 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
             vista.btGuardar.setEnabled(true);
             vista.dcFecha.getDateEditor().getUiComponent().requestFocusInWindow(); // entregar el foco al jDateChooser
             activarText(true);
+            vista.cbPacientes.setEnabled(false);
             cargatUltimo();
-
         }
         if (e.getSource() == vista.btGuardar) {
             EntidadControl co = new EntidadControl();
@@ -170,6 +173,8 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
                         llenarTabla(extraerIdPaciente());
                         vista.btGuardar.setEnabled(false);
                         vista.btEliminar.setEnabled(true);
+                        vista.cbPacientes.setEnabled(true);
+                        limpiarFomulario();
                     }
                 } catch (SQLException ex) {
                     //Logger.getLogger(ControladorControl.class.getName()).log(Level.SEVERE, null, ex);
@@ -183,11 +188,14 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
                         JOptionPane.showMessageDialog(vista, "Cambios guardados con exito");
                         vista.btGuardar.setEnabled(false);
                         vista.btEliminar.setEnabled(true);
+                        vista.cbPacientes.setEnabled(true);
                         llenarTabla(extraerIdPaciente());
+                        limpiarFomulario();
                     } else {
                         JOptionPane.showMessageDialog(vista, "No se pudo guardar los cambios!!");
                         vista.btGuardar.setEnabled(true);
                         vista.btEliminar.setEnabled(false);
+                        vista.cbPacientes.setEnabled(true);
                     }
                 } catch (SQLException ex) {
                     //Logger.getLogger(ControladorControl.class.getName()).log(Level.SEVERE, null, ex);
@@ -396,15 +404,16 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         modelo.addColumn("Fecha");
         modelo.addColumn("Peso");
         modelo.addColumn("Cintura");
-        modelo.addColumn("Cita");
+        modelo.addColumn("Prox. Cita");
         modelo.addColumn("Observaciones");
         vista.tbControl.setModel(modelo);
-        vista.tbControl.getColumnModel().getColumn(0).setPreferredWidth(15);
-        vista.tbControl.getColumnModel().getColumn(1).setPreferredWidth(40);
-        vista.tbControl.getColumnModel().getColumn(2).setPreferredWidth(30);
-        vista.tbControl.getColumnModel().getColumn(3).setPreferredWidth(30);
-        vista.tbControl.getColumnModel().getColumn(4).setPreferredWidth(40);
-        vista.tbControl.getColumnModel().getColumn(5).setPreferredWidth(50);
+        vista.tbControl.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        vista.tbControl.getColumnModel().getColumn(0).setPreferredWidth(22);
+        vista.tbControl.getColumnModel().getColumn(1).setPreferredWidth(70);
+        vista.tbControl.getColumnModel().getColumn(2).setPreferredWidth(45);
+        vista.tbControl.getColumnModel().getColumn(3).setPreferredWidth(45);
+        vista.tbControl.getColumnModel().getColumn(4).setPreferredWidth(70);
+        vista.tbControl.getColumnModel().getColumn(5).setPreferredWidth(238);
     }
 
     private void llenarTabla(int idPaciente) {
@@ -512,6 +521,7 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         vista.txCintura.setText("0,00");
         vista.txIMC.setText("0,00");
         vista.txGasto.setText("0,00");
+        vista.txObs.setText("");
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         cal.add(Calendar.DAY_OF_MONTH, 7);
@@ -587,6 +597,30 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
             } catch (SQLException ex) {
                 // Logger.getLogger(ControladorVistaControl.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(vista, "No se puede consultar el ultimo control existentes");
+            }
+        } else { // buscar el peso declarado en la Dieta para poner como peso Inicial
+            double pesoInicial = 0.0;
+            List<EntidadDieta> d = new ArrayList<>();
+            DataDieta dt = new DataDieta();
+            try {
+                d = dt.listarDietas();
+                for (EntidadDieta dieta : d) {
+                    if (dieta.getPaciente() == extraerIdPaciente() && dieta.isEstado()) {
+                        pesoInicial = dieta.getPesoInicial();
+                        break;
+                    }
+                }
+                if (pesoInicial == 0) {
+                    JOptionPane.showMessageDialog(vista, "El Paciente no tiene una Dieta Acticva, \n creale una dieta primero.");
+                    activarText(false);
+                    vista.cbPacientes.setEnabled(true);
+                    vista.btGuardar.setEnabled(false);
+                    vista.btEliminar.setEnabled(false);
+                }
+                vista.txPeso.setText(formatoDecimal(pesoInicial));
+            } catch (SQLException ex) {
+                //Logger.getLogger(ControladorVistaControl.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(vista, "No se puede acceder a la lista de Dietas");
             }
 
         }

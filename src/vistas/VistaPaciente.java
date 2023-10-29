@@ -54,6 +54,8 @@ public class VistaPaciente extends javax.swing.JInternalFrame {
         txDNI = new utilidades.MiCampoTextoFormateado(1);
         ;
 
+        setTitle("Administracion de Pacientes");
+
         jPanel1.setBackground(new java.awt.Color(51, 51, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
