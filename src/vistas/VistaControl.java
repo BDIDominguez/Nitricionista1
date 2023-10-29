@@ -125,6 +125,7 @@ public class VistaControl extends javax.swing.JInternalFrame {
 
         txGasto.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         txGasto.setText("0,00");
+        txGasto.setToolTipText("Gasto Energetico de 0 a 100 unidades");
         jPanel1.add(txGasto, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 170, 103, -1));
 
         txIMC.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N

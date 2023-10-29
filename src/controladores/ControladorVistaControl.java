@@ -79,7 +79,7 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         vista.txGasto.addKeyListener(this);
         vista.txIMC.addKeyListener(this);
         vista.txPeso.addKeyListener(this);
-        
+
         // Se impide Copiar y pegar en los jTextField
         vista.txAltura.setTransferHandler(null);
         vista.txCintura.setTransferHandler(null);
@@ -87,7 +87,7 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         vista.txIMC.setTransferHandler(null);
         vista.txObs.setTransferHandler(null);
         vista.txPeso.setTransferHandler(null);
-        
+
         vista.dcFecha.addKeyListener(this);
 
     }
@@ -105,13 +105,13 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         llenarTabla(extraerIdPaciente());
         vista.txObs.setLineWrap(true);
         vista.txObs.setWrapStyleWord(true);
-        
+
         //Inicia todo los campos Bloqueados para que fuerze a usar el boton nuevo
         activarText(false);
-        
+
     }
-    
-    private void activarText(Boolean dato){
+
+    private void activarText(Boolean dato) {
         vista.dcCita.setEnabled(dato);
         vista.dcFecha.setEnabled(dato);
         vista.txAltura.setEditable(dato);
@@ -144,7 +144,8 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
             vista.btGuardar.setEnabled(true);
             vista.dcFecha.getDateEditor().getUiComponent().requestFocusInWindow(); // entregar el foco al jDateChooser
             activarText(true);
-            
+            cargatUltimo();
+
         }
         if (e.getSource() == vista.btGuardar) {
             EntidadControl co = new EntidadControl();
@@ -225,23 +226,22 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
 
     @Override
     public void focusGained(FocusEvent e) {
-        if (e.getSource() == vista.txAltura){
+        if (e.getSource() == vista.txAltura) {
             vista.txAltura.selectAll();
         }
-        if (e.getSource() == vista.txPeso){
+        if (e.getSource() == vista.txPeso) {
             vista.txPeso.selectAll();
         }
-        if (e.getSource() == vista.txGasto){
+        if (e.getSource() == vista.txGasto) {
             vista.txGasto.selectAll();
         }
-        if (e.getSource() == vista.txIMC){
+        if (e.getSource() == vista.txIMC) {
             vista.txIMC.selectAll();
         }
-        if (e.getSource() == vista.txCintura){
+        if (e.getSource() == vista.txCintura) {
             vista.txCintura.selectAll();
         }
-        
-            
+
     }
 
     @Override
@@ -252,7 +252,7 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
                 if (valor >= 0 && valor < 595) {
                     vista.txPeso.setText(formatoDecimal(Double.parseDouble(vista.txPeso.getText().replace(",", "."))));
                 } else {
-                    JOptionPane.showMessageDialog(vista, "El peso no es uno que se considera Valida!!!");
+                    JOptionPane.showMessageDialog(vista, "El peso no es uno que se considere Valido!!!");
                     vista.txPeso.setText("80,00");
                     vista.txPeso.requestFocus();
                 }
@@ -267,7 +267,7 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
                 if (valor >= 0.50 && valor < 2.8) {
                     vista.txAltura.setText(formatoDecimal(Double.parseDouble(vista.txAltura.getText().replace(",", "."))));
                 } else {
-                    JOptionPane.showMessageDialog(vista, "La altura no es una que se considera Valida!!!");
+                    JOptionPane.showMessageDialog(vista, "La altura no es una que se considere Valido!!! \n de 0.5 a 2.8 mtros");
                     vista.txAltura.setText("1,60");
                     vista.txAltura.requestFocus();
                 }
@@ -282,7 +282,7 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
                 if (valor >= 0 && valor < 100) {
                     vista.txCintura.setText(formatoDecimal(Double.parseDouble(vista.txCintura.getText().replace(",", "."))));
                 } else {
-                    JOptionPane.showMessageDialog(vista, "La cintura no es una que se considera Valida!!!");
+                    JOptionPane.showMessageDialog(vista, "La cintura no es una que se considere Valido!!! \n de 0 a 100 cm");
                     vista.txCintura.setText("35");
                     vista.txCintura.requestFocus();
                 }
@@ -296,7 +296,7 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
                 if (valor >= 0 && valor < 175) {
                     vista.txIMC.setText(formatoDecimal(Double.parseDouble(vista.txIMC.getText().replace(",", "."))));
                 } else {
-                    JOptionPane.showMessageDialog(vista, "El IMC no es uno que se considera Valida!!!");
+                    JOptionPane.showMessageDialog(vista, "El IMC no es uno que se considere Valido!!! \n de 0 a 175 Kg/m2");
                     vista.txIMC.setText("25");
                     vista.txIMC.requestFocus();
                 }
@@ -310,7 +310,7 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
                 if (valor >= 0 && valor < 100) {
                     vista.txGasto.setText(formatoDecimal(Double.parseDouble(vista.txGasto.getText().replace(",", "."))));
                 } else {
-                    JOptionPane.showMessageDialog(vista, "El gasto Energetico no es uno que se considera Valido!!!");
+                    JOptionPane.showMessageDialog(vista, "El gasto Energetico no es uno que se considere Valido!!! \n de 0 a 100 ");
                     vista.txGasto.setText("35");
                     vista.txGasto.requestFocus();
                 }
@@ -381,7 +381,7 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
     public void keyReleased(KeyEvent e) {
 
     }
-    
+
     private class MyModelo extends DefaultTableModel {
 
         //para evitar las edicion de los campos de la tabla pero que se puedan seleccionar
@@ -519,55 +519,77 @@ public class ControladorVistaControl implements ActionListener, FocusListener, L
         vista.btEliminar.setEnabled(false);
         vista.btGuardar.setEnabled(true);
     }
-    private LocalDate fechasALocalDate(String cual){
-        LocalDate da ;
-        try{
-            if (cual.equals("fecha")){
-            da = vista.dcFecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        }else{
-            da = vista.dcCita.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        }
-        if (da.isBefore(LocalDate.now()) && idcontrol == -1 ){
-            JOptionPane.showMessageDialog(vista,"La fecha no esta cargada correctamente!");
-            da = LocalDate.now();
-            if (cual.equals("fecha")){
-                vista.dcFecha.setDate(Date.from(da.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-                vista.dcFecha.requestFocus();
-            }else{
-                vista.dcCita.setDate(Date.from(da.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-                vista.dcCita.requestFocus();
+
+    private LocalDate fechasALocalDate(String cual) {
+        LocalDate da;
+        try {
+            if (cual.equals("fecha")) {
+                da = vista.dcFecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            } else {
+                da = vista.dcCita.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             }
-        }
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(vista,"Fecha mal cargada se pondra por defecto la fecha Actual" );
+            if (da.isBefore(LocalDate.now()) && idcontrol == -1) {
+                JOptionPane.showMessageDialog(vista, "La fecha no esta cargada correctamente!");
+                da = LocalDate.now();
+                if (cual.equals("fecha")) {
+                    vista.dcFecha.setDate(Date.from(da.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                    vista.dcFecha.requestFocus();
+                } else {
+                    vista.dcCita.setDate(Date.from(da.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                    vista.dcCita.requestFocus();
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(vista, "Fecha mal cargada se pondra por defecto la fecha Actual");
             da = LocalDate.now();
         }
         return da;
     }
-    private Date fechasADate(String cual){
-        Date da ;
-        try{
-            if (cual.equals("fecha")){
-            da = vista.dcFecha.getDate();
-        }else{
-            da = vista.dcCita.getDate();
-        }
-        if (da.before(new Date())){
-            JOptionPane.showMessageDialog(vista,"La fecha no esta cargada correctamente!");
-            da = new Date();
-            if (cual.equals("fecha")){
-                vista.dcFecha.setDate(new Date());
-                vista.dcFecha.requestFocus();
-            }else{
-                vista.dcCita.setDate(new Date());
-                vista.dcCita.requestFocus();
+
+    private Date fechasADate(String cual) {
+        Date da;
+        try {
+            if (cual.equals("fecha")) {
+                da = vista.dcFecha.getDate();
+            } else {
+                da = vista.dcCita.getDate();
             }
-        }
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(vista,"Fecha mal cargada se pondra por defecto la fecha Actual");
+            if (da.before(new Date())) {
+                JOptionPane.showMessageDialog(vista, "La fecha no esta cargada correctamente!");
+                da = new Date();
+                if (cual.equals("fecha")) {
+                    vista.dcFecha.setDate(new Date());
+                    vista.dcFecha.requestFocus();
+                } else {
+                    vista.dcCita.setDate(new Date());
+                    vista.dcCita.requestFocus();
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(vista, "Fecha mal cargada se pondra por defecto la fecha Actual");
             da = new Date();
         }
         return da;
+    }
+
+    private void cargatUltimo() { // consulta el ultimo control para cargar el ultimo control. 
+        int fila = vista.tbControl.getRowCount();
+        if (fila > 0) {
+            try {
+                int id = Integer.parseInt(modelo.getValueAt(fila - 1, 0).toString());
+                EntidadControl a = new EntidadControl();
+                a = cData.ControlxID(id);
+                vista.txPeso.setText(formatoDecimal(a.getPeso()));
+                vista.txAltura.setText(formatoDecimal(a.getAltura()));
+                vista.txCintura.setText(formatoDecimal(a.getCintura()));
+                vista.txIMC.setText(formatoDecimal(a.getIMC()));
+                vista.txGasto.setText(formatoDecimal(a.getGasenergetico()));
+            } catch (SQLException ex) {
+                // Logger.getLogger(ControladorVistaControl.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(vista, "No se puede consultar el ultimo control existentes");
+            }
+
+        }
     }
 
 } //Fin Clase
