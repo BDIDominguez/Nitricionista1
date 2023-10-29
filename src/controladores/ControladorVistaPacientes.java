@@ -14,6 +14,7 @@ import entidades.EntidadPaciente;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import vistas.VistaPaciente;
@@ -86,6 +87,7 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
                     vista.txID.setText(ide.getIdpaciente() + "");
                     vista.btGuardar.setEnabled(false);
                     vista.btEliminar.setEnabled(false);
+                    vista.btNuevo.setEnabled(true);
                     JOptionPane.showMessageDialog(vista, "Paciente creado con exito");
                     llenarTabla();
                 } catch (SQLException ex) {
@@ -99,6 +101,7 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
                         JOptionPane.showMessageDialog(vista, "Se guardaron los cambios Correctamente!");
                         vista.btGuardar.setEnabled(true);
                         vista.btEliminar.setEnabled(true);
+                        vista.btNuevo.setEnabled(true);
                     } else {
                         JOptionPane.showMessageDialog(vista, "Tenemos algun error, no controlado!!");
                     }
@@ -198,10 +201,11 @@ public class ControladorVistaPacientes implements ActionListener, FocusListener,
         modelo.addColumn("Nombre");
         modelo.addColumn("Telefono");
         vista.tbPacientes.setModel(modelo);
-        vista.tbPacientes.getColumnModel().getColumn(0).setPreferredWidth(80);
-        vista.tbPacientes.getColumnModel().getColumn(1).setPreferredWidth(250);
-        vista.tbPacientes.getColumnModel().getColumn(2).setPreferredWidth(500);
-        vista.tbPacientes.getColumnModel().getColumn(3).setPreferredWidth(300);
+        vista.tbPacientes.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        vista.tbPacientes.getColumnModel().getColumn(0).setPreferredWidth(30);
+        vista.tbPacientes.getColumnModel().getColumn(1).setPreferredWidth(70);
+        vista.tbPacientes.getColumnModel().getColumn(2).setPreferredWidth(350);
+        vista.tbPacientes.getColumnModel().getColumn(3).setPreferredWidth(200);
     }
 
     private void llenarTabla() {
