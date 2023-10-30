@@ -68,11 +68,8 @@ public class ControladorComida implements ActionListener {
         vista.jbModificar.setEnabled(false);
         vista.btDeshabilitarLista.setEnabled(false);
         vista.btHabilitarLista.setEnabled(false);
-
         UIManager.put("OptionPane.messageFont", UIManager.getFont("Label.font").deriveFont(20.0f));
-
         vista.tbComidas.setDefaultEditor(Object.class, new DefaultCellEditor(new miText()));
-        
         customFont = new Font("Arial", Font.PLAIN, 16);
     }
 
@@ -95,7 +92,6 @@ public class ControladorComida implements ActionListener {
                 if (fila >= 0 && columna >= 0) {
                     DefaultTableModel modelo = (DefaultTableModel) vista.tbComidas.getModel();
                     Object nuevoValor = modelo.getValueAt(fila, columna);
-
                     if (nuevoValor != null) {
 // capturar los cambios y almacenarlos en la estructura de cambios pendientes
                         capturarCambios(fila, columna, nuevoValor);
@@ -209,7 +205,6 @@ public class ControladorComida implements ActionListener {
     JOptionPane.showMessageDialog(null, "El peso debe ser un número en gramos");
     return;
 }
-       
         if (vista.rbHabilitada.isSelected()) {
             estado = true; // Habilitada
         } else if (vista.rbDeshabilitada.isSelected()) {
@@ -299,10 +294,9 @@ if (idComidaObj != null) {
         idComida = (int) idComidaObj;
     } else if (idComidaObj instanceof String) {
         try {
-            // Intenta convertir el valor a entero
+            // Intentar convertir el valor a entero
             idComida = Integer.parseInt((String) idComidaObj);
         } catch (NumberFormatException ex) {
-          
         }
     } else {
         // Manejo de error si el tipo de valor no es compatible
@@ -330,10 +324,11 @@ if (idComidaObj != null) {
     if (nombre!= null) {
        if (nombre.matches("^[a-zA-Z\\s]+$")) {
             if (!nombre.equals(comidaActual.getNombreComida())) {
-                comidaActual.setNombreComida(nombre);
+                comidaActual.setNombreComida(nombre);                
             }
         } else {
             JOptionPane.showMessageDialog(null, "El nombre de la comida solo puede contener texto");
+            vista.tbComidas.setValueAt(comidaActual.getNombreComida(), fila, columna);
         }
     }
     break;
@@ -346,6 +341,7 @@ if (idComidaObj != null) {
             }
         } else {
             JOptionPane.showMessageDialog(null, "La receta de la comida solo puede contener texto");
+            vista.tbComidas.setValueAt(comidaActual.getReceta(), fila, columna);
         }
     }
     break;
@@ -358,6 +354,7 @@ if (idComidaObj != null) {
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Las calorías deben ser un número entero");
+                    vista.tbComidas.setValueAt(comidaActual.getCalorias(), fila, columna);
                 }
                 break;
             case 4: // Peso
@@ -368,6 +365,7 @@ if (idComidaObj != null) {
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "El peso debe ser un número");
+                    vista.tbComidas.setValueAt(comidaActual.getPeso(), fila, columna);
                 }
                 break;
             default:
@@ -376,8 +374,6 @@ if (idComidaObj != null) {
         //  actualizar la lista de cambios pendientes
         cambiosPendientes.set(cambiosPendientes.indexOf(comidaActual), comidaActual);
          } catch (NumberFormatException ex) {
-        // Mostrar el mensaje de error
-        JOptionPane.showMessageDialog(null, "Las calorías deben ser un número entero");
         // Restaurar el valor original en la tabla
         vista.tbComidas.setValueAt(valorOriginal, fila, columna);
     }
@@ -405,12 +401,10 @@ if (idComidaObj != null) {
                 if (comidaModificada.getPeso() == 0.0) {
                     comidaModificada.setPeso(comidaActual.getPeso());
                 }
-
-                // Actualiza la base de datos con los cambios realizados
+                // Actualizar la base de datos con los cambios realizados
                 data.modificarComidas2(comidaModificada);
-                     JOptionPane.showMessageDialog(null, "Se ha actualizado JIJI correctamente la comida");
 
-                // Actualiza la tabla con los nuevos valores
+                // Actualizar la tabla con los nuevos valores
                 for (int fila = 0; fila < modelo.getRowCount(); fila++) {
                     if ((int) modelo.getValueAt(fila, 0) == idComida) {
                         modelo.setValueAt(comidaModificada.getIdComida(), fila, 0);
@@ -418,12 +412,12 @@ if (idComidaObj != null) {
                         modelo.setValueAt(comidaModificada.getReceta(), fila, 2);
                         modelo.setValueAt(comidaModificada.getCalorias(), fila, 3);
                         modelo.setValueAt(comidaModificada.getPeso(), fila, 4);
+                       JOptionPane.showMessageDialog(null, "Se ha modificado la comida");
                         break;
                     }
                 }
             }
         }
-
         // Limpiar la lista de cambios pendientes después de aplicarlos
         cambiosPendientes.clear();
     }
@@ -438,7 +432,6 @@ if (idComidaObj != null) {
     }
 
         public class MultilineCellRenderer extends DefaultTableCellRenderer {
-
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
