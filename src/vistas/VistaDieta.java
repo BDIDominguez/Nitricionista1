@@ -58,6 +58,7 @@ public class VistaDieta extends javax.swing.JInternalFrame {
         dcFechInicio = new com.toedter.calendar.JDateChooser();
 
         setClosable(true);
+        setTitle("Dietas de pacientes");
 
         jDesktopPane1.setBackground(new java.awt.Color(51, 51, 255));
         jDesktopPane1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
