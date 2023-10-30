@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-10-2023 a las 03:23:16
+-- Tiempo de generación: 30-10-2023 a las 02:29:42
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.2.4
 
@@ -18,9 +18,9 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `nutricionista`
+-- Base de datos: `nutrigrupo43`
 --
-CREATE DATABASE IF NOT EXISTS `nutrigrupo43` DEFAULT CHARACTER SET utf8mb4 ;
+CREATE DATABASE IF NOT EXISTS `nutrigrupo43` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `nutrigrupo43`;
 
 -- --------------------------------------------------------
@@ -37,7 +37,7 @@ CREATE TABLE `comidas` (
   `calorias` int DEFAULT NULL,
   `estado` tinyint DEFAULT NULL,
   `peso` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `comidas`
@@ -45,16 +45,26 @@ CREATE TABLE `comidas` (
 
 INSERT INTO `comidas` (`idcomida`, `nombre`, `receta`, `calorias`, `estado`, `peso`) VALUES
 (1, 'Ensalada de Garbanzos y Aguacate', 'Garbanzos cocidos, aguacate, tomate, cilantro, limón', 340, 1, 280),
-(2, 'Pescado a la Parrilla con Espárragos y Quinua', 'Filete de pescado, espárragos, quinua cocida, limón', 410, 1, 380),
+(2, 'Pescado a la Parrilla con Espárragos', 'Filete de pescado, espárragos, quinua cocida, limón', 410, 1, 380),
 (3, 'Ensalada de Espinacas con Fresas', 'Espinacas frescas, fresas, almendras tostadas', 350, 1, 380),
 (4, 'Pavo al Horno con Batatas', 'Pechuga de pavo, batatas asadas, romero, aceite de oliva', 420, 1, 350),
-(5, 'Ensalada de Col Rizada con Aguacate', 'Col rizada, aguacate, nueces, vinagreta de limón', 380, 1, 280),
+(5, 'Ensalada de Col Rizada y Aguacate', 'Col rizada, aguacate, nueces, vinagreta de limón', 380, 1, 280),
 (6, 'Tofu Salteado con Verduras', 'Tofu, brócoli, zanahorias, pimientos, salsa de soja baja en sodio', 290, 1, 320),
 (7, 'Ensalada de Atún y Garbanzos', 'Atún enlatado, garbanzos, tomate, cebolla roja, aceite de oliva', 320, 1, 280),
 (8, 'Pollo al Curry con Brócoli', 'Pechuga de pollo, brócoli, cebolla, curry en polvo, leche de coco', 520, 1, 400),
-(9, 'Quinua con Verduras Asadas', 'Quinua cocida, zanahorias, calabacines, pimientos, aceite de oliva', 380, 1, 300),
-(10, 'Salmón a la Parrilla con Espárragos', 'Filete de salmón, espárragos, aceite de oliva, limón', 450, 1, 350),
-(11, 'Ensalada de Espinacas con Fresas', 'Espinacas frescas, fresas, almendras tostadas', 350, 1, 250);
+(9, 'Quinua con Verduras Asadas', 'Quinua cocida, zanahorias, calabacines, pimientos, aceite de oliva', 380, 1, 3000),
+(10, 'Salmón a la Parrilla con Espárragos', 'Filete de salmón, espárragos, aceite de oliva, limón', 4500, 1, 350),
+(11, 'Ensalada de Espinacas con Fresas', 'aEspinacas frescas, fresas, almendras tostadas', 350, 1, 250),
+(25, 'Pechuga de Pollo a la Plancha', 'Pechuga de pollo asada a la parrilla con especias.', 300, 1, 180),
+(26, 'Tofu Salteado con Vegetales', 'Tofu salteado con brócoli, pimientos y salsa de soja baja en sodio.', 220, 1, 160),
+(27, 'Hummus con Zanahorias', 'Hummus casero con zanahorias frescas en rodajas.', 180, 1, 220),
+(28, 'Sopa de Lentejas', 'Sopa nutritiva de lentejas con verduras y especias.', 280, 1, 240),
+(29, 'Filete de Salmón al Horno', 'Filete de salmón horneado con limón y eneldo.', 320, 1, 170),
+(30, 'Pavo Asado con Batata', 'Pavo asado con batatas y hierbas aromáticas.', 280, 1, 210),
+(31, 'Ensalada de Frutas Frescas', 'Mezcla de frutas frescas como piña, fresas, kiwi y uvas.', 120, 1, 180),
+(32, 'Salmón a la Parrilla', 'Filete de salmón a la parrilla con limón y especias.', 350, 1, 200),
+(33, 'Yogur Griego con Frutas', 'Yogur griego bajo en grasa con fresas y arándanos.', 150, 1, 200),
+(34, 'Brócoli al Vapor', 'Brócoli fresco cocido al vapor con un toque de aceite de oliva.', 40, 0, 150);
 
 -- --------------------------------------------------------
 
@@ -74,7 +84,7 @@ CREATE TABLE `controles` (
   `IMC` double DEFAULT NULL,
   `proximacita` date DEFAULT NULL,
   `estado` tinyint DEFAULT NULL,
-  `obs` text COLLATE utf8mb4_general_ci
+  `obs` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -82,11 +92,17 @@ CREATE TABLE `controles` (
 --
 
 INSERT INTO `controles` (`idControl`, `idPaciente`, `fecha`, `peso`, `altura`, `cintura`, `gasenergetico`, `IMC`, `proximacita`, `estado`, `obs`) VALUES
-(3, 1, '2023-10-08', 50, 50, 50, 50, 50, '2023-10-15', 1, 'Lechonnnnn!!!'),
-(4, 1, '2023-10-15', 50, 50, 50, 50, 50, '2023-10-22', 0, 'Segunda cita del Lechos!!!'),
-(6, 4, '2023-10-09', 73.5, 1.69, 45.5, 45, 25.73, '2023-10-17', 1, 'La paciende precenta sintomas de transtornos pero siquiatricos!!!!'),
-(7, 4, '2023-10-17', 75.5, 1.69, 48, 60, 26.43, '2023-10-24', 1, 'Sigue con sus claros problemas mentales, no entiende que no necesita\nun nutricionista si no un psicologo XD'),
-(8, 4, '2023-10-10', 74.5, 1.69, 46, 35, 26.08, '2023-10-11', 1, 'Sigue con sus claros problemas mentales, no entiende que no necesita\nun nutricionista si no un psicologo XD');
+(1, 1, '2023-10-27', 25, 1.6, 94, 16, 9.77, '2023-11-03', 1, 'Esta Perfecto el peso, pero no execedas el entrenamiento y ejercicios, procura no llegar a la fatiga'),
+(2, 2, '2023-10-27', 95, 1.6, 80, 30, 37.11, '2023-11-03', 1, 'LA PACIENTE INGRESO CON UN INDICE CORPORAL ALTO PARA SU CONTEXTURA, SE LE ASIGNA LA DIETA DETOX CON CONTROL SEMANAL DUTRANTE 1 MES'),
+(3, 2, '2023-11-03', 87, 1.6, 77, 30, 33.98, '2023-11-10', 1, 'PACIENTE MUESTRA PROGRESO POSITIVO EN CONTROL'),
+(4, 2, '2023-11-10', 85, 1.6, 72, 30, 33.2, '2023-11-17', 1, 'LA PACIENTE SIGUE EL PROGRESO ESPERADO'),
+(5, 2, '2023-11-17', 79, 1.6, 68, 30, 30.86, '2023-11-24', 1, 'SE ESPERABA MAYOR PROGRESO ESTA SEMANA'),
+(6, 2, '2023-11-24', 75, 1.6, 62, 30, 29.3, '2023-12-02', 1, 'ASOMBROSAMENTE PERDIO 10 KG LA ULTIMA SEMANA Y LLEGO A LA META'),
+(7, 3, '2023-11-20', 109.5, 1.75, 80, 30, 29.3, '2023-11-25', 1, 'El lechon pretende perder peso, sin dejar de comer porquerias ni cambiar su rutina de pasarsela sentado frente la PC'),
+(8, 3, '2023-10-25', 112, 1.75, 85, 30, 29.3, '2023-10-31', 1, 'No esperabamos nada por parte del lechon y aun asi logra desepcionarnos, engordo el muy maldito!!!!'),
+(9, 5, '2023-10-29', 74, 1.65, 50, 25, 27.18, '2023-11-05', 1, 'La paciente necesia mas un ciquiatrico pero como por plata baila el mono veremos que podemos hacer XD'),
+(10, 5, '2023-10-29', 70, 1.65, 50, 25, 25.71, '2023-11-05', 1, 'Acosta de todo pronostico mejor un poco su peso pero no se puede tapar el sol con un dedo XD'),
+(11, 5, '2023-10-29', 78, 1.65, 50, 25, 28.65, '2023-11-05', 1, 'Como deciamos, el animalito no quiere entender que dejar de tragar de golpe no le va a producir los efectos deceados.');
 
 -- --------------------------------------------------------
 
@@ -101,7 +117,19 @@ CREATE TABLE `dietacomidas` (
   `iddieta` int DEFAULT NULL,
   `porcion` int DEFAULT NULL,
   `horario` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `dietacomidas`
+--
+
+INSERT INTO `dietacomidas` (`iddietacomida`, `idcomida`, `iddieta`, `porcion`, `horario`) VALUES
+(1, 5, 1, 4, 'Almuerzo'),
+(2, 7, 2, 1, 'Almuerzo'),
+(3, 7, 3, 1, 'Almuerzo'),
+(4, 1, 3, 1, 'Desayuno'),
+(5, 2, 3, 1, 'Desayuno'),
+(9, 6, 3, 1, 'Desayuno');
 
 -- --------------------------------------------------------
 
@@ -119,7 +147,17 @@ CREATE TABLE `dietas` (
   `pesoinicial` double DEFAULT NULL,
   `pesofinal` double DEFAULT NULL,
   `estado` tinyint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `dietas`
+--
+
+INSERT INTO `dietas` (`iddieta`, `nombre`, `idpaciente`, `fecinicio`, `fecfinal`, `pesoinicial`, `pesofinal`, `estado`) VALUES
+(1, 'Salmón al horno con espárragos', 1, '2023-06-14', '2023-07-14', 186, 97, 1),
+(2, 'DETOX', 2, '2023-10-27', '2023-11-02', 85, 75, 1),
+(3, 'Para el Lechon', 3, '2023-10-20', '2023-10-31', 109.5, 90, 1),
+(4, 'Alimentacion Valanciada', 5, '2023-10-29', '2023-11-30', 74, 65, 1);
 
 -- --------------------------------------------------------
 
@@ -135,17 +173,18 @@ CREATE TABLE `pacientes` (
   `domicilio` varchar(60) DEFAULT NULL,
   `telefono` varchar(15) DEFAULT NULL,
   `estado` tinyint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `pacientes`
 --
 
 INSERT INTO `pacientes` (`idpaciente`, `nombre`, `dni`, `domicilio`, `telefono`, `estado`) VALUES
-(1, 'Dominguez, Benardo', 30541575, 'La Providencia N 62', '+543885273263', 1),
-(2, 'Dominguez, Dario', 30541576, 'La providencia nro 62', '+543885273263', 1),
-(3, 'Dominguez, Ismael', 30541577, 'La Providencia Nro 62', '+543885273263', 1),
-(4, 'Vasualdo, Ines', 30150502, 'La providencia nro 62', '+543885273827', 1);
+(1, 'Matteoni, Matias', 38825523, 'Chacabuco  dpto C', '47314867', 1),
+(2, 'ENTESANO, LOUISINETTE', 95625820, 'ROSARIO', '3415558899', 1),
+(3, 'Dominguez, Bernardo Dario Ismael', 30541575, 'La providencia Nro 62', '30541575', 1),
+(5, 'Vasualdo, Ines Soledad', 30150502, 'La providencia nro 62', '+543885273827', 1),
+(6, 'Dominguez, Daiana Belen', 46472275, 'La providencia nro 62', '+543885307093', 1);
 
 --
 -- Índices para tablas volcadas
@@ -194,31 +233,31 @@ ALTER TABLE `pacientes`
 -- AUTO_INCREMENT de la tabla `comidas`
 --
 ALTER TABLE `comidas`
-  MODIFY `idcomida` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idcomida` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `controles`
 --
 ALTER TABLE `controles`
-  MODIFY `idControl` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idControl` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `dietacomidas`
 --
 ALTER TABLE `dietacomidas`
-  MODIFY `iddietacomida` int NOT NULL AUTO_INCREMENT;
+  MODIFY `iddietacomida` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `dietas`
 --
 ALTER TABLE `dietas`
-  MODIFY `iddieta` int NOT NULL AUTO_INCREMENT;
+  MODIFY `iddieta` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `pacientes`
 --
 ALTER TABLE `pacientes`
-  MODIFY `idpaciente` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idpaciente` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
