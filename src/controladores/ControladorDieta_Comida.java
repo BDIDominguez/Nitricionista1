@@ -3,41 +3,43 @@ package controladores;
 /**
  * * @author DIEGO G
  */
+// Importación de paquetes y clases necesarios.
 import datas.DataDieta_Comida;
 import datas.DataComida;
 import datas.DataDieta;
 import datas.DataPaciente;
-
+// Importación de clases y paquetes necesarios para el controlador.
 import entidades.EntidadDieta_Comida;
 import entidades.EntidadPaciente;
 import entidades.EntidadComida;
 import entidades.EntidadDieta_Comida.HorarioComida;
-
+// Importación de clases para la gestión de eventos de GUI.
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
+// Importación de las clases de la interfaz gráfica.
 import vistas.VistaDieta;
 import vistas.VistaPantallaPrincipal;
 import vistas.VistaDieta_Comida;
-
+// Importación de la clase SQLException para manejo de excepciones SQL.
 import java.sql.SQLException;
-
+// Importación de clases para estructuras de datos.
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+// Importación de clases para la creación de interfaces gráficas y manejo de tablas.
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class ControladorDieta_Comida implements ActionListener, FocusListener, ListSelectionListener {
+// Declaración de variables miembro para el controlador.
 
     private final VistaPantallaPrincipal menu;
     private final VistaDieta_Comida vista;
@@ -47,8 +49,10 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     MyModelo modelo = new MyModelo();
     private List<EntidadPaciente> pacientes = new ArrayList<>();
     private Set<String> comidasAgregadas = new HashSet<>();
+    // Constructor del controlador.
 
     public ControladorDieta_Comida(VistaPantallaPrincipal menu, VistaDieta_Comida vista, DataDieta_Comida dataDietaComida) {
+        // Inicialización del controlador con los parámetros de la vista y los datos.
         this.vista = vista;
         this.menu = menu;
         this.dataDietaComida = dataDietaComida;
@@ -60,18 +64,18 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         vista.BtSalir.addActionListener(this);
         vista.BtQuitarComida.addActionListener(this);
         vista.BtCancel.addActionListener(this);
-        //Combos
+        //Combo. Asignación de controladores de eventos a los combobox de la vista
         vista.CBPaciente.addActionListener(this);
         vista.CBDietasActivas.addActionListener(this);
         vista.CBComidasActivas.addActionListener(this);
         vista.CbHorario.addActionListener(this);
-        //Cuadro de texto
+        //Cuadro de texto. Asignación de controladores de eventos al cuadro de texto de la vista.
         vista.TxPorcion.addFocusListener(this);
-        //Tabla
+        //Tabla. Asignación de controladores de eventos a la tabla de la vista.
         vista.JTComidas.getSelectionModel().addListSelectionListener(this);
     }
 
-    public void iniciar() {
+    public void iniciar() { // Método para iniciar la vista y configurar su estado inicial.
         menu.dpFondo.add(vista);
         vista.setVisible(true);
         menu.dpFondo.moveToFront(vista);
@@ -84,16 +88,17 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         vista.BtCancel.setEnabled(false);
     }
 
-    private void modelarTabla() {
+    private void modelarTabla() { // Método para configurar el modelo de la tabla y su apariencia.
         modelo.addColumn("id");
         modelo.addColumn("Comida");
         modelo.addColumn("Porción");
         modelo.addColumn("Horarios");
         vista.JTComidas.setModel(modelo);
-        vista.JTComidas.getColumnModel().getColumn(0).setPreferredWidth(10);
-        vista.JTComidas.getColumnModel().getColumn(1).setPreferredWidth(50);
-        vista.JTComidas.getColumnModel().getColumn(2).setPreferredWidth(30);
-        vista.JTComidas.getColumnModel().getColumn(3).setPreferredWidth(20);
+        vista.JTComidas.setAutoResizeMode(vista.JTComidas.AUTO_RESIZE_OFF);
+        vista.JTComidas.getColumnModel().getColumn(0).setPreferredWidth(20);
+        vista.JTComidas.getColumnModel().getColumn(1).setPreferredWidth(375);
+        vista.JTComidas.getColumnModel().getColumn(2).setPreferredWidth(50);
+        vista.JTComidas.getColumnModel().getColumn(3).setPreferredWidth(80);
     }
 
     private class MyModelo extends DefaultTableModel {
@@ -104,7 +109,7 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
         }
     }
 
-    private void llenarJTComidas() {
+    private void llenarJTComidas() { // Método para llenar la tabla de comidas de la dieta seleccionada.
         try {
             List<EntidadDieta_Comida> comidas = new ArrayList<>();
 
@@ -126,10 +131,10 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             JOptionPane.showMessageDialog(vista, "error al llenar JTComidas al tratar de obtener una lista de comidas \n" + ex.getMessage());
         }
         vista.BtGuardar.setEnabled(false);
-        vista.BtAgregarComida.setEnabled(true);
+//        vista.BtAgregarComida.setEnabled(true);
     }
 
-    private void llenarComboBPaciente() {
+    private void llenarComboBPaciente() { // Método para llenar el combo de pacientes con información desde la base de datos.
         List<EntidadPaciente> pac = new ArrayList<>();
         try {
             DataPaciente e = new DataPaciente();
@@ -146,17 +151,33 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
     }
 
     private void llenarComboBDietasActivas() {
+        vista.CBDietasActivas.removeAllItems();
         List<entidades.EntidadDieta> diet = new ArrayList<>();
-
+        DataDieta dataDieta = new DataDieta();
         try {
-            vista.CBDietasActivas.removeAllItems();
-            DataDieta dataDieta = new DataDieta();
-            List<entidades.EntidadDieta> dietas = dataDieta.listarDietas();
 
+            List<entidades.EntidadDieta> dietas = dataDieta.listarDietas();
+            boolean tieneDietasActivas = false;
             for (entidades.EntidadDieta dieta : dietas) {
+
                 if (dieta.isEstado() && dieta.getPaciente() == paciente) { // Verifica si la dieta está activa
+                    tieneDietasActivas = true;
                     vista.CBDietasActivas.addItem(dieta.getIdDieta() + "-" + dieta.getNombre());
                 }
+            }
+            if (!tieneDietasActivas) {
+                JOptionPane.showMessageDialog(vista, "El paciente no tiene dietas activas. Puede crear una nueva desde el botón 'Nueva Dieta' o seleccionar otro paciente.", "Sin Dietas Activas", JOptionPane.INFORMATION_MESSAGE);
+                vista.BtGuardar.setEnabled(false);
+                vista.BtNuevaDieta.setEnabled(true);
+                vista.BtEliminarDieta.setEnabled(false);
+                vista.BtQuitarComida.setEnabled(false);
+                vista.BtCancel.setEnabled(false);
+                vista.CbHorario.setEnabled(false);
+                vista.TxPorcion.setEnabled(false);
+                vista.CBComidasActivas.setEnabled(false);
+                vista.BtAgregarComida.setEnabled(false);
+            } else {
+                reset();
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al obtener la lista de dietas activas: " + ex.getMessage());
@@ -270,20 +291,21 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
 
             String dietaSeleccionada = (String) vista.CBDietasActivas.getSelectedItem();
             String[] partes = dietaSeleccionada.split("-");
-            int idDieta = Integer.parseInt(partes[0].trim());
-            int rowCount = modelo.getRowCount();
+            int idDieta = Integer.parseInt(partes[0].trim());   //se obtiene la dieta seleccionada en el ComboBox "CBDietasActivas", se divide en partes utilizando el carácter "-" y se extrae el ID de la dieta. Este ID se almacena en la variable idDieta.
+            int rowCount = modelo.getRowCount();    //Se obtiene el número de filas en el modelo de la tabla.
 
-            for (int i = 0; i < rowCount; i++) {
+            for (int i = 0; i < rowCount; i++) {    //bucle que recorre todas las filas de la tabla.
                 String nombreComida = modelo.getValueAt(i, 1).toString();
                 String[] partes2 = nombreComida.split("-");
                 int idComida = Integer.parseInt(partes2[0].trim());
                 int porcion = Integer.parseInt(modelo.getValueAt(i, 2).toString());
                 String horario = modelo.getValueAt(i, 3).toString();
                 int idcolumn1 = Integer.parseInt(modelo.getValueAt(i, 0).toString());
-
+//Dentro del bucle, se obtienen los valores de cada fila de la tabla, incluyendo el nombre de la comida, el ID de la comida, la porción, el horario y un ID de columna.
                 vista.BtAgregarComida.setEnabled(true);
+//Creo un objeto EntidadDieta_Comida con los datos de la dieta seleccionada, la comida, la porción y el horario.                
                 EntidadDieta_Comida dietaComida = new EntidadDieta_Comida(idDieta, idComida, porcion, HorarioComida.valueOf(horario));
-
+//Guardo la entidad dietaComida en la base de datos utilizando el método GuardarDietaComida de dataDietaComida. Se verifica que idcolumn1 sea igual a 0 antes de guardar, indicando que la fila es una nueva entrada.
                 try {
                     if (idcolumn1 == 0) {
                         dataDietaComida.GuardarDietaComida(dietaComida);
@@ -292,29 +314,29 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                     JOptionPane.showMessageDialog(vista, "Error al guardar los datos en la base de datos:\n" + ex.getMessage());
                 }
             }
-            llenarJTComidas();
+            llenarJTComidas(); //llamo la función llenarJTComidas para actualizar la tabla con los datos guardados.
 
             reset();
-            vista.CBComidasActivas.setSelectedIndex(0);
+            vista.CBComidasActivas.setSelectedIndex(0); //selecciono el primer elemento en el ComboBox "CBComidasActivas".
             JOptionPane.showMessageDialog(vista, "Datos guardados con éxito.");
         }
 
         if (e.getSource() == vista.BtQuitarComida) {
 
-            int selectedRow = vista.JTComidas.getSelectedRow();
-            if (selectedRow != -1) {
-                int idDietaComida = (int) vista.JTComidas.getValueAt(selectedRow, 0);
-
-                try {
+            int selectedRow = vista.JTComidas.getSelectedRow(); //obtengo el índice de la fila seleccionada en la tabla "JTComidas" de la vista. Si no se ha seleccionado ninguna fila, selectedRow será igual a -1.
+            if (selectedRow != -1) {    //verifica si se ha seleccionado una fila en la tabla.
+                int idDietaComida = (int) vista.JTComidas.getValueAt(selectedRow, 0); //obtiene el valor de la primera columna (columna 0) de la fila seleccionada en la tabla. Este valor se interpreta como un ID de "Dieta Comida".
+                try {      //bloque try-catch para manejar excepciones
                     boolean eliminacionOK = dataDietaComida.eliminarDietaDeTabla(idDietaComida);
-
+//intento eliminar una entrada de "Dieta Comida" de la base de datos utilizando el método eliminarDietaDeTabla de la instancia dataDietaComida. 
                     if (eliminacionOK) {
                         JOptionPane.showMessageDialog(vista, "Comida eliminada con éxito.");
                     } else {
                         JOptionPane.showMessageDialog(vista, "Comida eliminada de la dieta.");
                         int fila = vista.JTComidas.getSelectedRow(); //obtienen el índice de la fila seleccionada
-                        String temp = modelo.getValueAt( fila, 1).toString();   //recupera un valor de la tabla modelo (el valor en la segunda columna con índice 1) esto evita que salga cartel de comida ya ha sido agregada al eliminarla.
+                        String temp = modelo.getValueAt(fila, 1).toString();   //recupera un valor de la tabla modelo (el valor en la segunda columna con índice 1) esto evita que salga cartel de comida ya ha sido agregada al eliminarla.
                         comidasAgregadas.remove(temp); //elimina un elemento de una colección comidasAgregadas utilizando el valor almacenado en la variable temp.
+//Si la eliminación no fue exitosa, se muestra un mensaje de diálogo que indica que la comida se ha eliminado de la dieta. Luego, se obtiene el índice de la fila seleccionada en la tabla y se recupera el valor de la segunda columna (columna 1) de esa fila, que se almacena en la variable temp. Luego, se elimina temp de la colección comidasAgregadas. Esta colección se utiliza para evitar agregar la misma comida varias veces.                    
                     }
                     modelo.removeRow(selectedRow);  // Quitar la fila seleccionada de la tabla
 
@@ -325,12 +347,12 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
                 JOptionPane.showMessageDialog(vista, "Por favor, seleccione una comida de la tabla antes de quitarla.");
             }
         }
-        
-        if(e.getSource()== vista.BtCancel){
-        reset();
-        llenarJTComidas();
+
+        if (e.getSource() == vista.BtCancel) {
+            reset();
+            llenarJTComidas();
         }
-        
+
         if (e.getSource() == vista.BtSalir) {
             vista.dispose();
         }
@@ -348,21 +370,21 @@ public class ControladorDieta_Comida implements ActionListener, FocusListener, L
             vista.CBComidasActivas.addItem(cadena);
         }
     }
-    
-    public void reset(){
-    vista.CBPaciente.setEnabled(true);
-    vista.CBDietasActivas.setEnabled(true);
-    vista.CBComidasActivas.setEnabled(true);
-    vista.CbHorario.setEnabled(true);
-    vista.BtAgregarComida.setEnabled(true);
-    vista.BtEliminarDieta.setEnabled(true);
-    vista.BtGuardar.setEnabled(false);
-    vista.BtNuevaDieta.setEnabled(true);
-    vista.BtQuitarComida.setEnabled(true);
-    vista.CBComidasActivas.setEnabled(true);
-    vista.CBComidasActivas.setEnabled(true);
-    vista.TxPorcion.setText("");
-    vista.BtCancel.setEnabled(false);
+
+    public void reset() {
+        vista.CBPaciente.setEnabled(true);
+        vista.CBDietasActivas.setEnabled(true);
+        vista.CBComidasActivas.setEnabled(true);
+        vista.CbHorario.setEnabled(true);
+        vista.BtAgregarComida.setEnabled(true);
+        vista.BtEliminarDieta.setEnabled(true);
+        vista.BtGuardar.setEnabled(false);
+        vista.BtNuevaDieta.setEnabled(true);
+        vista.BtQuitarComida.setEnabled(true);
+        vista.CBComidasActivas.setEnabled(true);
+        vista.CBComidasActivas.setEnabled(true);
+        vista.TxPorcion.setText("");
+        vista.BtCancel.setEnabled(false);
     }
 
     private void eliminarComidasSeleccionadas() {
